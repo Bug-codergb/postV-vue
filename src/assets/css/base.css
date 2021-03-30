@@ -1,0 +1,49 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: Arial,Helvetica,sans-serif;
+}
+a{
+    text-decoration: none;
+}
+li{
+    list-style: none;
+}
+input{
+    padding: 0px;
+    margin: 0px;
+    outline: none;
+    border: none;
+}
+button{
+    border: none;
+    outline: none;
+
+}
+/*
+body{
+    background-image: url("../img/image.png");
+    background-repeat: no-repeat;
+    background-size: 1000px auto;
+    background-color:#0b8ed9;
+}*/
+.text-nowrap{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+textarea{
+    border: none;
+    outline: 1px solid #7f7f7f;
+    resize:none;
+}
+/*轮播图指示器*/
+.el-carousel__button{
+    height: 10px!important;
+    width: 10px !important;
+    border-radius: 50%;
+}
+.el-carousel__indicators--outside button
+{
+    background-color: #3a8ee6!important;
+}
