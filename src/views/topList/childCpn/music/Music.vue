@@ -1,5 +1,6 @@
 <template>
   <div class="picture">
+    音乐
     <ul>
       <li v-for="(item,index) in pictures" :key="item.id">
         <!--用户头像信息-->

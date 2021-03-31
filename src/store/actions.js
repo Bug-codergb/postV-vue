@@ -2,6 +2,7 @@ import {login} from '@/network/login'
 import {userDetail} from "@/network/user";
 import {allMoments, momentDetail} from "@/network/home";
 import {hotMoment} from "@/network/moment";
+import {getTopListDetail} from "@/network/toplist";
 export default{
     /*获取用户登录信息*/
     getUserMsgAction(context,payload)
@@ -71,6 +72,17 @@ export default{
                     type:'changeHotMoment',
                     hotMoment:data
                 })
+            })
+        })
+    },
+    //获取榜单分类下详情
+    getTopListDetailAction(content,payload)
+    {
+        const {categoryId}=payload;
+        getTopListDetail(categoryId).then(data=>{
+            content.commit({
+                type:'changeTopListDetail',
+                topListDetail:data
             })
         })
     }

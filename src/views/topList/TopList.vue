@@ -1,10 +1,10 @@
 <template>
-  <div class="toplist">
+  <div class="top-list">
     <ul class="category">
-      <li v-for="(item,index) in ['视频','放映厅','图片','科技','体育','搞笑']"
+      <li v-for="(item,index) in videoCate" :key="item.categoryId"
           :class="{active:index===currentIndex}"
-          @click="liClick(index)">
-        {{item}}
+          @click="liClick(item,index)">
+        {{item.name}}
       </li>
     </ul>
     <!--体育，视频，图片的视图-->
@@ -13,22 +13,35 @@
 </template>
 
 <script>
+import {getAllVideoCate} from "@/network/category";
+
 export default {
   name: "TopList",
   data()
   {
     return {
       currentIndex:0,
-      path:['/Home/TopList/Video','/Home/TopList/Movie','/Home/TopList/Picture',
-             '/Home/TopList/Technology','/Home/TopList/Sport','/Home/TopList/Funny']
+      videoCate:[],
+      path:['/Home/TopList/Life','/Home/TopList/Funny','/Home/TopList/Sport',
+             '/Home/TopList/Technology','/Home/TopList/Music','/Home/TopList/Game','/Home/TopList/Movie']
     }
   },
+  created() {
+    getAllVideoCate().then(data=>{
+      this.videoCate=data.filter((item,index)=>{
+        return item.name!=="知识"
+      });
+    })
+  },
   methods:{
-    liClick(index)
+    liClick(item,index)
     {
       this.currentIndex=index;
       this.$router.push({
-        path:this.path[index]
+        path:this.path[index],
+        query:{
+          categoryId:item.categoryId
+        }
       })
     }
   }
@@ -36,8 +49,12 @@ export default {
 </script>
 
 <style scoped lang="less">
+  .topic-list{
+
+  }
   .category{
     display: flex;
+    flex-wrap:wrap ;
     li{
       background-color: #3a8ee6;
       margin: 0 15px;

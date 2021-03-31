@@ -9,13 +9,13 @@ export function getToplistPic(offset,limit)
         }
     })
 }
-export function getAllCate(offset,limit)
+/*获取榜单分类下详情*/
+export function getTopListDetail(categoryId)
 {
     return request({
-        url:'/cate/all',
+        url:'/toplist/detail',
         params:{
-            offset,
-            limit
+            categoryId
         }
     })
 }

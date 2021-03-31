@@ -4,14 +4,13 @@ export function getVideoBase64(url) {
         const ctx=canvas.getContext("2d");
 
         const video=document.createElement('video');
-        /*video.setAttribute('width','300');*/
-        /*video.setAttribute('height','300');*/
+        /*funny.setAttribute('width','300');*/
+        /*funny.setAttribute('height','300');*/
         video.setAttribute('controls',"controls");
-        console.log(video.offsetHeight,video.offsetWidth)
         video.src=url;
         video.currentTime =0.1;
         video.oncanplay=function (){
-            //console.log(video.videoHeight,video.videoWidth)
+            //console.log(funny.videoHeight,funny.videoWidth)
             canvas.height = video.videoHeight;
             canvas.width=video.videoWidth;
             ctx.drawImage(video,0,0, video.videoWidth,video.videoHeight);

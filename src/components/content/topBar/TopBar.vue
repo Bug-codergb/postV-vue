@@ -11,7 +11,10 @@
       </div>
       <!--设置搜索框-->
       <search/>
-      <button class="moment" @click="publish">发动态</button>
+      <button class="moment" @click="publish">
+        <i class="iconfont icon-shipin"></i>
+        发布视频
+      </button>
       <!--设置用户信息-->
       <div class="user">
         <div class="avatar" @click="showLogin">
@@ -100,6 +103,12 @@ name: "TopBar",
   color: #fff;
   margin: 0 0 0 40px;
   cursor:pointer;
+  display: flex;
+  align-items: center;
+  i{
+    font-size: 18px;
+    margin: 0 10px 0 0;
+  }
 }
 /*用户头像，信息*/
 .user{

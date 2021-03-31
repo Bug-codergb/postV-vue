@@ -9,12 +9,10 @@
         </div>
       </el-carousel-item>
     </el-carousel>
-    <!--推荐动态-->
-    <Article :article="recommendArc" v-if="recommendArc.moments"/>
     <!--视频，图片科技等-->
     <ul>
-      <li v-for="(item,index) in otherRec" :key="item.categoryId">
-        <other-cate :cate-detail="item" v-if="otherRec.length&&item.moments.length" />
+      <li v-for="(item,index) in cateDetail" :key="item.categoryId">
+        <other-cate :cate-detail="item" v-if="cateDetail.length&&item.videos.length" />
       </li>
     </ul>
     <Knowledge/>
@@ -22,23 +20,25 @@
 </template>
 
 <script>
-import {hotMoment} from "@/network/moment";
 import Moment from "@/components/content/moment/Moment";
 import {getHotBanner} from "@/network/recommend";
-import Article from "@/views/hotRecommend/childCpn/article/Article";
-import {getAllCate} from "@/network/toplist";
+
+import {getAllVideoCate, getCateDetail} from "@/network/category";
 import OtherCate from "@/views/hotRecommend/childCpn/otherCate/OtherCate";
 import Knowledge from "@/views/hotRecommend/childCpn/knowledge/Knowledge";
 
 export default {
 name: "HotRecommend",
-  components: {Knowledge, OtherCate, Article, Moment},
+  components: {Knowledge, OtherCate,Moment},
   data()
   {
     return {
       banner:[],
       recommendArc:{},
-      otherRec:[]
+      otherRec:[],
+      //所有视频分类
+      videoCate:[],
+      cateDetail:[]
     }
   },
   created() {
@@ -46,18 +46,15 @@ name: "HotRecommend",
       //console.log(data);
       this.banner=data;
     })
-    getAllCate(0,10).then(data=>{
+    getAllVideoCate().then(data=>{
+      this.videoCate=data;
+      //获取分类下视频
       let promise=data.map((item,index)=>{
-        return hotMoment(item.categoryId)
+        return getCateDetail(item.categoryId)
       })
       Promise.all(promise).then(data=>{
-        this.recommendArc=data.filter((item,index)=>{
-          return item.name==='文章'
-        })[0]
-        this.otherRec=data.filter((item,index)=>{
-          return item.name!=='文章'
-        });
-        //console.log(this.otherRec)
+        console.log(data);
+        this.cateDetail=data;
       })
     })
   }

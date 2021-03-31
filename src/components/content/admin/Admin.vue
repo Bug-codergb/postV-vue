@@ -23,7 +23,7 @@ export default {
   {
     return {
       list:['动态','专题','视频','放映厅','课堂'],
-      path:['/admin/moment','/admin/topic','/admin/video','/admin/movie','/admin/knowledge'],
+      path:['/admin/moment','/admin/topic','/admin/funny','/admin/movie','/admin/knowledge'],
       currentIndex:0
     }
   },

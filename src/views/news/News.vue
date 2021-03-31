@@ -3,7 +3,7 @@
     <el-carousel height="260px" :autoplay="false" indicator-position="outside">
       <el-carousel-item v-for="item in banners" :key="item.momentId">
         <div>
-          <img :src="item.pictures[0]" class="postit-img" alt="用户头像"/>
+          <img :src="item.picUrl[0].picUrl" class="postit-img" alt="用户头像"/>
           <div class="title">{{item.title}}</div>
         </div>
       </el-carousel-item>
@@ -14,14 +14,17 @@
         <moment :momentDetail="_this.$store.state.momentDetail[index]"
                 v-if="_this.$store.state.momentDetail.length!==0"
                 :is-show-com="false">
-          <!--评论回复内容-->
+          <!--内容-->
           <div slot="momentContent">
             <div class="content" @click="momentRouter(item)">
               <div class="moment-img" v-if="_this.$store.state.momentDetail[index].picUrl">
                 <img :src="_this.$store.state.momentDetail[index].picUrl[0].picUrl" />
               </div>
               <div class="state">
+                <p class="video-title">{{_this.$store.state.momentDetail[index].title}}</p>
                 <span v-html="_this.$store.state.momentDetail[index].content">{{_this.$store.state.momentDetail[index].content}}</span>
+                <!--发表时间和查看数,点击量，评论数-->
+                <moment-bar :moment-detail="_this.$store.state.momentDetail[index]"/>
               </div>
             </div>
           </div>
@@ -32,25 +35,23 @@
 </template>
 
 <script>
-import {allMoments, momentDetail} from "@/network/home";
 import Tags from "@/components/content/tags/Tags";
 import Reply from "@/components/content/reply/Reply";
 import Moment from "@/components/content/moment/Moment";
 import {getNewBanner} from "@/network/new";
 import {momentView} from "@/network/moment";
-//import Moment from "@/components/content/moment/Moment";
+import MomentBar from "@/components/content/moment/children/momentBar/MomentBar";
 export default {
   name: "News",
   components:{
     Moment,
     Tags,
     Reply,
+    MomentBar
   },
   data(){
     return {
       banners:[],
-      /*moments:[],
-      momentDetail:[],*/
       isRouterAlive:true,
       _this:{}
     }
@@ -59,7 +60,6 @@ export default {
     this.getAllMoments();
     this._this=this
     getNewBanner().then(data=>{
-      //console.log(data)
       this.banners=data;
     })
   },
@@ -141,11 +141,11 @@ h3 {
 //动态内容
 .content{
   display: flex;
-  align-items:flex-start;
+  align-items:center;
   .moment-img{
     margin: 0 30px 0 0;
     img{
-      width: 200px;
+      width: 220px;
     }
   }
 }
@@ -155,8 +155,12 @@ h3 {
   color: #595959;
   line-height: 24px;
   overflow: hidden;
-  height: 140px;
+  height: 130px;
   width: 450px;
+  .video-title{
+    font-size: 20px;
+    font-weight: bolder;
+  }
 }
 //动态中的内容
 .state /deep/ img{
