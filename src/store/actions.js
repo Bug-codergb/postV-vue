@@ -74,9 +74,15 @@ export default{
             })
         })
     },
-    //获取动态详情
+    //获取动态详情(用于评论的实时更新)
     getMomentDetail(context,payload)
     {
-
+        const {momentId}=payload;
+        momentDetail(momentId).then(data=>{
+            context.commit({
+                type:'changeMomentDetails',
+                momentDetails:data
+            })
+        })
     }
 }

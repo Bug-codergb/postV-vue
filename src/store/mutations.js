@@ -37,5 +37,10 @@ export default{
     changeSearchResult(state,payload)
     {
         state.searchResult=payload.searchResult;
+    },
+    //评论更新的动态详情
+    changeMomentDetails(state,payload)
+    {
+        state.momentDetails=payload.momentDetails;
     }
 }

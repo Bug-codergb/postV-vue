@@ -120,6 +120,10 @@ name: "Reply",
       if(this.content&&this.status)
       {
         publishCom(this.content,this.id).then(data=>{
+          this.$store.dispatch({
+            type:'getMomentDetail',
+            momentId:this.id
+          })
           this.isShowCom=false;
           this.$toast.show("回复成功",2000);
           /*this.$store.dispatch({

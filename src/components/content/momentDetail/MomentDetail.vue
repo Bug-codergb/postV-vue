@@ -1,11 +1,15 @@
 <template>
   <div class="moment-detail">
     <div class="left-content">
-      <moment :momentDetail="momentDetail" v-if="this.momentDetail.momentId!==undefined">
+      <moment :momentDetail="this.$store.state.momentDetails"
+              v-if="this.$store.state.momentDetails.momentId!==undefined"
+              >
         <div slot="momentContent">
           <div class="content">
             <div class="state">
-              <span v-html="momentDetail.content">{{momentDetail.content}}</span>
+              <span v-html="this.$store.state.momentDetails.content">
+                {{this.$store.state.momentDetails.content}}
+              </span>
             </div>
           </div>
         </div>
@@ -37,9 +41,13 @@ export default {
     this.userId=this.$route.query.userId;
     this.momentId=this.$route.query.momentId;
     //获取动态详情
-    momentDetail(this.momentId).then(data=>{
+   // momentDetail(this.momentId).then(data=>{
       //console.log(data)
-      this.momentDetail=data;
+     // this.momentDetail=data;
+   // })
+    this.$store.dispatch({
+      type:'getMomentDetail',
+      momentId:this.momentId
     })
   }
 }

@@ -35,7 +35,7 @@
         <!--动态回复按钮-->
         <reply :id="momentDetail.momentId" v-if="isShowCom"/>
         <!--评论回复-->
-        <comment :momentId="momentDetail.momentId" v-if="momentDetail&&isShowCom"/>
+        <comment :momentId="momentDetail.momentId" v-if="momentDetail&&isShowCom" :key="momentDetail.momentId"/>
   </div>
 </template>
 
