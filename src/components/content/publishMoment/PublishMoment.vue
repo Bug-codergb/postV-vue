@@ -153,7 +153,7 @@ export default {
         let flag=true
         for(let item of files)
         {
-          const {type}=item;
+          const {type}=item.file;
           if(type.includes('image'))
           {
             imgFormData.append('picture',item)
@@ -161,7 +161,8 @@ export default {
           else if(type.includes("video"))
           {
             flag=false;
-            vioForData.append('video',item);
+            vioForData.append('video',item.file);
+            vioForData.append('duration',item.duration)
           }
         }
         //上传图片
