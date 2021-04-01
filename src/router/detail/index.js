@@ -17,6 +17,8 @@ const videoCate=()=>import('../../components/content/category/children/videoCate
 const imageCate=()=>import('../../components/content/category/children/imageCate/ImageCate');
 //科技分类详情页
 const technologyCate=()=>import('../../components/content/category/children/technology/Technology');
+//文章分类详情
+const articleCate=()=>import('../../components/content/category/children/articleCate/ArticleCate')
 //课程分类详情页
 const knowCate=()=>import("../../components/content/category/children/knowCate/KnowCate");
 //课程详情页
@@ -99,6 +101,14 @@ export const technologyCateRouter={
     name:'technologyCate',
     components:{
         detail:technologyCate
+    }
+}
+//文章分类详情
+export const articleCateRouter={
+    path:'/articleCate',
+    name:'articleCate',
+    components:{
+        detail:articleCate
     }
 }
 //课程分类详情页

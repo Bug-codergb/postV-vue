@@ -33,6 +33,7 @@ import {
   imageDetailRouter,
   imageCateRouter,
   technologyCateRouter,
+  articleCateRouter,
   knowCateRouter,
   knowDetailRouter,
   knowPlayRouter
@@ -198,6 +199,8 @@ const routes = [
       imageCateRouter,
         //科技分类详情
       technologyCateRouter,
+        //文章分类详情
+      articleCateRouter,
         //课程分类·
       knowCateRouter,
         //课程详情

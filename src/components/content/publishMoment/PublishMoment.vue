@@ -63,7 +63,7 @@
 import {momentPic, publishMoment} from "@/network/moment";
 import {delMomentPic} from "../../../network/moment";
 import {uploadVio, uploadVioImg} from "../../../network/video";
-import {getVideoBase64, getVideoImage} from "../../../utils/videoToImg";
+import {getVideoBase64, getVideoDuration, getVideoImage} from "../../../utils/videoToImg";
 import {getAllCate} from "@/network/toplist";
 
 export default {
@@ -130,9 +130,14 @@ export default {
     //视频预览
     previewVio()
     {
-        //上传的视频文件
-        this.fileList.push(this.$refs.momentVio.files[0]);
          //上传的视频文件的图片
+        getVideoDuration(this.$refs.momentVio.files[0]).then(data=>{
+          //上传的视频文件
+          this.fileList.push({
+            file:this.$refs.momentVio.files[0],
+            duration:data
+          })
+        })
         let url=URL.createObjectURL(this.$refs.momentVio.files[0]);
         getVideoBase64(url).then(data=>{
           this.videos.push(data)

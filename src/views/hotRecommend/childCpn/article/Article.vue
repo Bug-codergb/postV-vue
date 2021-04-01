@@ -1,6 +1,6 @@
 <template>
   <div class="article">
-    <p class="article-name">{{article.name}}
+    <p class="article-name" @click="articleRouter()">{{article.name}}
       <i class="iconfont icon-svgarrowsright"></i>
     </p>
     <!--文章内容-->
@@ -84,6 +84,15 @@ export default {
           userId:item.user.userId
         }
       })
+    },
+    articleRouter()
+    {
+      this.$router.push({
+        path:'/articleCate',
+        query:{
+          categoryId:this.article.categoryId
+        }
+      })
     }
   }
 }
@@ -101,6 +110,11 @@ export default {
     .article-name{
       font-weight: bold;
       margin: 20px 0 0 0;
+      cursor: pointer;
+      color:#333;
+      &:hover{
+        color:#000;
+      }
       i{
         font-size: 14px;
       }

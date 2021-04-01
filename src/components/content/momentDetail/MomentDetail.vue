@@ -62,6 +62,7 @@ export default {
   .content{
     .state{
       color: #595959;
+      line-height: 30px;
       /deep/ img{
         width: 350px;
         outline: 1px solid rgba(0,0,0,.1);

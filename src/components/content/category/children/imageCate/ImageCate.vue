@@ -23,7 +23,7 @@ export default {
     }
   },
   created() {
-    getCateDetail(this.$route.query.categoryId).then(data=>{
+    getCateDetail(this.$route.query.categoryId,0,15).then(data=>{
       console.log(data)
       this.images=data;
     })
