@@ -4,7 +4,7 @@ export function allMoments()
     return request({
         url:'moment/all',
         params:{
-            offset:0,
+            offset:4,
             limit:15
         }
     })

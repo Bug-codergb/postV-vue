@@ -4,10 +4,10 @@
       <i class="iconfont icon-svgarrowsright"></i>
     </p>
     <ul class="outer">
-      <li v-for="(item,index) in cateDetail.videos" :key="item.momentId">
+      <li v-for="(item,index) in cateDetail.moments" :key="item.momentId">
         <div class="img-container" @click="videoRouter(item)">
-          <img :src="item.picUrl[0].picUrl" class="active" />
-          <div class="play">
+          <img :src="item.picUrl[0].picUrl" :class="{active:cateDetail.name==='视频'}" />
+          <div class="play" v-show="cateDetail.name==='视频'" >
             <i class="iconfont icon-play"></i>
           </div>
         </div>
@@ -43,9 +43,28 @@ name: "OtherCate",
   methods:{
     detailRouter(name)
     {
-      this.$router.push({
-        path:'/videoCate'
-      });
+      console.log(name)
+      switch(name)
+      {
+        case '视频':
+          this.$router.push({
+            path:'/videoCate'
+          });break;
+        case "图片":
+          this.$router.push({
+            path:'/imageCate',
+            query:{
+              categoryId:this.cateDetail.categoryId
+            }
+          });break;
+        case '科技':
+          this.$router.push({
+            path:'/technologyCate',
+            query:{
+              categoryId:this.cateDetail.categoryId
+            }
+          })
+      }
     },
     videoRouter(item)
     {

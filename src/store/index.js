@@ -33,9 +33,7 @@ export default new Vuex.Store({
     //搜索结果
     searchResult:{
       user:[{avatarUrl:""}]
-    },
-    //榜单下详情
-    topListDetail:[]
+    }
   },
   mutations,
   actions,

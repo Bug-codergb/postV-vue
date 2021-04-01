@@ -11,10 +11,10 @@
      <div class="category">
        <span>分类</span>
        <select v-model="cate">
-         <option v-for="(item,index) in videoCate"
+         <option v-for="(item,index) in category"
                  :key="item.categoryId"
-                 :value="item.name"
-                 :selected="cateMap.get('生活')">
+                 :selected="item.name==='文章'"
+                  :value="item.name">
            {{item.name}}
          </option>
        </select>
@@ -42,14 +42,14 @@
     <div class="control-btn">
       <div class="upload">
         <!--上传图片-->
-        <div class="upload-img-btn" v-show="false">
+        <div class="upload-img-btn" v-show="cate!=='视频'">
           <input type="file" @change="previewImg" ref="momentPic" name="picture" multiple="multiple" title="上传图片"/>
           <span>
             <i class="iconfont icon-tu"></i>
           </span>
         </div>
         <!--上传视频-->
-        <div class="upload-vio">
+        <div class="upload-vio" v-show="cate!=='文章'&&cate!=='图片'">
           <input type="file" @change="previewVio" ref="momentVio" title="上传视频"/>
           <span><i class="iconfont icon-shipin"></i></span>
         </div>
@@ -61,9 +61,10 @@
 
 <script>
 import {momentPic, publishMoment} from "@/network/moment";
+import {delMomentPic} from "../../../network/moment";
 import {uploadVio, uploadVioImg} from "../../../network/video";
-import {getVideoBase64, getVideoDuration, getVideoImage} from "@/utils/videoToImg";
-import {getAllVideoCate} from "@/network/admin";
+import {getVideoBase64, getVideoImage} from "../../../utils/videoToImg";
+import {getAllCate} from "@/network/toplist";
 
 export default {
   name: "PublishMoment",
@@ -75,33 +76,31 @@ export default {
       videos:[],
       fileList:[],
       vioImg:[],//根据视频生成的图片
-     /* category:[],
+      category:[],
       cate:'文章',
-      cateMap:new Map()*/
-      //所有视频分类
-      videoCate:[],
-      //默认分类
-      cate:'生活',
       cateMap:new Map()
     }
   },
   created() {
-    getAllVideoCate().then(data=>{
-     this.videoCate=data;
-     data.forEach((item,index)=>{
-       this.cateMap.set(item.name,item.categoryId)
-     })
-   })
+    getAllCate(0,10).then(data=>{
+      this.category=data
+      this.category.forEach((item,index)=>{
+        this.cateMap.set(item.name,item.categoryId);
+      })
+      console.log(this.cateMap)
+    })
   },
   methods:{
     publishMoment()
     {
       if(!this.title)
       {
-        this.$toast.show("为你的视频添加一个标题吧!",1500)
+        this.$toast.show("为你的动态添加一个标题吧!",1500)
       }
      else{
         publishMoment(this.title,this.cateMap.get(this.cate),this.content).then(data=>{
+          //console.log(data);
+          //文件上传
           this.upload(this.fileList,data)
           this.$emit('changeShow')
         })
@@ -132,17 +131,7 @@ export default {
     previewVio()
     {
         //上传的视频文件
-        console.log(this.$refs.momentVio.files[0])
-        getVideoDuration(this.$refs.momentVio.files[0]).then(data=>{
-          if(data)
-          {
-            this.fileList.push({
-              File:this.$refs.momentVio.files[0],
-              duration:data
-            }
-            );
-          }
-        })
+        this.fileList.push(this.$refs.momentVio.files[0]);
          //上传的视频文件的图片
         let url=URL.createObjectURL(this.$refs.momentVio.files[0]);
         getVideoBase64(url).then(data=>{
@@ -159,17 +148,15 @@ export default {
         let flag=true
         for(let item of files)
         {
-          const {type}=item.File;
+          const {type}=item;
           if(type.includes('image'))
           {
             imgFormData.append('picture',item)
           }
-          //上传视频
           else if(type.includes("video"))
           {
             flag=false;
-            vioForData.append('video',item.File);
-            vioForData.append('duration',item.duration);
+            vioForData.append('video',item);
           }
         }
         //上传图片

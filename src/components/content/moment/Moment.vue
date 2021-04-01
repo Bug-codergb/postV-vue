@@ -9,14 +9,17 @@
           <div class="creator">
             {{momentDetail.user.name}}
           </div>
+
           <slot name="delete"></slot>
         </div>
-
+        <!--标题-->
+        <h3 class="moment-title">{{momentDetail.title}}</h3>
         <!--内容-->
-       <div class="content-outer">
-         <!--标题-->
+       <div>
          <slot name="momentContent"></slot>
        </div>
+       <!--发表时间和查看数,点击量，评论数-->
+       <moment-bar :moment-detail="momentDetail"/>
         <!--标签-->
         <div class="tags" v-if="momentDetail!==undefined">
           <p v-if="momentDetail.tags!==null">标签</p>
@@ -120,9 +123,6 @@ export default {
 }
 .moments{
   margin: 0 0 0 30px;
-}
-.content-outer{
-  display: flex;
 }
 //动态 标题
 .moment-title{

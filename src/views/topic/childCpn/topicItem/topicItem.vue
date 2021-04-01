@@ -2,7 +2,7 @@
   <div>
     <ul class="topic-item">
       <li v-for="(item,index) in topicContent" :key="item.topic_content_id">
-        <div class="img-container">
+        <div class="img-container" @click="momentRouter(item)">
           <img :src="item.picUrls[0].picUrl" />
         </div>
         <div class="state text-nowrap">{{item.title}}</div>
@@ -33,6 +33,12 @@ name: "topicItem",
       console.log(data);
       this.topicContent=data;
     })
+  },
+  methods:{
+    momentRouter(item)
+    {
+      console.log(item);
+    }
   }
 }
 </script>

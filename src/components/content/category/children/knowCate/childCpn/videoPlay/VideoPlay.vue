@@ -6,7 +6,7 @@
 
 <script>
 import {getKnowUrl} from "@/network/recommend";
-import Video from "@/views/topList/childCpn/funny/Funny";
+import Video from "@/views/topList/childCpn/video/Video";
 
 export default {
   name: "VideoPlay",

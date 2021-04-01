@@ -37,9 +37,5 @@ export default{
     changeSearchResult(state,payload)
     {
         state.searchResult=payload.searchResult;
-    },
-    //榜单下详情
-    changeTopListDetail(state,payload){
-        state.topListDetail=payload.topListDetail;
     }
 }

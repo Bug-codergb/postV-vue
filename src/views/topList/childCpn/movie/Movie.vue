@@ -1,6 +1,5 @@
 <template>
   <div class="movie">
-    影视
     <ul>
       <li v-for="(item,index) in allMovie" :key="item.vid">
         <div class="img-container">

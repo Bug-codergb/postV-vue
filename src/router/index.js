@@ -40,12 +40,11 @@ import {
 
 //榜单子路由
 const movie=()=>import('../views/topList/childCpn/movie/Movie')
-const music=()=>import('../views/topList/childCpn/music/Music')
+const picture=()=>import('../views/topList/childCpn/picture/Picture')
 const sport=()=>import('../views/topList/childCpn/sport/Sport')
 const technology=()=>import('../views/topList/childCpn/technology/Technology')
-const funny=()=>import('../views/topList/childCpn/funny/Funny');
-const life=()=>import('../views/topList/childCpn/life/Life')
-const game=()=>import('../views/topList/childCpn/game/Game')
+const video=()=>import('../views/topList/childCpn/video/Video');
+const funny=()=>import('../views/topList/childCpn/funny/Funny')
 
 const originalPush = VueRouter.prototype.push
 VueRouter.prototype.push = function push(location) {
@@ -148,7 +147,7 @@ const routes = [
         children:[
           {
             path:'/Home/TopList',
-            redirect:'/Home/TopList/Life'
+            redirect:'/Home/TopList/Video'
           },
           {
             path:'Movie',
@@ -156,9 +155,9 @@ const routes = [
             component:movie
           },
           {
-            path:'Life',
-            name:'life',
-            component:life
+            path:'Picture',
+            name:'picture',
+            component:picture
           },
           {
             path:'Technology',
@@ -171,19 +170,14 @@ const routes = [
             component:sport
           },
           {
-            path:'Game',
-            name:'game',
-            component:game
+            path:'Video',
+            name:'video',
+            component:video
           },
           {
             path:'Funny',
             name:'funny',
             component:funny
-          },
-          {
-            path:"Music",
-            name:music,
-            component:music
           }
         ]
       },
