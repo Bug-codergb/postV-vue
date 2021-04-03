@@ -1,9 +1,8 @@
 <template>
   <div class="topic">
     <ul>
-      <li v-for="(item,index) in allTopic" :key="item.topicId">
-        <div class="title">{{item.name}}</div>
-        <topic-item :topic-id="item.topicId" />
+      <li v-for="(item,index) in allTopic" :key="item.topicId" @click="topicRouter">
+        <topic-item :topic="item" />
       </li>
     </ul>
   </div>
@@ -11,7 +10,7 @@
 
 <script>
 import {getAllTopic} from "@/network/topic";
-import TopicItem from "@/views/topic/childCpn/topicItem/topicItem";
+import TopicItem from "@/components/content/topicItem/TopicItem";
 
 export default {
 name: "Topic",
@@ -27,21 +26,18 @@ name: "Topic",
       console.log(data)
       this.allTopic=data;
     })
+  },
+  methods:{
+    topicRouter()
+    {
+      this.$router.push({
+        path:'/topicDetail'
+      })
+    }
   }
 }
 </script>
 
 <style scoped lang="less">
-  .title{
-    font-size: 16px;
-    font-weight: bold;
-    margin: 0 0 10px 0;
-  }
-  .topic{
-    ul{
-      li{
-        margin: 0 0 15px 0;
-      }
-    }
-  }
+
 </style>

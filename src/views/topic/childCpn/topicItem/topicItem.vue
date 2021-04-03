@@ -29,10 +29,10 @@ name: "topicItem",
     }
   },
   created() {
-    getAllTopicContent(this.topicId,0,6).then(data=>{
+   /* getAllTopicContent(this.topicId,0,6).then(data=>{
       console.log(data);
       this.topicContent=data;
-    })
+    })*/
   },
   methods:{
     momentRouter(item)

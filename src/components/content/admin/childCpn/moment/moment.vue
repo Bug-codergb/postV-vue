@@ -31,12 +31,16 @@ export default {
     }
   },
   created() {
-    getAllCheckMoment().then(data=>{
-      console.log(data);
-      this.allCheckMoment=data;
-    })
+    this.getAllCheckMoment();
   },
   methods:{
+    getAllCheckMoment()
+    {
+      getAllCheckMoment().then(data=>{
+        console.log(data);
+        this.allCheckMoment=data;
+      })
+    },
     momentRouter(item)
     {
       console.log(item);
@@ -52,13 +56,17 @@ export default {
       check(item)
       {
         checkMoment(item.momentId).then(data=>{
-          console.log(data);
+          if(data)
+          {
+            this.getAllCheckMoment();
+          }
         })
       },
     //删除动态
     delMoment(item,index)
     {
       const flag=confirm("你确定要删除吗?");
+      console.log(flag)
       if(flag)
       {
         delMoment(item.momentId).then(data=>{

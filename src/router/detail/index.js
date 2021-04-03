@@ -6,6 +6,8 @@ const momentDetail=()=>import('../../components/content/momentDetail/MomentDetai
 const videoDetail=()=>import('../../components/content/videoDetail/VideoDetail');
 //搜索详情页
 const searchDetail=()=>import('../../components/content/searchDetail/SearchDetail');
+//话题详情
+const topicDetail=()=>import('../../components/content/topicDetail/TopicDetail')
 //搜索子路由
 const user=()=>import('../../components/content/searchDetail/childCpn/user/User');
 const moment=()=>import('../../components/content/searchDetail/childCpn/moment/Moment');
@@ -47,6 +49,14 @@ export const videoDetailRouter={
     components: {
     detail: videoDetail
     },
+}
+//话题详情
+export const topicDetailRouter={
+    path:'/topicDetail',
+    name:'topicDetail',
+    components:{
+        detail:topicDetail
+    }
 }
 //图片详情页
 export const imageDetailRouter={

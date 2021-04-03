@@ -8,7 +8,8 @@
                @play.once="play"
                @timeupdate="getCurrentTime"
                @canplay="canplay"
-               controls="controls">
+               controls="controls"
+               autoplay>
         </video>
         <button @click="playVideo">565播放</button>
       </div>

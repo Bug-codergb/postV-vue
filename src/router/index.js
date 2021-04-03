@@ -29,6 +29,7 @@ import {
   userDetailRouter,
   momentDetailRouter,
   videoDetailRouter,
+  topicDetailRouter,
   searchDetailRouter,
   videoCateRouter,
   imageDetailRouter,
@@ -195,6 +196,8 @@ const routes = [
       userDetailRouter,
       //视频详情
       videoDetailRouter,
+        //话题
+      topicDetailRouter,
         //图片详情页
       imageDetailRouter,
       //搜索详情

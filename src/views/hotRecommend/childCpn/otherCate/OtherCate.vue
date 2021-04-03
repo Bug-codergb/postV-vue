@@ -30,6 +30,8 @@
 </template>
 
 <script>
+import {holder} from "@/utils/holder";
+
 export default {
 name: "OtherCate",
   props:{
@@ -73,14 +75,7 @@ name: "OtherCate",
     //占位
     holder(count,line)
     {
-      let rem=count%line;
-      if(rem===0)
-      {
-        return 0;
-      }
-      else{
-        return count-rem;
-      }
+      return holder(count,line);
     },
     videoRouter(item)
     {
