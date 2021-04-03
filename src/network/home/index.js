@@ -1,10 +1,11 @@
 import {request} from '../request';
+//获取最新动态
 export function allMoments()
 {
     return request({
         url:'moment/all',
         params:{
-            offset:4,
+            offset:0,
             limit:15
         }
     })

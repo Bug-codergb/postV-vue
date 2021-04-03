@@ -21,6 +21,10 @@
           </div>
         </div>
       </li>
+      <!--占位-->
+      <li v-for="(item,index) in holder(cateDetail.moments.length,3)" style="opacity: 0">
+        <div class="img-container"></div>
+      </li>
     </ul>
   </div>
 </template>
@@ -64,6 +68,18 @@ name: "OtherCate",
               categoryId:this.cateDetail.categoryId
             }
           })
+      }
+    },
+    //占位
+    holder(count,line)
+    {
+      let rem=count%line;
+      if(rem===0)
+      {
+        return 0;
+      }
+      else{
+        return count-rem;
       }
     },
     videoRouter(item)

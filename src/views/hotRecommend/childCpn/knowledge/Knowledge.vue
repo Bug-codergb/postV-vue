@@ -16,7 +16,7 @@
           <div class="user-name">{{item.user.userName}}</div>
         </div>
       </li>
-      <li v-for="item in 3-hotKnow.length%3">
+      <li v-for="item in holder(hotKnow.length,3)">
         <div class="img-container"></div>
       </li>
     </ul>
@@ -25,6 +25,7 @@
 
 <script>
 import {getHotKnow} from "@/network/recommend";
+import {holder} from "@/utils/holder";
 
 export default {
 name: "Knowledge",
@@ -46,6 +47,10 @@ name: "Knowledge",
       this.$router.push({
         path:'/knowCate'
       })
+    },
+    holder(count,line)
+    {
+      return holder(count,line)
     }
   }
 }
@@ -72,6 +77,7 @@ name: "Knowledge",
     ul{
       display: flex;
       justify-content: space-between;
+      flex-wrap: wrap;
       li{
         .img-container{
           width:200px;

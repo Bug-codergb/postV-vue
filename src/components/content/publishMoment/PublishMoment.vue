@@ -99,9 +99,7 @@ export default {
       }
      else{
         publishMoment(this.title,this.cateMap.get(this.cate),this.content).then(data=>{
-          //console.log(data);
-          //文件上传
-          this.upload(this.fileList,data)
+          this.upload(this.fileList,data,this.cate)
           this.$emit('changeShow')
         })
       }
@@ -144,7 +142,7 @@ export default {
           this.vioImg.push(getVideoImage(data,this.$refs.momentVio.files[0].name));
         })
     },
-    upload(files,momentId)
+    upload(files,momentId,cate)
     {
       if(files.length!==0)
       {
@@ -153,11 +151,21 @@ export default {
         let flag=true
         for(let item of files)
         {
-          const {type}=item.file;
+          //判断文件时视频文件还是图片文件；
+          let type='';
+          if(cate==='视频'||cate==='预告片')
+          {
+            type=item.file.type;
+          }
+          else{
+            type=item.type;
+          }
+          //如果是图片
           if(type.includes('image'))
           {
             imgFormData.append('picture',item)
           }
+          //如果是视频
           else if(type.includes("video"))
           {
             flag=false;

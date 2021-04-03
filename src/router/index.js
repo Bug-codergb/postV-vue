@@ -18,6 +18,7 @@ const adminMovie=()=>import('../components/content/admin/childCpn/movie/Movie');
 const videoPlay=()=>import('../components/content/admin/childCpn/videoPlay/VideoPlay')
 const adminKnowledge=()=>import('../components/content/admin/childCpn/knowledge/Knowledge');
 const knowDetail=()=>import('../components/content/admin/childCpn/knowledge/childCpn/KnowDetail');
+const adminMomentDetail=()=>import('../components/content/admin/childCpn/moment/childCpn/momentDetail/momentDetail')
 //
 const hotRecommend=()=>import('../views/hotRecommend/HotRecommend');
 const news=()=>import('../views/news/News');
@@ -112,6 +113,11 @@ const routes = [
         path:'videoPlay',
         name:'videoPlay',
         component:videoPlay
+      },
+      {
+        path:'adminMomentDetail',
+        name:'adminMomentDetail',
+        component:adminMomentDetail
       }
     ]
   },

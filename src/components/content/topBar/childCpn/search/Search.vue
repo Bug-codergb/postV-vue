@@ -36,7 +36,6 @@ export default {
     searchInp() {
       if (this.keywords.length !== 0) {
         search(this.keywords).then(data => {
-          console.log(data);
           this.searchRes = data;
         })
         this.isShow = true;
