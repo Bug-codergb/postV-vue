@@ -6,7 +6,7 @@
           <img :data-src="item.pictures[0].picUrl"
                :data-error="require('../../../../../assets/img/moment.png')" />
         </div>
-        <div class="state">{{item.title}}</div>
+        <div class="state text-nowrap">{{item.title}}</div>
         <div class="creator">{{item.user.userName}}</div>
         <div class="updateTime">{{item.updateTime.substring(0,10)}}</div>
       </li>
@@ -21,6 +21,13 @@ export default {
 </script>
 
 <style scoped lang="less">
+  .center()
+  {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+  }
   .moment{
     margin: 20px 0 0 0;
     ul{
@@ -28,6 +35,7 @@ export default {
         display: flex;
         align-items: center;
         margin: 5px 0;
+        padding: 10px 0;
         &:nth-child(odd)
         {
           background-color: #f9f9f9;
@@ -40,13 +48,15 @@ export default {
           height: 50px;
           overflow: hidden;
           background-color:#d8e8fa;
+          position: relative;
           img{
-            width: 50px;
+            height: 50px;
+            .center();
           }
         }
         .state{
-          width: 280px;
-          margin: 0 0 0 20px;
+          width: 350px;
+          margin: 0 30px 0 20px;
           font-size: 14px;
         }
         .creator{

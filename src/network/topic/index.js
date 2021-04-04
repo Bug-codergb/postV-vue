@@ -20,7 +20,7 @@ export function getAllTopicContent(topicId,offset,limit)
         }
     })
 }
-//获取专题下内容详情
+//获取专题下内容
 export function getTopicContent(topicId,offset,limit)
 {
     return request({
@@ -29,6 +29,16 @@ export function getTopicContent(topicId,offset,limit)
             topicId,
             offset,
             limit
+        }
+    })
+}
+//获取专题下内容详情
+export function getTopicContentDetail(topic_content_id)
+{
+    return request({
+        url:'/topic/content/detail',
+        params:{
+            topic_content_id
         }
     })
 }

@@ -43,14 +43,14 @@ export default {
   },
   created() {
     getTopicContent(this.$route.query.topicId,0,30).then(data=>{
-      console.log(data.content);
+      //console.log(data.content);
       this.topicContent=data;
     })
   },
   methods:{
     topicContentRouter(item)
     {
-      console.log(item);
+      //console.log(item);
       this.$router.push({
         path:'/topicContentDetail',
         query:{
