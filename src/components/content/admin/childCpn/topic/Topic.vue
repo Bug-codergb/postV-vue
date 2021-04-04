@@ -19,7 +19,6 @@
 
       </li>
     </ul>
-
     <!--专题文章-->
     <topic-content v-show="isShowTopic"
                    @cancelPublish="cancelPublish"

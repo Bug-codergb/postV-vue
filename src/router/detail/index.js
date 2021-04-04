@@ -7,7 +7,9 @@ const videoDetail=()=>import('../../components/content/videoDetail/VideoDetail')
 //搜索详情页
 const searchDetail=()=>import('../../components/content/searchDetail/SearchDetail');
 //话题详情
-const topicDetail=()=>import('../../components/content/topicDetail/TopicDetail')
+const topicDetail=()=>import('../../components/content/topicDetail/TopicDetail');
+//话题内容详情
+const topicContentDetail=()=>import('../../components/content/topicContentDetail/TopicContentDetail')
 //搜索子路由
 const user=()=>import('../../components/content/searchDetail/childCpn/user/User');
 const moment=()=>import('../../components/content/searchDetail/childCpn/moment/Moment');
@@ -56,6 +58,14 @@ export const topicDetailRouter={
     name:'topicDetail',
     components:{
         detail:topicDetail
+    }
+}
+//话题内容详情
+export const topicContentDetailRouter={
+    path:'/topicContentDetail',
+    name:'topicContentDetail',
+    components:{
+        detail:topicContentDetail
     }
 }
 //图片详情页

@@ -20,3 +20,15 @@ export function getAllTopicContent(topicId,offset,limit)
         }
     })
 }
+//获取专题下内容详情
+export function getTopicContent(topicId,offset,limit)
+{
+    return request({
+        url:'/topic/content',
+        params:{
+            topicId,
+            offset,
+            limit
+        }
+    })
+}

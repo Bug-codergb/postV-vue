@@ -1,7 +1,7 @@
 <template>
   <div class="topic">
     <ul>
-      <li v-for="(item,index) in allTopic" :key="item.topicId" @click="topicRouter">
+      <li v-for="(item,index) in allTopic" :key="item.topicId" @click="topicRouter(item)">
         <topic-item :topic="item" />
       </li>
     </ul>
@@ -28,10 +28,14 @@ name: "Topic",
     })
   },
   methods:{
-    topicRouter()
+    topicRouter(item)
     {
+      console.log(item)
       this.$router.push({
-        path:'/topicDetail'
+        path:'/topicDetail',
+        query:{
+          topicId:item.topicId
+        }
       })
     }
   }
