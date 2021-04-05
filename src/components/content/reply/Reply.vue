@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import {publishCom, replyComment} from "@/network/comment";
+import {publishCom, publishTopicCom, replyComment, replyTopicCom} from "@/network/comment";
 import {cancelThumb, thumbs} from "@/network/thumbs";
 import {cancelSubMoment, subMoment} from "@/network/moment";
 
@@ -54,8 +54,8 @@ name: "Reply",
       }
     },
     status:{
-      type:Boolean,
-      default:true
+      type:Number,
+      default:0
     },
     isShowSub:{
       type:Boolean,
@@ -117,7 +117,7 @@ name: "Reply",
     replyBtn()
     {
       /*发送动态评论*/
-      if(this.content&&this.status)
+      if(this.content&&this.status===0)
       {
         publishCom(this.content,this.id).then(data=>{
           this.$store.dispatch({
@@ -134,12 +134,28 @@ name: "Reply",
         })
       }
       /*回复评论的评论*/
-      if(this.content&&!this.status)
+      if(this.content&&this.status===1)
       {
         this.isShowCom=false;
-        this.isShowTip=true;
+        this.$toast.show("回复成功",2000);
         replyComment(this.content,this.id).then(data=>{
 
+        })
+      }
+      //发表专题评论
+      if(this.content&&this.status===2)
+      {
+        this.isShowCom=false;
+        publishTopicCom(this.id,this.content).then(data=>{
+          this.$toast.show("回复成功",2000);
+        })
+      }
+      //回复专题评论
+      if(this.content&&this.status===3)
+      {
+        this.isShowCom=false;
+        replyTopicCom(this.id,this.content).then(data=>{
+          this.$toast.show("回复成功",2000);
         })
       }
     },

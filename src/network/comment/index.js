@@ -53,3 +53,37 @@ export function getMomentCom(momentId)
         }
     })
 }
+//发表专题评论
+export function publishTopicCom(topic_content_id,content)
+{
+    return request({
+        url:'/topic/comment',
+        method:'post',
+        params:{
+            topic_content_id
+        },
+        headers:{
+            'authorization':store.state.userMsg.token
+        },
+        data:{
+            content
+        }
+    })
+}
+//回复专题评论
+export function replyTopicCom(commentId,content)
+{
+    return request({
+        url:'/topic/comment/reply',
+        method:'post',
+        headers:{
+            'authorization':store.state.userMsg.token
+        },
+        data:{
+            content
+        },
+        params:{
+            commentId
+        }
+    })
+}

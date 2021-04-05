@@ -50,13 +50,14 @@ export default {
     }
   },
   created() {
+    getAllVideoCate().then(data=>{
+      this.videoCate=data;
+    })
     getAllVideo(100,0).then(data=>{
       console.log(data)
       this.allVideo=data;
     })
-    getAllVideoCate().then(data=>{
-      this.videoCate=data;
-    })
+
   },
   methods:{
     cateForVideo(vid,index)

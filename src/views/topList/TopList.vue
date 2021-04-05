@@ -1,10 +1,10 @@
 <template>
   <div class="toplist">
     <ul class="category">
-      <li v-for="(item,index) in ['视频','放映厅','图片','科技','体育','搞笑']"
+      <li v-for="(item,index) in allCate"
           :class="{active:index===currentIndex}"
           @click="liClick(index)">
-        {{item}}
+        {{item.name}}
       </li>
     </ul>
     <!--体育，视频，图片的视图-->
@@ -13,6 +13,8 @@
 </template>
 
 <script>
+import {getAllCate} from "@/network/toplist";
+
 export default {
   name: "TopList",
   data()
@@ -20,8 +22,17 @@ export default {
     return {
       currentIndex:0,
       path:['/Home/TopList/Video','/Home/TopList/Movie','/Home/TopList/Picture',
-             '/Home/TopList/Technology','/Home/TopList/Sport','/Home/TopList/Funny']
+             '/Home/TopList/article'],
+      allCate:[]
     }
+  },
+  created() {
+    getAllCate(0,30).then(data=>{
+      console.log(data)
+      this.allCate=data.filter((item,index)=>{
+        return item.name!=="微课堂"&&item.name!=="预告片"
+      })
+    })
   },
   methods:{
     liClick(index)

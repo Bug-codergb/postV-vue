@@ -46,7 +46,7 @@ import {
 const movie=()=>import('../views/topList/childCpn/movie/Movie')
 const picture=()=>import('../views/topList/childCpn/picture/Picture')
 const sport=()=>import('../views/topList/childCpn/sport/Sport')
-const technology=()=>import('../views/topList/childCpn/technology/Technology')
+const article=()=>import('../views/topList/childCpn/article/Article')
 const video=()=>import('../views/topList/childCpn/video/Video');
 const funny=()=>import('../views/topList/childCpn/funny/Funny')
 
@@ -169,9 +169,9 @@ const routes = [
             component:picture
           },
           {
-            path:'Technology',
-            name:'technology',
-            component:technology
+            path:'Article',
+            name:'article',
+            component:article
           },
           {
             path:'Sport',
