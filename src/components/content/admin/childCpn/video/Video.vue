@@ -5,7 +5,7 @@
         <div class="img-container">
           <img :src="item.coverUrl" />
         </div>
-        <div class="state">
+        <div class="state text-nowrap">
           {{item.title}}
         </div>
         <div class="time text-nowrap">{{item.updateTime.substring(0,10)}}</div>
@@ -101,7 +101,7 @@ export default {
         }
         .state{
           font-size: 14px;
-          width: 200px;
+          width: 350px;
           margin: 0 0 0 15px;
         }
         .time{

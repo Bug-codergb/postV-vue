@@ -3,7 +3,7 @@
     <cate-list title="类别" :list="videoCate" v-if="videoCate.length" @cate="cate" />
     <ul class="video-list">
       <li v-for="(item,index) in videoList.videos" :key="item.vid">
-        <div class="img-container">
+        <div class="img-container" v-if="item.coverUrl">
           <div class="play">
             <i class="iconfont icon-play"></i>
           </div>
@@ -16,13 +16,13 @@
         </div>
         <div class="state text-nowrap">{{item.title}}</div>
         <div class="msg">
-          <div class="user-msg">
+          <div class="user-msg" v-if="item.user">
             <div class="avatar">
               <img :src="item.user.avatarUrl" />
             </div>
             <div class="user-name">{{item.user.userName}}</div>
           </div>
-          <div class="time">
+          <div class="time" v-if="item.updateTime">
             <i class="iconfont icon-shijian"></i>
             <div>{{item.updateTime.substring(0,10)}}</div>
           </div>
@@ -50,7 +50,8 @@ export default {
   created() {
     getAllVideoCate().then(data=>{
       data.forEach((item,index)=>{
-        this.videoCatMap.set(item.name,item.categoryId)
+        this.videoCatMap.set(item.name,item.categoryId);
+        this.cate("科幻")
       })
       this.videoCate=data.map((item,index)=>{
         return item.name
@@ -61,7 +62,7 @@ export default {
     cate(item)
     {
       getCateVideo(this.videoCatMap.get(item)).then(data=>{
-        console.log(data);
+        //console.log(data);
         this.videoList=data;
       })
     }
