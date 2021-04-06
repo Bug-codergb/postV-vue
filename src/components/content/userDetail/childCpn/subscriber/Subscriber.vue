@@ -18,8 +18,6 @@
 import {momentDetail} from "@/network/home";
 import MomentDetail from "@/components/content/momentDetail/MomentDetail";
 import Moment from "@/components/content/moment/Moment";
-import {deleteTag} from "@/network/tag";
-import {delMoment} from "@/network/moment";
 
 export default {
 name: "Subscriber",
@@ -43,7 +41,13 @@ name: "Subscriber",
     if(this.sub)
     {
       let promise=this.sub.map((item,index)=>{
-        return momentDetail(item.momentId)
+        if(item.momentId)
+        {
+          return momentDetail(item.momentId)
+        }
+        else{
+          return null
+        }
       })
       Promise.all(promise).then(data=>{
         //console.log(data);

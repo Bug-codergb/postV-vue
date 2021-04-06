@@ -46,14 +46,7 @@ name: "Tags",
         let tag=[];
         tag.push(this.content)
         addTag(this.moment.momentId,tag).then(data=>{
-          this.$store.dispatch({
-            type:'getAllMomentsAction'
-          })
-          this.$store.dispatch({
-            type:'getHotMomentAction',
-            limit:15,
-            offset:0
-          })
+
         })
       }
     }

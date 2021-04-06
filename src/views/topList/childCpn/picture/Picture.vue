@@ -15,6 +15,7 @@
         <div class="img-container">
           <img :src="item.picUrl" />
         </div>
+        <tags/>
         <reply id="item.momentId"/>
         <!--图片（动态）评论-->
         <comment :momentId="item.momentId" />
@@ -27,10 +28,11 @@
 import {getToplistPic} from "@/network/toplist";
 import Comment from "@/components/content/comment/Comment";
 import Reply from "@/components/content/reply/Reply";
+import Tags from "@/components/content/tags/Tags";
 
 export default {
   name: "picture",
-  components: {Reply, Comment},
+  components: {Tags, Reply, Comment},
   data()
   {
     return {
@@ -57,6 +59,7 @@ export default {
         .img-container{
           img{
             width: 400px;
+            outline:1px solid rgba(0,0,0,.3) ;
           }
         }
         .title{

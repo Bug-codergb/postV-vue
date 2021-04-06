@@ -22,6 +22,7 @@
            <div class="desc">
              <span>简介:</span>
              <span>{{userDetail.desc}}</span>
+             <span v-show="!userDetail.desc" class="edit-desc">编辑</span>
            </div>
          </div>
        </div>
@@ -188,6 +189,9 @@ export default {
              color: #9b9b9b;
              width: 500px;
             line-height: 18px;
+             .edit-desc{
+               color: #3a8ee6;
+             }
            }
            .attention{
              margin: 20px 0 0 0;

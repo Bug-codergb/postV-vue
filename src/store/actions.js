@@ -61,7 +61,8 @@ export default{
     /*获取曾经的热门动态*/
     getHotMomentAction(context, payload)
     {
-        hotMoment(offset,limit).then(data => {
+        const {categoryId}=payload;
+        hotMoment(categoryId).then(data => {
             let promise=data.map((item,index)=>{
                 return momentDetail(item.momentId)
             })

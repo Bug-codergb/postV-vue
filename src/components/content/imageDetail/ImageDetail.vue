@@ -14,6 +14,8 @@
       <div class="img-container">
         <img :src="momentDetail.picUrl[0].picUrl" />
       </div>
+      <!--标签-->
+      <tags/>
       <reply :id="momentDetail.momentId"/>
       <comment :moment-id="momentDetail.momentId" v-if="momentDetail.momentId"/>
     </div>
@@ -25,10 +27,11 @@
 import {momentDetail} from "@/network/home";
 import Reply from "@/components/content/reply/Reply";
 import Comment from "@/components/content/comment/Comment";
+import Tags from "@/components/content/tags/Tags";
 
 export default {
 name: "ImageDetail",
-  components: {Comment, Reply},
+  components: {Tags, Comment, Reply},
   data()
   {
     return {
@@ -94,6 +97,7 @@ name: "ImageDetail",
       overflow: hidden;
       img{
         width: 100%;
+        outline: 1px solid rgba(0,0,0,.4);
       }
     }
   }
