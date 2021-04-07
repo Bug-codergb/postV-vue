@@ -38,3 +38,23 @@ export function uploadAvatar(file)
         }
     })
 }
+//获取用户收藏
+export function getUserSub(userId)
+{
+    return request({
+        url:'/user/sub',
+        params:{
+            userId
+        }
+    })
+}
+//获取用户加入的专题
+export function getUserJoinTopic(userId)
+{
+    return request({
+        url:'/user/topic/join',
+        params:{
+            userId
+        }
+    })
+}

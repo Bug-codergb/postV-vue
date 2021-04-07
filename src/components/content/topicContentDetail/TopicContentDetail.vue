@@ -43,7 +43,6 @@ export default {
   },
   created() {
     getTopicContentDetail(this.$route.query.topic_content_id).then(data=>{
-      console.log(data)
       this.contentDetail=data;
     })
   }

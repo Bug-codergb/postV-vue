@@ -16,7 +16,7 @@
             </div>
           </div>
           <div class="right-msg">
-            <div class="img-container">
+            <div class="img-container" v-if="item.picUrl">
               <img :src="item.picUrl[0].picUrl" />
             </div>
           </div>

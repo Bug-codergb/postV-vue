@@ -25,7 +25,8 @@
               <i class="iconfont icon-svgarrowsright"></i>
             </div>
           </div>
-          <div class="follow">加入</div>
+          <div class="follow" v-show="!isJoin" @click.stop="join(topic)">加入</div>
+          <div class="follow" v-show="isJoin">已加入</div>
         </div>
         <!--简介-->
         <div class="desc">
@@ -39,6 +40,8 @@
 </template>
 
 <script>
+import {joinTopic} from "@/network/topic";
+
 export default {
   name: "TopicItem",
   props:{
@@ -48,6 +51,41 @@ export default {
       {
         return {}
       }
+    }
+  },
+  created() {
+    console.log(this.topic)
+  },
+  computed:{
+    isJoin()
+    {
+      let flag=-1;
+      if(this.$store.state.userDetail.topic)
+      {
+        flag=this.$store.state.userDetail.topic.findIndex((item,index)=>{
+          return this.topic.topicId===item.topicId
+        })
+        console.log(flag)
+        if(flag===-1)
+        {
+          return false
+        }
+        else{
+          return true
+        }
+      }
+    }
+  },
+  methods:{
+    join(item)
+    {
+      joinTopic(item.topicId).then(data=>{
+        this.$toast.show("加入成功",1500)
+        this.$store.dispatch({
+          type:'getUserDetailAction',
+          userId:this.$store.state.userMsg.userId
+        })
+      })
     }
   }
 }
@@ -110,6 +148,7 @@ export default {
               font-size: 13px;
               border-radius: 4px;
               text-align: center;
+              cursor: pointer;
             }
             .user-msg{
               display: flex;

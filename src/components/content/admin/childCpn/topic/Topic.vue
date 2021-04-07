@@ -9,10 +9,10 @@
           <button class="delete-btn" @click="addContent(item.topicId)">添加文章</button>
         </div>
         <!--专题下内容-->
-        <ul class="topic-content" :class="{active:currentIndex===index}">
-          <li v-for="(item,i) in topicContent[index]" :key="item.topic_content_Id">
+        <ul class="topic-content" :class="{active:currentIndex===index}" v-if="topicContent[index]">
+          <li v-for="(item,i) in topicContent[index].content" :key="item.topic_content_Id">
             <div class="topic-content-title text-nowrap">{{item.title}}</div>
-            <div class="topic-content-time">{{item.updateTime.substring(0,10)}}</div>
+            <div class="topic-content-time">{{item.updateTime&&item.updateTime.substring(0,10)}}</div>
             <button class="delete-btn" @click="delTopicContent(item,index,i)">删除</button>
           </li>
         </ul>
@@ -65,8 +65,13 @@ name: "Topic",
         return getAllTopicContent(item.topicId,0,20)
       })
       Promise.all(promise).then(data=>{
-        console.log(data)
-        this.topicContent=data;
+        this.topicContent=data.filter((item,index)=>{
+          if(item.content)
+          {
+            return item
+          }
+        })
+        console.log(this.topicContent)
       })
     })
   },

@@ -11,7 +11,13 @@
   import TopBar from "@/components/content/topBar/TopBar";
   export default{
     name:'app',
-    components: {TopBar, Login}
+    components: {TopBar, Login},
+    mounted() {
+      this.$nextTick(()=>{
+          let homeContainer=this.$refs.homeContainer;
+          document.onselectstart=new Function("return false");
+      })
+    }
   }
 </script>
 <style scoped lang="less">

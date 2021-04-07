@@ -26,7 +26,7 @@
            </div>
          </div>
        </div>
-       <tab-control :list="['动态','关注','粉丝','收藏']">
+       <tab-control :list="['动态','关注','粉丝','收藏','专题']">
          <ul slot='动态'>
            <li v-for="(item,index) in moments" :key="item.id" class="detail-moments">
              <Moment :momentDetail="momentDetail[index]" v-if="momentDetail.length!==0">
@@ -48,10 +48,13 @@
            <follow/>
          </div>
          <div slot="粉丝">
-           123
+           <fans :fans="userDetail.fans"/>
          </div>
          <div slot="收藏">
-           <subscriber :sub="userDetail.subscribe" v-if="userDetail.subscribe" />
+           <subscriber :user-id="userId" v-if="userId"/>
+         </div>
+         <div slot="专题">
+           <topic :user-id="userId" v-if="userId"/>
          </div>
        </tab-control>
      </div>
@@ -70,28 +73,34 @@ import {delMoment} from "@/network/moment";
 import Follow from "@/components/content/userDetail/childCpn/follow/Follow";
 import {cancelFollow, followUser} from "@/network/follow";
 import Subscriber from "@/components/content/userDetail/childCpn/subscriber/Subscriber";
+import Fans from "@/components/content/userDetail/childCpn/fans/Fans";
+import Topic from "@/components/content/userDetail/childCpn/topic/Topic";
 export default {
   name: "userDetail",
   components: {
+    Fans,
     Subscriber,
     Moment,
     TabControl,
-    Follow
+    Follow,
+    Topic
   },
   data(){
     return {
       userDetail:{},
       momentDetail:[],
       moments:[],
+      userId:''
     }
   },
   created() {
+    this.userId=this.$route.query.id;
     userDetail(this.$route.query.id).then(data=>{
-      console.log(data)
+      //console.log(data)
       this.userDetail=data
     })
     userMoment(this.$route.query.id).then(data=>{
-      console.log(data.moments)
+     // console.log(data.moments)
       this.moments=data.moments
       let promise=this.moments.map((item,index)=>{
         return momentDetail(item.id);
@@ -105,7 +114,7 @@ export default {
   methods:{
     deleteMoment(item)
     {
-      console.log(item.id)
+      //console.log(item.id)
       const result=confirm("您确定要删除动态？")
       if(result)
       {
@@ -159,6 +168,13 @@ export default {
 </script>
 
 <style scoped lang="less">
+  .center()
+  {
+    position: absolute;
+    left: 50%;
+    top:50%;
+    transform:translate(-50%,-50%);
+  }
    @size:170px;
    .user-detail {
      display: flex;
@@ -175,11 +191,13 @@ export default {
            width: @size;
            height: @size;
            background-color: #f4f4f4;
+           position: relative;
            overflow: hidden;
            border-radius: 8px;
            margin: 0 15px 0 0;
            img {
-             height: @size;
+             .center();
+             width: @size;
            }
          }
          .user-msg{

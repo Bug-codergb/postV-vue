@@ -31,6 +31,7 @@
 import {publishCom, publishTopicCom, replyComment, replyTopicCom} from "@/network/comment";
 import {cancelThumb, thumbs} from "@/network/thumbs";
 import {cancelSubMoment, subMoment} from "@/network/moment";
+import {subTopic} from "@/network/topic";
 
 export default {
 name: "Reply",
@@ -94,10 +95,16 @@ name: "Reply",
     isSub()
     {
       let flag=-1
-      if(this.$store.state.userDetail.subscribe)
+      if(this.$store.state.userDetail.subscribe.moment)
       {
-        flag=this.$store.state.userDetail.subscribe.findIndex((item,index)=>{
+        flag=this.$store.state.userDetail.subscribe.moment.findIndex((item,index)=>{
           return this.id===item.momentId
+        })
+      }
+      if(this.$store.state.userDetail.subscribe.topicContent)
+      {
+        flag=this.$store.state.userDetail.subscribe.topicContent.findIndex((item,index)=>{
+          return this.id===item.topic_content_id
         })
       }
       if(flag===-1)
@@ -190,22 +197,38 @@ name: "Reply",
     {
       if(!this.isSub)
       {
-        subMoment(this.id,this.$store.state.userMsg.userId).then(data=>{
-          console.log(data)
-          this.$store.dispatch({
-            type:'getUserDetailAction',
-            userId:this.$store.state.userMsg.userId
+        if(this.status===0)
+        {
+          subMoment(this.id,this.$store.state.userMsg.userId).then(data=>{
+            console.log(data)
+            this.$store.dispatch({
+              type:'getUserDetailAction',
+              userId:this.$store.state.userMsg.userId
+            })
           })
-        })
+        }
+        //收藏专题
+        if(this.status===2)
+        {
+          subTopic(this.id,this.$store.state.userMsg.userId).then(data=>{
+            this.$store.dispatch({
+              type:'getUserDetailAction',
+              userId:this.$store.state.userMsg.userId
+            })
+          })
+        }
       }
       else{
-        cancelSubMoment(this.id,this.$store.state.userMsg.userId).then(data=>{
-          console.log(data);
-          this.$store.dispatch({
-            type:'getUserDetailAction',
-            userId:this.$store.state.userMsg.userId
+        if(this.status===0)
+        {
+          cancelSubMoment(this.id,this.$store.state.userMsg.userId).then(data=>{
+            console.log(data);
+            this.$store.dispatch({
+              type:'getUserDetailAction',
+              userId:this.$store.state.userMsg.userId
+            })
           })
-        })
+        }
       }
     }
   }

@@ -51,11 +51,11 @@ name: "Follow"
           align-items: center;
         }
         .cancel{
-          background-color: #3a8ee6;
-          border-radius: 5px;
+          background-color:rgba(58, 142, 230,.6);
+          border-radius: 3px;
           color: #fff;
           font-size: 13px;
-          padding: 3px 10px;
+          padding: 5px 10px;
         }
         &:nth-child(odd)
         {

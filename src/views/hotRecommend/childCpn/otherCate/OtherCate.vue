@@ -17,7 +17,7 @@
             <div class="avatar">
               <img :src="item.user.avatarUrl"/>
             </div>
-            <div class="user-name">{{item.user.userName}}</div>
+            <div class="user-name" @click="userRouter(item)">{{item.user.userName}}</div>
           </div>
         </div>
       </li>
@@ -97,6 +97,15 @@ name: "OtherCate",
          }
        })
      }
+    },
+    userRouter(item)
+    {
+      this.$router.push({
+        path:"/userDetail",
+        query:{
+          id:item.user.userId
+        }
+      })
     }
   }
 }
@@ -184,6 +193,7 @@ name: "OtherCate",
         .user-name{
           color: #3a8ee6;
           font-size: 12px;
+          cursor:pointer;
         }
       }
     }

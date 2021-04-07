@@ -18,7 +18,7 @@
                <div class="avatar-container">
                  <img :src="item.user.avatarUrl" />
                </div>
-               <div class="user-name">{{item.user.userName}}</div>
+               <div class="user-name" @click="userRouter(item)">{{item.user.userName}}</div>
              </div>
              <!--控制按钮-->
              <control-btn not-show="sub" v-if="article.moments.length">
@@ -91,6 +91,16 @@ export default {
         path:'/articleCate',
         query:{
           categoryId:this.article.categoryId
+        }
+      })
+    },
+    userRouter(item)
+    {
+      console.log(item)
+      this.$router.push({
+        path:'/userDetail',
+        query:{
+          id:item.user.userId
         }
       })
     }
@@ -177,6 +187,7 @@ export default {
             .user-name{
               font-size: 12px;
               color: #3a8ee6;
+              cursor: pointer;
             }
           }
         }
