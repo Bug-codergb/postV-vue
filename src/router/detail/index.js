@@ -1,3 +1,4 @@
+import store from '../../store'
 //用户详情页
 const userDetail=()=>import('../../components/content/userDetail/userDetail')
 //动态详情页
@@ -143,6 +144,19 @@ export const knowCateRouter={
 export const knowDetailRouter={
     path:'/knowledgeMsg',
     name:'knowDetail',
+    beforeEnter:(to,from,next)=>{
+        const {vip}=to.query;
+        if(parseInt(vip)===1)
+        {
+            if(store.state.userDetail.vip===1)
+            {
+                next();
+            }
+        }
+        else{
+            next();
+        }
+    },
     components:{
         detail:knowDetail
     }

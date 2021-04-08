@@ -3,7 +3,7 @@
     <cate-list title="类别" :list="videoCate" v-if="videoCate.length" @cate="cate" />
     <ul class="video-list">
       <li v-for="(item,index) in videoList.videos" :key="item.vid">
-        <div class="img-container" v-if="item.coverUrl">
+        <div class="img-container" v-if="item.coverUrl" @click="videoRouter(item)">
           <div class="play">
             <i class="iconfont icon-play"></i>
           </div>
@@ -12,7 +12,6 @@
             <i class="iconfont icon-play1" ></i>
             <span>{{item.playCount}}</span>
           </div>
-
         </div>
         <div class="state text-nowrap">{{item.title}}</div>
         <div class="msg">
@@ -64,6 +63,15 @@ export default {
       getCateVideo(this.videoCatMap.get(item)).then(data=>{
         //console.log(data);
         this.videoList=data;
+      })
+    },
+    videoRouter(item)
+    {
+      this.$router.push({
+        path:'/videoDetail',
+        query:{
+          vid:item.vid
+        }
       })
     }
   }

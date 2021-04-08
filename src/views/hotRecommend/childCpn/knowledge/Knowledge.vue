@@ -5,8 +5,9 @@
     </p>
     <ul>
       <li v-for="(item,index) in hotKnow" :key="item.kid">
-          <div class="img-container">
+          <div class="img-container" @click="knowRouter(item)">
             <img :src="item.picUrl" />
+            <div class="vip" v-if="item.vip===1">vip</div>
           </div>
         <div class="state">{{item.title}}</div>
         <div class="user-msg">
@@ -51,6 +52,35 @@ name: "Knowledge",
     holder(count,line)
     {
       return holder(count,line)
+    },
+    knowRouter(item)
+    {
+      if(parseInt(item.vip)===1)
+      {
+        if(this.$store.state.userDetail.vip===0)
+        {
+          this.$toast.show("当前课程为VIP课程,请开通VIP",1500);
+        }
+        else if(this.$store.state.userDetail.vip===1)
+        {
+          this.$router.push({
+            path:'/knowledgeMsg',
+            query:{
+              kid:item.kid,
+              vip:item.vip
+            }
+          })
+        }
+      }
+      else{
+        this.$router.push({
+          path:'/knowledgeMsg',
+          query:{
+            kid:item.kid,
+            vip:item.vip
+          }
+        })
+      }
     }
   }
 }
@@ -85,8 +115,18 @@ name: "Knowledge",
           overflow: hidden;
           text-align: center;
           border-radius: 3px;
+          position: relative;
           img{
             width:200px;
+          }
+          .vip{
+            position: absolute;
+            top: 0;
+            left:100%;
+            padding: 1px 10px;
+            background-color: #ec4141;
+            color: #fff;
+            transform: translateX(-100%);
           }
         }
         .state{

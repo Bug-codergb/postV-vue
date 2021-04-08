@@ -17,6 +17,7 @@
           <div>粉丝</div>
         </li>
       </ul>
+      <vip/>
       <div class="exit-login" @click="logout">
         <i class="iconfont icon-tuichudenglu"></i>
         退出登录
@@ -32,9 +33,11 @@
 
 <script>
 import LoginCpn from '@/components/common/loginCpn/LoginCpn'
+import Vip from "@/components/content/topBar/childCpn/login/childCpn/vip/Vip";
 export default {
 name: "Login",
   components:{
+    Vip,
     LoginCpn
   },
   methods:{
@@ -125,7 +128,7 @@ name: "Login",
   .exit-login{
     border-top: 1px solid #eeedee;
     border-bottom: 1px solid #eeedee;
-    margin: 100px 0 0 0;
+    margin: 0px 0 0 0;
     font-size: 16px;
     color: #333333;
     line-height: 30px;

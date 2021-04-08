@@ -122,6 +122,13 @@ export default {
 </script>
 
 <style scoped lang="less">
+  .center()
+  {
+    position: absolute;
+    left: 50%;
+    top:50%;
+    transform: translate(-50%,-50%);
+  }
   .right-content{
     width: 300px;
   }
@@ -149,7 +156,8 @@ export default {
     color: #fff;
   }
   .avatar img{
-    width: 100px;
+    height: 100px;
+    .center();
   }
   .right-content em{
     font-size: 13px;

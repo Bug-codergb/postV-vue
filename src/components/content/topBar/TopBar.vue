@@ -23,6 +23,7 @@
           <i class="iconfont icon-custom-user" v-show="this.$store.state.loginType===0"></i>
           <div v-show="this.$store.state.loginType===0" class="user-name">未登录</div>
           <div v-show="this.$store.state.loginType===1" class="user-name">{{ this.$store.state.userDetail.userName }}</div>
+          <div class="vip" v-if="this.$store.state.userDetail.vip===1&&this.$store.state.loginType===1">vip</div>
         </div>
         <!--登录-->
         <transition name="login">
@@ -77,6 +78,13 @@ name: "TopBar",
 </script>
 
 <style scoped lang="less">
+  .center()
+  {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+  }
 .top-bar{
   margin: 0 0 5px 0;
   background-color:#fff;
@@ -128,9 +136,21 @@ name: "TopBar",
     border-radius: 50%;
     text-align: center;
     background-color:rgba(58, 142, 230,.2);
+    position: relative;
     img{
-      width: 30px;
+      .center();
+      height: 30px;
     }
+  }
+  .vip{
+    color:#ec4141;
+    padding: 2px 10px;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: bold;
+    position: absolute;
+    left:90%;
+    top:-10%;
   }
 }
 .top-bar{

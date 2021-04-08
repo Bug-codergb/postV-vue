@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "8288816",
+      "name": "VIP",
+      "font_class": "VIP",
+      "unicode": "e83d",
+      "unicode_decimal": 59453
+    },
+    {
       "icon_id": "10304458",
       "name": "back-top",
       "font_class": "back-top",
