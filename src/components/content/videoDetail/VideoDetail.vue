@@ -118,11 +118,11 @@ name: "VideoDetail",
 
 <style scoped lang="less">
   .video-detail{
-    border: 1px solid #3a8ee6;
+    /*border: 1px solid #3a8ee6;*/
     display: flex;
     .left-content{
       width: 710px;
-      border-right: 1px solid red;
+      border-right: 1px solid rgba(58, 142, 230,.2);
       height: 1500px;
       .vio-container{
         width: 700px;

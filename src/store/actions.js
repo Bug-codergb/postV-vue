@@ -9,17 +9,23 @@ export default{
         const {userName,password}=payload
         return new Promise((resolve,reject)=>{
             login(userName,password).then(data=>{
-                const {userId}=data;
-                window.sessionStorage.setItem('userMsg',JSON.stringify(data));
-                context.commit({
-                    type:'changeUserMsg',
-                    userMsg:data
-                })
-                context.dispatch({
-                    type:"getUserDetailAction",
-                    userId:userId
-                })
-                resolve(data)
+               if(data)
+               {
+                   const {userId}=data;
+                   window.sessionStorage.setItem('userMsg',JSON.stringify(data));
+                   context.commit({
+                       type:'changeUserMsg',
+                       userMsg:data
+                   })
+                   context.dispatch({
+                       type:"getUserDetailAction",
+                       userId:userId
+                   })
+                   resolve(data)
+               }
+               else{
+                   reject(data)
+               }
             },err=>{
                 reject(err)
             })

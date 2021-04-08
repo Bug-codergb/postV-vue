@@ -33,8 +33,6 @@ export default {
   },
   watch:{
     $route(to,from){
-     /* console.log(from.path)
-      console.log(to.path);*/
       this.livePath=to.path;
     }
   },
@@ -75,13 +73,13 @@ export default {
   width: 1010px;
   /*height: 2500px;*/
   margin: 0 auto;
-  border: 1px solid red;
+  border: 1px solid rgba(58, 142, 230,.6);
   display: flex;
   background-color: #fff;
   padding:  30px 30px 50px 30px;
 }
 .routerView{
-  border:1px solid #3a8ee6;
+  /*border:1px solid #3a8ee6;*/
   width: 1020px;
   margin: 0 auto;
   padding: 0 20px 0 0;

@@ -54,13 +54,17 @@ name: "Login",
           }
         }
         else{
+          console.log("789")
           this.isShowErr=true;
           setTimeout(()=>{
             this.isShowErr=false
           },1500)
         }
       }).catch(err=>{
-        console.log(err)
+        this.isShowErr=true;
+        setTimeout(()=>{
+          this.isShowErr=false
+        },1500)
       })
     },
     registerRouter()

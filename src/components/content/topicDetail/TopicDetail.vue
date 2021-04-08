@@ -94,7 +94,7 @@ export default {
     .left-content{
       width: 750px;
       height: 1000px;
-      border-right: 1px solid red;
+      border-right: 1px solid rgba(58, 142, 230,.2);
       /*发布专题内容*/
       .publish-content{
         display: flex;

@@ -72,7 +72,7 @@ export default {
   }
   .left-content{
     width: 710px;
-    border-right: 1px solid red;
+    border-right: 1px solid rgba(58, 142, 230,.2);
   }
   .right-content{
     flex: 1;

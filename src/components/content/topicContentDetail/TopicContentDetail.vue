@@ -60,7 +60,7 @@ export default {
   .left-content{
     width:750px;
     height: 1500px;
-    border-right: 1px solid red;
+    border-right: 1px solid rgba(58, 142, 230,.2);
     .user-msg{
       display: flex;
       align-items: center;
@@ -93,6 +93,7 @@ export default {
       /deep/ img{
         width: 350px;
         display: block;
+        margin: 20px 0;
       }
     }
     .topic-content-control-btn
