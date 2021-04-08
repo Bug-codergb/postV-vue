@@ -1,5 +1,36 @@
 import {request} from '../request'
 import store from "@/store";
+//添加专题
+export function addTopic(name,desc)
+{
+    return request({
+        url:'/topic',
+        method:"post",
+        data:{
+            name,
+            desc
+        },
+        headers:{
+            'authorization':store.state.userMsg.token
+        }
+    })
+}
+//为专题配图
+export function addTopicImg(topicId,formData)
+{
+    return request({
+        url:'/topic/img',
+        data:formData,
+        method:'post',
+        headers:{
+            'authorization':store.state.userMsg.token,
+            'Content-type':'multipart/form-data',
+        },
+        params:{
+            topicId
+        }
+    })
+}
 export function getAllTopic(offset,limit)
 {
     return request({

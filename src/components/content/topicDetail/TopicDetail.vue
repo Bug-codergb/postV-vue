@@ -3,6 +3,15 @@
     <div class="left-content">
       <!--头部内容-->
       <topic-item :topic="topicContent" v-if="topicContent.topicId"/>
+      <!--发布内容-->
+      <div class="publish-content">
+        <p>一起讨论</p>
+        <i class="iconfont icon-pinglun1" title="发表内容" @click="publish"></i>
+        <div class="publish-topic-content" v-show="isShow">
+          <TopicContent :topic-id="topicContent.topicId" @cancelPublish="cancelPublish"/>
+        </div>
+
+      </div>
       <!--内容-->
       <ul>
         <li v-for="(item,index) in topicContent.content" :key="item.topic_content_id" @click="topicContentRouter(item)">
@@ -31,14 +40,16 @@
 <script>
 import {getTopicContent} from "@/network/topic";
 import TopicItem from "@/components/content/topicItem/TopicItem";
+import TopicContent from "@/components/content/admin/childCpn/topic/childCpn/TopicContent";
 
 export default {
   name: "TopicDetail",
-  components: {TopicItem},
+  components: {TopicContent, TopicItem},
   data()
   {
     return {
-      topicContent:{}
+      topicContent:{},
+      isShow:false
     }
   },
   created() {
@@ -57,6 +68,14 @@ export default {
           topic_content_id:item.topic_content_id
         }
       })
+    },
+    publish()
+    {
+      this.isShow=true;
+    },
+    cancelPublish()
+    {
+      this.isShow=false;
     }
   }
 }
@@ -76,6 +95,27 @@ export default {
       width: 750px;
       height: 1000px;
       border-right: 1px solid red;
+      /*发布专题内容*/
+      .publish-content{
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid rgba(58, 142, 230,.4);
+        padding: 20px 0;
+        position: relative;
+        p{
+          font-size: 14px;
+          margin: 0 10px 0 0;
+        }
+        i{
+          color: #3a8ee6;
+          cursor: pointer;
+        }
+        .publish-topic-content{
+          background-color: #fff;
+          .center();
+          z-index: 99;
+        }
+      }
       ul{
         li{
           display: flex;

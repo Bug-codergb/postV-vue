@@ -94,14 +94,14 @@ name: "Reply",
     //是否已经收藏
     isSub()
     {
-      let flag=-1
+      let flag=-1;
       if(this.$store.state.userDetail.subscribe.moment)
       {
         flag=this.$store.state.userDetail.subscribe.moment.findIndex((item,index)=>{
           return this.id===item.momentId
         })
       }
-      if(this.$store.state.userDetail.subscribe.topicContent)
+      if(this.$store.state.userDetail.subscribe.topicContent&&flag===-1)
       {
         flag=this.$store.state.userDetail.subscribe.topicContent.findIndex((item,index)=>{
           return this.id===item.topic_content_id
