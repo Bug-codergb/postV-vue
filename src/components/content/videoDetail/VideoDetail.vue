@@ -1,7 +1,6 @@
 <template>
   <div class="video-detail">
     <div class="left-content">
-
       <div class="vio-container">
         <video :src="videoDetail.url"
                ref="vio"
@@ -27,9 +26,11 @@
         <span>发布于: {{videoDetail.updateTime.substring(0,10)}}</span>
         <span>播放: {{videoDetail.playCount}}次</span>
       </div>
-      <reply :id="videoDetail.moment.momentId" v-if="videoDetail.moment" />
+      <reply :id="videoDetail.moment.momentId"
+             v-if="videoDetail.moment"
+             @reply="reply"/>
       <!--动态（视频）评论-->
-      <comment :momentId="videoDetail.moment.momentId" v-if="videoDetail.moment.momentId"/>
+      <comment :momentId="videoDetail.moment.momentId" v-if="videoDetail.moment.momentId" :key="keyId"/>
     </div>
     <div class="right-content">
       <avatar :user-id="videoDetail.user.userId" v-if="videoDetail.user.userId"/>
@@ -41,7 +42,6 @@
 import {addVideoPlayCouont, getVideoDetail} from "@/network/video";
 import Reply from "@/components/content/reply/Reply";
 import Avatar from "@/components/content/avatar/Avatar";
-import {getMomentCom} from "@/network/comment";
 import Comment from "@/components/content/comment/Comment";
 
 export default {
@@ -61,7 +61,8 @@ name: "VideoDetail",
       isPlay:false,
       value1:0,
       duration:0,
-      currentTime:0
+      currentTime:0,
+      keyId:1
     }
   },
   created() {
@@ -73,9 +74,16 @@ name: "VideoDetail",
   mounted() {
     this.$nextTick(()=>{
       this.$refs.vio.volume=0.1;
+      //console.log(this.reply)
+      this.$bus.$on('replyComment',this.reply);
     })
   },
   methods: {
+    reply()
+    {
+      console.log("我被执行")
+      this.keyId+=1;
+    },
     play()
     {
       addVideoPlayCouont(this.videoDetail.vid).then(data => {

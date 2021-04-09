@@ -22,7 +22,6 @@
 </template>
 
 <script>
-import {momentDetail} from "@/network/home";
 import Moment from "@/components/content/moment/Moment";
 import Avatar from "@/components/content/avatar/Avatar";
 

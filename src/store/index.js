@@ -35,7 +35,9 @@ export default new Vuex.Store({
       user:[{avatarUrl:""}]
     },
     //评论结果实时动态详情（实时更新评论）
-    momentDetails:{}
+    momentDetails:{
+      user:{}
+    }
   },
   mutations,
   actions,

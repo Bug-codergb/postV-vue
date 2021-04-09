@@ -133,20 +133,16 @@ name: "Reply",
           })
           this.isShowCom=false;
           this.$toast.show("回复成功",2000);
-          /*this.$store.dispatch({
-            type:'getHotMomentAction',
-            limit:15,
-            offset:0
-          })*/
+          this.$emit('reply')
         })
       }
       /*回复评论的评论*/
       if(this.content&&this.status===1)
       {
-        this.isShowCom=false;
-        this.$toast.show("回复成功",2000);
         replyComment(this.content,this.id).then(data=>{
-
+          this.isShowCom=false;
+          this.$toast.show("回复评论成功",2000);
+          this.$bus.$emit('replyComment');
         })
       }
       //发表专题评论

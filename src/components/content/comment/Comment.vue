@@ -12,7 +12,10 @@
           <span class="comment-user-name">{{item.user.userName}}: </span>
           {{item.content}}
           <div class="comment-time">{{item.createTime?item.createTime.slice(0,10):item.updateTime.slice(0,10)}}</div>
-          <reply :replyStyle="{fontSize:'14px'}" :status="status" :id="item.commentId" :is-show-sub="false"/>
+          <reply :replyStyle="{fontSize:'14px'}"
+                 :status="status"
+                 :id="item.commentId"
+                 :is-show-sub="false"/>
           <!--回复评论的评论-->
           <ul class="reply-comment" v-if="item.reply">
             <li v-for="(iten,i) in item.reply"
@@ -38,7 +41,8 @@ export default {
   data()
   {
     return {
-      comments:[]
+      comments:[],
+      keyId:1
     }
   },
   props:{
@@ -59,6 +63,7 @@ export default {
     }
   },
   created() {
+    console.log("评论重新创建")
     if(this.status===1)
     {
       getMomentCom(this.momentId).then(data=>{
@@ -72,6 +77,8 @@ export default {
     else if(this.status===3){
       this.comments=this.commentDetail
     }
+  },
+  methods:{
   }
 }
 </script>
@@ -118,5 +125,7 @@ li{
 }
 .replyName{
   color: #3a8ee6;
+  white-space: nowrap;
+  margin: 0 5px 0 0;
 }
 </style>

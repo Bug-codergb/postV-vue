@@ -4,20 +4,22 @@
       <!--用户信息-->
       <div class="user-msg">
         <div class="avatar">
-          <img :src="momentDetail.user.avatarUrl" />
+          <img :src="this.$store.state.momentDetails.user.avatarUrl" />
         </div>
-        <div class="user-name">{{momentDetail.user.name}}</div>
+        <div class="user-name">{{this.$store.state.momentDetails.user.name}}</div>
       </div>
       <!--标题-->
-      <p class="title">{{momentDetail.title}}</p>
+      <p class="title">{{this.$store.state.momentDetails.title}}</p>
       <!--图片-->
       <div class="img-container">
-        <img :src="momentDetail.picUrl[0].picUrl" />
+        <img :src="this.$store.state.momentDetails.picUrl[0].picUrl" />
       </div>
       <!--标签-->
       <tags/>
-      <reply :id="momentDetail.momentId"/>
-      <comment :moment-id="momentDetail.momentId" v-if="momentDetail.momentId"/>
+      <reply :id="this.$store.state.momentDetails.momentId"/>
+      <comment :moment-id="this.$store.state.momentDetails.momentId"
+               v-if="this.$store.state.momentDetails.momentId"
+               :key="this.$store.state.momentDetails.momentId+this.$store.state.momentDetails.comments.length"/>
     </div>
     <div class="right-content"></div>
   </div>
@@ -44,9 +46,13 @@ name: "ImageDetail",
     }
   },
   created() {
-    momentDetail(this.$route.query.momentId).then(data=>{
+    /*momentDetail(this.$route.query.momentId).then(data=>{
       console.log(data);
       this.momentDetail=data;
+    })*/
+    this.$store.dispatch({
+      type:'getMomentDetail',
+      momentId:this.$route.query.momentId
     })
   }
 }

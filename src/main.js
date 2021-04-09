@@ -9,6 +9,8 @@ import 'element-ui/lib/theme-chalk/index.css';
 Vue.use(ElementUI);
 Vue.use(less);
 
+Vue.prototype.$bus=new Vue();
+
 import VueLazyload from 'vue-lazyload';
 Vue.use(VueLazyload, {
   preLoad: 1.3,
