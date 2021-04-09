@@ -7,7 +7,10 @@
       动态
     </div>
     <ul class="search-moment">
-      <li v-for="(item,index) in searchRes.moment" :key="item.momentId" class="text-nowrap">
+      <li v-for="(item,index) in searchRes.moment"
+          :key="item.momentId"
+          class="text-nowrap"
+          @click="momentRouter(item)">
         <div>{{item.title}}</div>
       </li>
     </ul>
@@ -38,6 +41,12 @@ name: "SearchResult",
         }
       }
     }
+  },
+  methods:{
+    momentRouter(item)
+    {
+      console.log(item)
+    }
   }
 }
 </script>
@@ -51,7 +60,7 @@ name: "SearchResult",
     left: 8%;
     width: 300px;
     height: 400px;
-    padding:15px 10px;
+    padding:15px 20px;
     box-shadow: 0 0 15px rgba(0,0,0,.3);
     border-radius: 5px;
     .search-moment,.search-user{

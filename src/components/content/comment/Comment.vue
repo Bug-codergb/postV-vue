@@ -63,7 +63,6 @@ export default {
     }
   },
   created() {
-    console.log("评论重新创建")
     if(this.status===1)
     {
       getMomentCom(this.momentId).then(data=>{

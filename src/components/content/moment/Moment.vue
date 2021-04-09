@@ -20,18 +20,8 @@
        </div>
        <!--发表时间和查看数,点击量，评论数-->
        <moment-bar :moment-detail="momentDetail"/>
-        <!--标签-->
-        <div class="tags" v-if="momentDetail!==undefined">
-          <p v-if="momentDetail.tags!==null">标签</p>
-          <ul>
-            <li v-for="(it,i) in momentDetail.tags">
-              <div @click="delTag(momentDetail.momentId,it.tagId)"><i class="iconfont icon-chahao"></i></div>
-              {{it.tagName}}
-            </li>
-            <!--添加标签-->
-            <Tags :moment="momentDetail"/>
-          </ul>
-        </div>
+       <!--标签-->
+       <Tags :momentDetail="momentDetail"/>
         <!--动态回复按钮-->
         <reply :id="momentDetail.momentId" v-if="isShowCom"/>
         <!--评论回复-->
@@ -42,10 +32,8 @@
 </template>
 
 <script>
-import {deleteTag} from "@/network/tag";
 import reply from '@/components/content/reply/Reply';
 import Tags from "@/components/content/tags/Tags"
-import {commentDetail} from "@/network/comment";
 import Comment from "@/components/content/comment/Comment";
 import MomentBar from "@/components/content/moment/children/momentBar/MomentBar";
 export default {
@@ -88,15 +76,7 @@ export default {
     //console.log(this.momentDetail)
   },
   methods:{
-    delTag(momentId,tagId)
-    {
-      deleteTag(momentId,tagId).then(data=>{
-        console.log(data)
-        this.$store.dispatch({
-          type:'getAllMomentsAction'
-        })
-      })
-    },
+
     userRouter(user)
     {
       console.log(this.user)
@@ -148,49 +128,7 @@ export default {
   font-weight: bold;
 }
 
-/*评论*/
-.tags{
-  display: flex;
-  align-items: center;
-  margin: 10px 0 20px 0;
-}
-.tags >ul{
-  display: flex;
-}
-.tags li{
-  font-size: 14px;
-  margin: 0 10px 0 0;
-  background-color: #fff;
-  padding: 5px 10px;
-  color: #3a8ee6;
-  border-radius: 5px;
-  position: relative;
-  background-color: rgba(58, 142, 230,.1);
-}
-.tags li:hover div{
-  display: block;
-}
-.tags li div{
-  position: absolute;
-  width: 17px;
-  height: 17px;
-  border-radius: 50%;
-  background-color: rgba(58,142,230,.1);
-  text-align: center;
-  line-height: 17px;
-  top: -10px;
-  left:100%;
-  cursor: pointer;
-  transform: translateX(-100%);
-  display: none;
-}
-.tags li div i{
-  font-size: 18px;
-}
-.tags p{
-  font-size:14px;
-  margin: 0 10px 0 0;
-}
+
 .reply-comment{
   li{
     background-color: rgba(0,0,0,.04);

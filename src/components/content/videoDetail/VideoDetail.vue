@@ -81,7 +81,6 @@ name: "VideoDetail",
   methods: {
     reply()
     {
-      console.log("我被执行")
       this.keyId+=1;
     },
     play()

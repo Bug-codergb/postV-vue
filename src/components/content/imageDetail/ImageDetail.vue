@@ -15,7 +15,7 @@
         <img :src="this.$store.state.momentDetails.picUrl[0].picUrl" />
       </div>
       <!--标签-->
-      <tags/>
+      <tags :moment-detail="this.$store.state.momentDetails"/>
       <reply :id="this.$store.state.momentDetails.momentId"/>
       <comment :moment-id="this.$store.state.momentDetails.momentId"
                v-if="this.$store.state.momentDetails.momentId"

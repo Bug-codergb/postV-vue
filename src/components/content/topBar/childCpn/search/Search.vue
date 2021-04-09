@@ -8,14 +8,18 @@
            @input="searchInp"
            @blur="changeStatus"
            @keydown.enter="enter"
+           @focus="focus"
            v-model="keywords" />
     <search-result v-show="isShow" :searchRes="searchRes"/>
+    <history v-if="isShowHistory" @changeKeyword="changeKeyword"/>
   </div>
 </template>
 
 <script>
 import SearchResult from "@/components/content/searchResult/SearchResult";
 import {search} from "@/network/search";
+import History from "@/components/content/topBar/childCpn/search/history/History";
+import {historyStr, strToHistoryArray} from "@/utils/history";
 
 export default {
   name: "Search",
@@ -23,6 +27,7 @@ export default {
     return {
       keywords: '',
       isShow: false,
+      isShowHistory:false,
       searchRes: {
         user: [],
         moment: []
@@ -30,22 +35,52 @@ export default {
     }
   },
   components: {
+    History,
     SearchResult
   },
   methods: {
     searchInp() {
       if (this.keywords.length !== 0) {
+        this.isShowHistory=false;
         search(this.keywords).then(data => {
           this.searchRes = data;
         })
         this.isShow = true;
       }
+      else{
+        this.isShow=false;
+       this.isShowHistory=true;
+      }
+    },
+    changeKeyword(item)
+    {
+      this.keywords=item;
+      this.searchRouter();
     },
     changeStatus() {
       this.isShow = false;
+     // this.isShowHistory=false;
     },
     //将search数据添加到vuex
     searchRouter() {
+      if(strToHistoryArray().length<=20)
+      {
+        let isExist=strToHistoryArray().findIndex((item,index)=>{
+          return item===this.keywords;
+        })
+        if(isExist===-1)
+        {
+          historyStr(this.keywords);
+        }
+        else{
+          const index=strToHistoryArray().indexOf(this.keywords);
+          let historyArray=strToHistoryArray();
+          historyArray.splice(index,1);
+          window.localStorage.removeItem('history');
+          window.localStorage.setItem('history',historyArray.join(","));
+          historyStr(this.keywords);
+        }
+      }
       this.$store.commit({
         type:'changeSearchResult',
         searchResult:this.searchRes
@@ -57,6 +92,17 @@ export default {
     enter()
     {
       this.searchRouter();
+    },
+    focus()
+    {
+      if(this.keywords==='')
+      {
+        this.isShowHistory=true
+      }
+      else{
+        this.isShowHistory=false;
+        this.isShow=true;
+      }
     }
   }
 }

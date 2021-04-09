@@ -40,6 +40,7 @@
 
 <script>
 import ControlBtn from "@/components/common/controlBtn/ControlBtn";
+import {momentView} from "@/network/moment";
 export default {
   name: "Article",
   components: {ControlBtn},
@@ -76,7 +77,6 @@ export default {
     },
     momentRouter(item)
     {
-      console.log(item);
       this.$router.push({
         path:'/momentDetail',
         query:{
@@ -84,6 +84,10 @@ export default {
           userId:item.user.userId
         }
       })
+      if(this.$store.state.loginType===1)
+      {
+        momentView(item.momentId);
+      }
     },
     articleRouter()
     {
