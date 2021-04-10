@@ -53,7 +53,7 @@ export function getAllTopicContent(topicId,offset,limit)
     })
 }
 //获取专题下内容
-export function getTopicContent(topicId,offset,limit)
+export function getTopicContent(topicId,offset=0,limit=30)
 {
     return request({
         url:'/topic/content',
@@ -100,5 +100,15 @@ export function joinTopic(topicId)
         headers:{
             'authorization':store.state.userMsg.token,
         },
+    })
+}
+//获取专题成员
+export function getTopicMember(topicId)
+{
+    return request({
+        url:'/topic/member',
+        params:{
+          topicId
+        }
     })
 }

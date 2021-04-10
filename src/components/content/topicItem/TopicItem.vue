@@ -19,7 +19,7 @@
               <div class="time">{{topic.updateTime.substring(0,10)}}</div>
             </div>
             <!--成员数-->
-            <div class="user-count">
+            <div class="user-count" @click="topicUserRouter">
               {{topic.users}}
               成员
               <i class="iconfont icon-svgarrowsright"></i>
@@ -54,7 +54,7 @@ export default {
     }
   },
   created() {
-    console.log(this.topic)
+    //console.log(this.topic)
   },
   computed:{
     isJoin()
@@ -85,6 +85,15 @@ export default {
           type:'getUserDetailAction',
           userId:this.$store.state.userMsg.userId
         })
+      })
+    },
+    topicUserRouter()
+    {
+      this.$router.push({
+        path:"/topicUserDetail",
+        query:{
+          topicId:this.topic.topicId
+        }
       })
     }
   }

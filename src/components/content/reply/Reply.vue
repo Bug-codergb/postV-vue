@@ -21,7 +21,8 @@
       <slot name="delete"></slot>
     </div>
     <div class="comment-content" v-show="isShowCom">
-      <textarea v-model="content" rows="5" cols="80"/>
+      <textarea v-model="content" rows="5" cols="80"
+                :disabled="this.$store.state.loginType!==1"/>
       <button class="reply-btn" @click="replyBtn">发表评论</button>
     </div>
   </div>

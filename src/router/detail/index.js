@@ -9,6 +9,8 @@ const videoDetail=()=>import('../../components/content/videoDetail/VideoDetail')
 const searchDetail=()=>import('../../components/content/searchDetail/SearchDetail');
 //话题详情
 const topicDetail=()=>import('../../components/content/topicDetail/TopicDetail');
+//话题用户详情
+const topicUserDetail=()=>import('../../components/content/topicUserDetail/TopicUserDetail');
 //话题内容详情
 const topicContentDetail=()=>import('../../components/content/topicContentDetail/TopicContentDetail')
 //搜索子路由
@@ -59,6 +61,14 @@ export const topicDetailRouter={
     name:'topicDetail',
     components:{
         detail:topicDetail
+    }
+}
+//话题用户详情
+export const topicUserDetailRouter={
+    path:'/topicUserDetail',
+    name:'topicUserDetail',
+    components:{
+        detail:topicUserDetail
     }
 }
 //话题内容详情

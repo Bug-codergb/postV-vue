@@ -2,11 +2,15 @@
   <div class="moment">
     <ul>
       <li v-for="(item,index) in this.$store.state.searchResult.moment">
-        <div class="img-container" v-lazy-container="{selector:'img'}">
+        <div class="img-container"
+             v-lazy-container="{selector:'img'}"
+             @click="momentRouter(item)"
+             v-if="item.pictures">
           <img :data-src="item.pictures[0].picUrl"
                :data-error="require('../../../../../assets/img/moment.png')" />
         </div>
-        <div class="state text-nowrap">{{item.title}}</div>
+        <div class="state text-nowrap" @click="momentRouter(item)">{{item.title}}</div>
+        <div class="cate" @click="cateRouter(item)">{{item.category.name}}</div>
         <div class="creator">{{item.user.userName}}</div>
         <div class="updateTime">{{item.updateTime.substring(0,10)}}</div>
       </li>
@@ -16,7 +20,56 @@
 
 <script>
 export default {
-  name: "User"
+  name: "User",
+  methods:{
+    momentRouter(item)
+    {
+      if(item.type===1&&item.vid)
+      {
+        this.$router.push({
+          path:'/videoDetail',
+          query:{
+            vid:item.vid
+          }
+        })
+      }
+      else if(item.type===0)
+      {
+        this.$router.push({
+          path:'/momentDetail',
+          query:{
+            momentId:item.momentId,
+            userId:item.user.userId
+          }
+        })
+      }
+    },
+    cateRouter(item)
+    {
+      const {name}=item.category
+      switch(name)
+      {
+        case "视频":
+          this.$router.push({
+            path:'/videoCate'
+          });break;
+        case "图片":
+          this.$router.push({
+            path:'/imageCate',
+            query:{
+              categoryId:item.category.categoryId
+            }
+          });break;
+        case "文章":
+          this.$router.push({
+            path:'/articleCate',
+            query:{
+              categoryId:item.category.categoryId
+            }
+          })
+      }
+    }
+  }
 }
 </script>
 
@@ -35,7 +88,7 @@ export default {
         display: flex;
         align-items: center;
         margin: 5px 0;
-        padding: 10px 0;
+        padding: 10px;
         &:nth-child(odd)
         {
           background-color: #f9f9f9;
@@ -50,7 +103,7 @@ export default {
           background-color:#d8e8fa;
           position: relative;
           img{
-            height: 50px;
+            width: 50px;
             .center();
           }
         }
@@ -58,11 +111,22 @@ export default {
           width: 350px;
           margin: 0 30px 0 20px;
           font-size: 14px;
+          &:hover{
+            color: #3a8ee6;
+            cursor: pointer;
+          }
         }
         .creator{
           width: 100px;
           font-size: 12px;
           color: #616162;
+          cursor:pointer;
+        }
+        .cate{
+          font-size: 14px;
+          color: #3a8ee6;
+          width: 100px;
+          cursor:pointer;
         }
         .updateTime{
           font-size: 12px;

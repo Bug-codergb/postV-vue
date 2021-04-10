@@ -43,6 +43,7 @@ export default {
       if (this.keywords.length !== 0) {
         this.isShowHistory=false;
         search(this.keywords).then(data => {
+          console.log(data);
           this.searchRes = data;
         })
         this.isShow = true;
@@ -59,7 +60,7 @@ export default {
     },
     changeStatus() {
       this.isShow = false;
-     // this.isShowHistory=false;
+      this.isShowHistory=false;
     },
     //将search数据添加到vuex
     searchRouter() {

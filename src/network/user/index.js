@@ -58,3 +58,17 @@ export function getUserJoinTopic(userId)
         }
     })
 }
+//设置用户简介
+export function setUserDesc(content)
+{
+    return request({
+        url:'/user/desc',
+        method:'post',
+        data:{
+            content
+        },
+        headers:{
+            'authorization':store.state.userMsg.token,
+        }
+    })
+}

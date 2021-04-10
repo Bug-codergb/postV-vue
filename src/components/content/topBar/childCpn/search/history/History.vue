@@ -68,11 +68,12 @@ name: "History",
     }
     .history-item{
       display: flex;
+      flex-wrap: wrap;
       li{
         font-size: 13px;
         border: 1px solid #d8d8d8;
         padding: 3px 10px;
-        margin: 0 10px 0 0;
+        margin: 0 10px 5px 0;
         border-radius: 15px;
         color: #666666;;
       }

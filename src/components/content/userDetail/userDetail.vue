@@ -22,7 +22,12 @@
            <div class="desc">
              <span>简介:</span>
              <span>{{userDetail.desc}}</span>
-             <span v-show="!userDetail.desc" class="edit-desc">编辑</span>
+             <span v-show="!userDetail.desc" class="edit-desc" @click="editDesc">编辑</span>
+             <div class="edit-desc-content" v-show="isShow">
+               <label>
+                 <textarea cols="30" rows="2" @blur="finish" v-model="desc"></textarea>
+               </label>
+             </div>
            </div>
          </div>
        </div>
@@ -45,7 +50,7 @@
            </li>
          </ul>
          <div slot="关注">
-           <follow/>
+           <follow :follow="userDetail.follow"/>
          </div>
          <div slot="粉丝">
            <fans :fans="userDetail.fans"/>
@@ -66,7 +71,7 @@
 
 <script>
 import TabControl from "@/components/common/tabControl/TabControl";
-import {userDetail, userMoment} from "@/network/user";
+import {setUserDesc, userDetail, userMoment} from "@/network/user";
 import {momentDetail} from "@/network/home";
 import Moment from "@/components/content/moment/Moment";
 import {delMoment} from "@/network/moment";
@@ -90,15 +95,14 @@ export default {
       userDetail:{},
       momentDetail:[],
       moments:[],
-      userId:''
+      userId:'',
+      isShow:false,
+      desc:''
     }
   },
   created() {
     this.userId=this.$route.query.id;
-    userDetail(this.$route.query.id).then(data=>{
-      //console.log(data)
-      this.userDetail=data
-    })
+    this.getUserDetail(this.userId);
     userMoment(this.$route.query.id).then(data=>{
      // console.log(data.moments)
       this.moments=data.moments
@@ -112,6 +116,13 @@ export default {
     })
   },
   methods:{
+    getUserDetail(userId)
+    {
+      userDetail(userId).then(data=>{
+        //console.log(data)
+        this.userDetail=data
+      })
+    },
     deleteMoment(item)
     {
       //console.log(item.id)
@@ -142,6 +153,34 @@ export default {
           userId:this.$store.state.userMsg.userId
         })
       })
+    },
+    //编辑简介
+    editDesc()
+    {
+      if(this.userId!==this.$store.state.userMsg.userId)
+      {
+        this.$toast.show('您没有编辑的权限',1500);
+      }
+      else{
+        this.isShow=!this.isShow;
+      }
+    },
+    //编写完毕
+    finish()
+    {
+      const isComplete=confirm("编写完毕?");
+      if(isComplete)
+      {
+        if(!this.desc)
+        {
+          this.$toast.show("简介不能为空",1500);
+        }
+        else{
+          setUserDesc(this.desc).then(data=>{
+            this.getUserDetail(this.userId)
+          })
+        }
+      }
     }
   },
   computed:{
@@ -206,9 +245,21 @@ export default {
              font-size: 13px;
              color: #9b9b9b;
              width: 500px;
-            line-height: 18px;
+             position: relative;
+             line-height: 18px;
+             cursor: pointer;
              .edit-desc{
                color: #3a8ee6;
+             }
+             //编辑简介内容
+             .edit-desc-content{
+               position: absolute;
+               left:0;
+               top:100%;
+               border-radius: 5px;
+               textarea{
+                 outline:1px solid rgba(58, 142, 230,.3);
+               }
              }
            }
            .attention{

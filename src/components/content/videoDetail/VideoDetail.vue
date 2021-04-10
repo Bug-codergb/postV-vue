@@ -5,15 +5,13 @@
         <video :src="videoDetail.url"
                ref="vio"
                @play.once="play"
-               @timeupdate="getCurrentTime"
-               @canplay="canplay"
                controls="controls"
                autoplay>
         </video>
-        <button @click="playVideo">565播放</button>
+<!--        <button @click="playVideo">565播放</button>-->
       </div>
       <!--进度条设置-->
-      <el-slider v-model="value1" @change="endChange"></el-slider>
+<!--      <el-slider v-model="value1" @change="endChange"></el-slider>-->
       <div class="profile">
         <div class="img-container">
           <img :src="videoDetail.user.avatarUrl" />
@@ -30,10 +28,13 @@
              v-if="videoDetail.moment"
              @reply="reply"/>
       <!--动态（视频）评论-->
-      <comment :momentId="videoDetail.moment.momentId" v-if="videoDetail.moment.momentId" :key="keyId"/>
+      <comment :momentId="videoDetail.moment.momentId"
+               v-if="videoDetail.moment.momentId"
+               :key="keyId"/>
     </div>
     <div class="right-content">
       <avatar :user-id="videoDetail.user.userId" v-if="videoDetail.user.userId"/>
+      <RecommendVideo :vid="vid" @play-video="playVideo"/>
     </div>
   </div>
 </template>
@@ -43,10 +44,11 @@ import {addVideoPlayCouont, getVideoDetail} from "@/network/video";
 import Reply from "@/components/content/reply/Reply";
 import Avatar from "@/components/content/avatar/Avatar";
 import Comment from "@/components/content/comment/Comment";
+import RecommendVideo from "@/components/content/videoDetail/childCpn/recommendVideo/RecommendVideo";
 
 export default {
 name: "VideoDetail",
-  components: {Comment, Avatar, Reply},
+  components: {RecommendVideo, Comment, Avatar, Reply},
   data()
   {
     return {
@@ -62,10 +64,12 @@ name: "VideoDetail",
       value1:0,
       duration:0,
       currentTime:0,
-      keyId:1
+      keyId:1,
+      vid:''
     }
   },
   created() {
+    this.vid=this.$route.query.vid;
     getVideoDetail(this.$route.query.vid).then(data=>{
       //console.log(data);
       this.videoDetail=data;
@@ -89,7 +93,16 @@ name: "VideoDetail",
         console.log(data)
       })
     },
-    getCurrentTime(e)
+    playVideo(vid)
+    {
+      getVideoDetail(vid).then(data=>{
+        //console.log(data);
+        this.videoDetail=data;
+        this.keyId+=1;
+        this.vid=vid;
+      })
+    }
+    /*getCurrentTime(e)
     {
      //console.log(e.target.currentTime);
      this.currentTime=e.target.currentTime*1000;
@@ -118,7 +131,7 @@ name: "VideoDetail",
       const time=val/100;
       this.$refs.vio.currentTime=time*this.duration*1000;
       console.log(this.$refs.vio)
-    }
+    }*/
   }
 }
 </script>
@@ -140,6 +153,7 @@ name: "VideoDetail",
         border-radius: 5px;
         video{
           height:100%;
+          outline: none;
         }
       }
       .profile{

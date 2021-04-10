@@ -2,7 +2,7 @@
 <template>
   <div class="follow">
     <ul>
-      <li v-for="(item,index) in this.$store.state.userDetail.follow">
+      <li v-for="(item,index) in follow">
         <div class="user-msg">
           <div class="img-container">
             <img :src="item.avatarUrl" />
@@ -19,7 +19,16 @@
 
 <script>
 export default {
-name: "Follow"
+name: "Follow",
+  props:{
+    follow:{
+      type:Array,
+      default()
+      {
+        return []
+      }
+    }
+  }
 }
 </script>
 

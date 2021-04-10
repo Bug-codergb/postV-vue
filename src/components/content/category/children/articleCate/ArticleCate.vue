@@ -44,6 +44,8 @@ name: "ArticleCate",
 
 <style scoped lang="less">
   .article-cate{
+    width: 750px;
+    border-right: 1px solid #d8e8fa;
     ul{
       li{
         padding: 15px 0;

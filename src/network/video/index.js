@@ -73,3 +73,10 @@ export function getCateVideo(categoryId)
         }
     })
 }
+//获取推荐视频
+export function getRecommendVio()
+{
+    return request({
+        url:'/video/commend',
+    })
+}
