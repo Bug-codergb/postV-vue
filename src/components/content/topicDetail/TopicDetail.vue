@@ -33,7 +33,9 @@
         </li>
       </ul>
     </div>
-    <div class="left-right"></div>
+    <div class="right-content">
+      <topic-recommend/>
+    </div>
   </div>
 </template>
 
@@ -41,10 +43,11 @@
 import {getTopicContent} from "@/network/topic";
 import TopicItem from "@/components/content/topicItem/TopicItem";
 import TopicContent from "@/components/content/admin/childCpn/topic/childCpn/TopicContent";
+import TopicRecommend from "@/components/content/topicRecommend/TopicRecommend";
 
 export default {
   name: "TopicDetail",
-  components: {TopicContent, TopicItem},
+  components: {TopicRecommend, TopicContent, TopicItem},
   data()
   {
     return {
@@ -167,6 +170,7 @@ export default {
     }
     .right-content{
       flex: 1;
+      padding: 0 20px;
     }
   }
 </style>

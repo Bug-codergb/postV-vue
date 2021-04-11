@@ -19,7 +19,7 @@
               <div class="time">{{topic.updateTime.substring(0,10)}}</div>
             </div>
             <!--成员数-->
-            <div class="user-count" @click="topicUserRouter">
+            <div class="user-count" @click="topicUserRouter" v-show="isShow">
               {{topic.users}}
               成员
               <i class="iconfont icon-svgarrowsright"></i>
@@ -51,6 +51,10 @@ export default {
       {
         return {}
       }
+    },
+    isShow:{
+      type:Boolean,
+      default:true
     }
   },
   created() {
@@ -65,7 +69,6 @@ export default {
         flag=this.$store.state.userDetail.topic.findIndex((item,index)=>{
           return this.topic.topicId===item.topicId
         })
-        console.log(flag)
         if(flag===-1)
         {
           return false
@@ -111,7 +114,7 @@ export default {
 .title{
   font-size: 16px;
   font-weight: bold;
-  margin: 0 0 10px 0;
+  margin: 0 0 20px 0;
 }
 .topic-item{
       .header{
@@ -140,6 +143,7 @@ export default {
             display: flex;
             margin: 15px 0 0 0;
             align-items: center;
+            cursor:pointer;
             font-size: 13px;
             i{
               font-size: 12px;

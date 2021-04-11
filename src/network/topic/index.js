@@ -112,3 +112,10 @@ export function getTopicMember(topicId)
         }
     })
 }
+//获取推荐专题
+export function getRecTopic()
+{
+    return request({
+        url:'/topic/recommend'
+    })
+}
