@@ -34,7 +34,9 @@
       </ul>
     </div>
     <div class="right-content">
-      <topic-recommend/>
+      <div class="recommend-topic">
+        <topic-recommend :topic-id="topicId" @changeTopicStatus="changeTopicStatus"/>
+      </div>
     </div>
   </div>
 </template>
@@ -52,10 +54,12 @@ export default {
   {
     return {
       topicContent:{},
-      isShow:false
+      isShow:false,
+      topicId:''
     }
   },
   created() {
+    this.topicId=this.$route.query.topicId;
     getTopicContent(this.$route.query.topicId,0,30).then(data=>{
       //console.log(data.content);
       this.topicContent=data;
@@ -79,6 +83,14 @@ export default {
     cancelPublish()
     {
       this.isShow=false;
+    },
+    changeTopicStatus(topicId)
+    {
+      this.topicId=topicId;
+      getTopicContent(this.topicId,0,30).then(data=>{
+        //console.log(data.content);
+        this.topicContent=data;
+      })
     }
   }
 }
@@ -171,6 +183,9 @@ export default {
     .right-content{
       flex: 1;
       padding: 0 20px;
+      .recommend-topic{
+        margin: 20px 0 0 0;
+      }
     }
   }
 </style>

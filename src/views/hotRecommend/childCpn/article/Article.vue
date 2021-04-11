@@ -61,7 +61,7 @@ export default {
     }
   },
   created() {
-    console.log(this.article)
+    //console.log(this.article)
   },
   mounted() {
     this.$nextTick(()=>{
@@ -100,7 +100,7 @@ export default {
     },
     userRouter(item)
     {
-      console.log(item)
+      //console.log(item)
       this.$router.push({
         path:'/userDetail',
         query:{

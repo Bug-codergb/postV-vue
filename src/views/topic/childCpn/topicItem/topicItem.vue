@@ -44,12 +44,19 @@ name: "topicItem",
 </script>
 
 <style scoped lang="less">
+  .center()
+  {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+  }
   .topic-item{
     display: flex;
     flex-wrap: wrap;
     align-items: baseline;
     li{
-      margin: 0px 20px 20px 0;
+      margin: 0 20px 20px 0;
       .state{
         width: 170px;
       }
@@ -60,7 +67,7 @@ name: "topicItem",
     overflow: hidden;
     border-radius: 5px;
     img{
-      width: 170px;
+      height: 170px;
       border-radius: 5px;
     }
   }

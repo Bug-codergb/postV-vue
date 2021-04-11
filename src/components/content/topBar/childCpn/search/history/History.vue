@@ -6,7 +6,7 @@
          title="清空搜索历史"></i>
     </p>
     <ul class="history-item" v-if="history.length">
-      <li v-for="item in history" :key="item">
+      <li v-for="item in history" :key="item" ref="history">
         <div v-if="item" @click="changeKeyword(item)">{{item}}</div>
       </li>
     </ul>
@@ -21,7 +21,7 @@ name: "History",
   data()
   {
     return {
-      history:[]
+      history:[],
     }
   },
   created()
@@ -30,10 +30,22 @@ name: "History",
       this.history=strToHistoryArray()
     }
   },
+  mounted() {
+    this.$nextTick(()=>{
+      if(this.$refs.history)
+      {
+        this.$refs.history.forEach((item,index)=>{
+          if(item.offsetWidth>=280)
+          {
+            item.classList.add('active')
+          }
+        })
+      }
+    })
+  },
   methods:{
     clearAll()
     {
-      console.log("789")
       window.localStorage.removeItem('history');
     },
     changeKeyword(item)
@@ -75,7 +87,14 @@ name: "History",
         padding: 3px 10px;
         margin: 0 10px 5px 0;
         border-radius: 15px;
-        color: #666666;;
+        color: #666666;
+        cursor:pointer;
+        &.active{
+          width: 280px;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
+        }
       }
     }
   }

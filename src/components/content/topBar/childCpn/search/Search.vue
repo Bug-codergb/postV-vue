@@ -4,13 +4,15 @@
     <i class="iconfont icon-search searchIcon" @click="searchRouter"></i>
     <input type="text"
            class="search"
-           placeholder="搜索你感兴趣的"
+           placeholder="搜索你感兴趣的影视"
            @input="searchInp"
-           @blur="changeStatus"
            @keydown.enter="enter"
            @focus="focus"
-           v-model="keywords" />
-    <search-result v-show="isShow" :searchRes="searchRes"/>
+           v-model="keywords"
+           @click.stop/>
+    <search-result v-show="isShow&&this.keywords!==''"
+                   :searchRes="searchRes"
+                    @moment-match="momentMatch"/>
     <history v-if="isShowHistory" @changeKeyword="changeKeyword"/>
   </div>
 </template>
@@ -38,12 +40,20 @@ export default {
     History,
     SearchResult
   },
+  //点击空白搜索匹配消失
+  mounted() {
+    this.$nextTick(()=>{
+      document.addEventListener('click',()=>{
+        this.isShow=false;
+        this.isShowHistory=false;
+      })
+    })
+  },
   methods: {
     searchInp() {
       if (this.keywords.length !== 0) {
         this.isShowHistory=false;
         search(this.keywords).then(data => {
-          console.log(data);
           this.searchRes = data;
         })
         this.isShow = true;
@@ -56,42 +66,52 @@ export default {
     changeKeyword(item)
     {
       this.keywords=item;
-      this.searchRouter();
+      search(this.keywords).then(data => {
+        this.searchRes = data;
+        this.searchRouter();
+      })
     },
-    changeStatus() {
-      this.isShow = false;
+    momentMatch(item)
+    {
+      this.keywords=item.title;
+      this.isShow=false;
       this.isShowHistory=false;
     },
     //将search数据添加到vuex
     searchRouter() {
-      if(strToHistoryArray().length<=20)
+      if(this.keywords!==''&&this.keywords.trim()!=='')
       {
-        let isExist=strToHistoryArray().findIndex((item,index)=>{
-          return item===this.keywords;
-        })
-        if(isExist===-1)
+        if(strToHistoryArray().length<=20)
         {
-          historyStr(this.keywords);
+          let isExist=strToHistoryArray().findIndex((item,index)=>{
+            return item===this.keywords;
+          })
+          if(isExist===-1)
+          {
+            historyStr(this.keywords);
+          }
+          else{
+            const index=strToHistoryArray().indexOf(this.keywords);
+            let historyArray=strToHistoryArray();
+            historyArray.splice(index,1);
+            window.localStorage.removeItem('history');
+            window.localStorage.setItem('history',historyArray.join(","));
+            historyStr(this.keywords);
+          }
         }
-        else{
-          const index=strToHistoryArray().indexOf(this.keywords);
-          let historyArray=strToHistoryArray();
-          historyArray.splice(index,1);
-          window.localStorage.removeItem('history');
-          window.localStorage.setItem('history',historyArray.join(","));
-          historyStr(this.keywords);
-        }
+
+        this.$store.commit({
+          type:'changeSearchResult',
+          searchResult:this.searchRes
+        })
+        this.$router.push({
+          path:'/searchDetail'
+        })
       }
-      this.$store.commit({
-        type:'changeSearchResult',
-        searchResult:this.searchRes
-      })
-      this.$router.push({
-        path:'/searchDetail'
-      })
     },
     enter()
     {
+      this.isShow=false;
       this.searchRouter();
     },
     focus()

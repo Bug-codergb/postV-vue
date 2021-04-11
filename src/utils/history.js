@@ -6,9 +6,9 @@ export function historyStr(keyword)
 export function strToHistoryArray()
 {
     let history=window.localStorage.getItem('history');
-    history=history.split(",")
     if(history)
     {
+        history=history.split(",")
         history=history.filter((item,index)=>{
             if(item!=='null')
             {
@@ -18,6 +18,6 @@ export function strToHistoryArray()
         return history;
     }
     else{
-        return '';
+        return [];
     }
 }

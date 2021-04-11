@@ -10,7 +10,7 @@
       <li v-for="(item,index) in searchRes.moment"
           :key="item.momentId"
           class="text-nowrap"
-          @click="momentRouter(item)">
+          @click.stop="momentRouter(item)">
         <div>{{item.title}}</div>
       </li>
     </ul>
@@ -20,7 +20,10 @@
       用户
     </div>
     <ul class="search-user">
-      <li v-for="(item,index) in searchRes.user" :key="item.userId" class="text-nowrap">
+      <li v-for="(item,index) in searchRes.user"
+          :key="item.userId"
+          class="text-nowrap"
+          @click.stop="userRouter(item)">
         <div>{{item.userName}}</div>
       </li>
     </ul>
@@ -45,7 +48,24 @@ name: "SearchResult",
   methods:{
     momentRouter(item)
     {
-      console.log(item)
+      this.$emit('moment-match',item)
+      this.$router.push({
+        path:'/momentDetail',
+        query:{
+          momentId:item.momentId,
+          userId:item.user.userId
+        }
+      })
+    },
+    userRouter(item)
+    {
+      this.$emit('moment-match',item)
+      this.$router.push({
+        path:'/userDetail',
+        query:{
+          id:item.userId
+        }
+      })
     }
   }
 }

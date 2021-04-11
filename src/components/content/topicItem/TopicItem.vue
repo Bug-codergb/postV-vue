@@ -127,8 +127,10 @@ export default {
             overflow: hidden;
             background-color: #333;
             border-radius: 8px;
+            position: relative;
             img{
               width: 150px;
+              .center();
             }
           }
         }

@@ -38,7 +38,7 @@ name: "Knowledge",
   },
   created() {
     getHotKnow(0,6).then(data=>{
-      console.log(data);
+      //console.log(data);
       this.hotKnow=data;
     })
   },
