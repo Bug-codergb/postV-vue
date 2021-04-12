@@ -3,7 +3,7 @@
     <!--推荐轮播图-->
     <el-carousel indicator-position="outside" height="260px">
       <el-carousel-item v-for="(item,index) in banner" :key="item.momentId">
-        <div class="img-container">
+        <div class="img-container" @click="momentRouter(item)">
           <img :src="item.picUrl[0].picUrl" :alt="item.title" />
           <div class="state text-nowrap">{{item.title}}</div>
         </div>
@@ -60,6 +60,30 @@ name: "HotRecommend",
         //console.log(this.otherRec)
       })
     })
+  },
+  methods:{
+    momentRouter(item)
+    {
+      if(item.type===1)
+      {
+        this.$router.push({
+          path:'/videoDetail',
+          query:{
+            vid:item.vid
+          }
+        })
+      }
+      if(item.type===0)
+      {
+        this.$router.push({
+          path:'/momentDetail',
+          query:{
+            momentId:item.momentId,
+            userId:item.user.userId
+          }
+        })
+      }
+    }
   }
 }
 </script>

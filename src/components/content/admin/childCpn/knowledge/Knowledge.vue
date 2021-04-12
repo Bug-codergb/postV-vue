@@ -1,5 +1,7 @@
 <template>
   <div class="knowledge">
+    <button class="add-class" @click="addKnow">添加课程</button>
+    <KnowUpload v-show="isShowAddKnow"/>
      <ul>
        <li v-for="(item,index) in allKnow">
          <div class="img-container" @click="knowRouter(item,index)">
@@ -31,9 +33,11 @@
 
 <script>
 import {addKnowContent, getAllKnow} from "@/network/admin/knowledge";
+import KnowUpload from "@/components/content/admin/childCpn/knowledge/childCpn/KnowUpload/KnowUpload";
 
 export default {
   name: "Knowledge",
+  components: {KnowUpload},
   data()
   {
     return{
@@ -41,7 +45,8 @@ export default {
       isShow:false,
       title:'',
       fileList:[],
-      kid:''
+      kid:'',
+      isShowAddKnow:false
     }
   },
   created() {
@@ -64,6 +69,10 @@ export default {
       this.isShow=!this.isShow;
       this.kid=item.kid
     },
+    addKnow()
+    {
+      this.isShowAddKnow=true;
+    },
     cancel()
     {
       this.isShow=!this.isShow;
@@ -81,8 +90,8 @@ export default {
         formData.append('knowContent',file);
       }
       formData.append('title',this.title);
-       addKnowContent(formData,this.kid).then(data=>{
-        this.isShow=!this.isShow
+        addKnowContent(formData,this.kid).then(data=>{
+        this.isShow=false
       })
     }
   }
@@ -98,6 +107,16 @@ export default {
    transform: translate(-50%,-50%);
  }
   .knowledge{
+    /*添加课程*/
+    .add-class{
+      background-color: #3a8ee6;
+      color: #fff;
+      width: 150px;
+      height:40px;
+      display: block;
+      margin: 0 auto 10px;
+      cursor: pointer;
+    }
     position: relative;
     ul{
       li{

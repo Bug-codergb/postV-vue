@@ -2,7 +2,7 @@
 <template>
   <div class="image">
     <div class="left-content">
-      <div class="title">{{imgDetail.title}}</div>
+      <div class="title" @click="imgRouter">{{imgDetail.title}}</div>
       <div class="msg">
         <div class="user-msg">
           <div class="avatar">

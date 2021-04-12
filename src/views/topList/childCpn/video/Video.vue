@@ -4,7 +4,7 @@
       <li v-for="(item,index) in videoTopList" :key="item.vid">
         <div class="index">{{(index+1).toString().padStart(2,"0")}}</div>
         <div class="left-content">
-          <div class="img-container">
+          <div class="img-container" @click="videoRouter(item)">
             <img :src="item.coverUrl" :alt="item.title"/>
             <div class="duration">{{duration(item.duration,"mm:ss")}}</div>
             <div class="playCount">
@@ -14,14 +14,15 @@
         </div>
         <div class="right-content">
           <div class="title text-nowrap">{{item.title.trim()}}</div>
-          <div class="cate">
-            <span>类型:</span>{{item.cate}}</div>
+          <div class="cate" @click="videoCate">
+            <span>类型:</span>{{item.cate}}
+          </div>
           <div class="msg">
             <div class="user-msg">
               <div class="avatar">
                 <img :src="item.user.avatarUrl" alt="item.title" />
               </div>
-              <div class="user-name">{{item.user.userName}}</div>
+              <div class="user-name" @click="userRouter(item)">{{item.user.userName}}</div>
             </div>
             <control-btn not-show="view thumb">
               <div slot="time" class="video-control-btn">{{item.updateTime.substring(0,10)}}</div>
@@ -69,6 +70,30 @@ export default {
     duration(item,format)
     {
       return formatDate(item,format)
+    },
+    videoRouter(item)
+    {
+      this.$router.push({
+        path:'/videoDetail',
+        query:{
+          vid:item.vid
+        }
+      })
+    },
+    videoCate()
+    {
+      this.$router.push({
+        path:'/videoCate',
+      })
+    },
+    userRouter(item)
+    {
+      this.$router.push({
+        path:'/userDetail',
+        query:{
+          id:item.user.userId
+        }
+      })
     }
   }
 }
@@ -141,6 +166,7 @@ export default {
       font-size: 12px;
       color: #3a8ee6;
       margin: 10px 0;
+      cursor:pointer;
       span{
         color: #9ca3ab;
         margin: 0 5px 0 0;
@@ -169,6 +195,7 @@ export default {
           margin: 0 0 0 10px;
           color: #3a8ee6;
           font-size:12px;
+          cursor: pointer;
         }
       }
       .video-control-btn{

@@ -56,6 +56,10 @@
         </list-info>
       </li>
     </ul>
+    <!--广告-->
+    <div class="advert">
+      <advert/>
+    </div>
   </div>
 </template>
 
@@ -63,10 +67,11 @@
 import {recommendUser, uploadAvatar, userDetail} from "@/network/user";
 import ListInfo from "@/components/common/listInfo/ListInfo";
 import {recMoment} from "@/network/moment";
+import Advert from "@/components/Home/childCpn/childCpn/advert/Advert";
 
 export default {
   name: "RightContent",
-  components: {ListInfo},
+  components: {Advert, ListInfo},
   data()
   {
     return {
@@ -131,6 +136,9 @@ export default {
   }
   .right-content{
     width: 300px;
+    .advert{
+      margin:50px 0 0 10px;
+    }
   }
   .avatar{
     background-color:rgba(58, 142, 230,.2);

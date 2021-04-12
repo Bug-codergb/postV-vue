@@ -18,9 +18,12 @@
       </control-btn>
 
       <!--点赞，评论，回复按钮-->
-      <reply :status="2" :id="contentDetail.topic_content_id"/>
+      <reply :status="2" :id="contentDetail.topic_content_id" @reply="reply"/>
       <!--评论内容-->
-      <comment :comment-detail="contentDetail.comment" :status="3" v-if="contentDetail.comment"/>
+      <comment :comment-detail="contentDetail.comment"
+               :status="3"
+                v-if="contentDetail.comment"
+               :key="keyId"/>
     </div>
     <div class="right-content"></div>
   </div>
@@ -38,13 +41,23 @@ export default {
   data()
   {
     return {
-      contentDetail:{user:{},updateTime:''}
+      contentDetail:{user:{},updateTime:''},
+      keyId:1
     }
   },
   created() {
     getTopicContentDetail(this.$route.query.topic_content_id).then(data=>{
       this.contentDetail=data;
     })
+  },
+  methods:{
+    reply()
+    {
+      getTopicContentDetail(this.$route.query.topic_content_id).then(data=>{
+        this.contentDetail=data;
+        this.keyId+=1;
+      })
+    }
   }
 }
 </script>
@@ -59,7 +72,7 @@ export default {
   }
   .left-content{
     width:750px;
-    height: 1500px;
+
     border-right: 1px solid rgba(58, 142, 230,.2);
     .user-msg{
       display: flex;

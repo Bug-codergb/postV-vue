@@ -3,6 +3,7 @@
     <ul>
       <li v-for="(item,index) in hotKnow" :key="item.kid">
         <div class="img-container" @click="knowRouter(item)">
+          <div class="vip" v-show="item.vip===1">vip</div>
           <img :src="item.picUrl" />
         </div>
         <div class="state">{{item.title}}</div>
@@ -33,12 +34,29 @@ export default {
   methods:{
     knowRouter(item)
     {
-      this.$router.push({
-        path:'/knowledgeMsg',
-        query:{
-          kid:item.kid
+      if(item.vip===1)
+      {
+        if(this.$store.state.userDetail.vip===1)
+        {
+          this.$router.push({
+            path:'/knowledgeMsg',
+            query:{
+              kid:item.kid
+            }
+          })
         }
-      })
+        else{
+          this.$toast.show("vip课程，开通vip后观看",1500);
+        }
+      }
+      else{
+        this.$router.push({
+          path:'/knowledgeMsg',
+          query:{
+            kid:item.kid
+          }
+        })
+      }
     }
   }
 }
@@ -62,6 +80,16 @@ export default {
           width: 120px;
           height: 80px;
           overflow: hidden;
+          position:relative;
+          .vip{
+            position: absolute;
+            background-color: #ec4141;
+            color: #fff;
+            z-index: 9;
+            padding: 3px;
+            left: 100%;
+            transform: translateX(-100%);
+          }
           img{
             width: 120px;
           }

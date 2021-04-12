@@ -45,3 +45,35 @@ export function addKnowContent(formData,kid)
         }
     })
 }
+//添加课程
+export function addKnow(title,vip,description)
+{
+    return request({
+        url:'/knowledge',
+        method:'post',
+        data:{
+            title,
+            vip,
+            description
+        },
+        headers:{
+            'authorization':store.state.userMsg.token
+        },
+    })
+}
+//为课程配图
+export function addKnowPic(formData,kid)
+{
+    return request({
+        url:'/knowledge/img',
+        method:'post',
+        data:formData,
+        params:{
+            kid
+        },
+        headers:{
+            'authorization':store.state.userMsg.token,
+            'Content-type':'multipart/form-data',
+        },
+    })
+}

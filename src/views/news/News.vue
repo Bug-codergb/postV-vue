@@ -2,7 +2,7 @@
   <div class="new">
     <el-carousel height="260px" :autoplay="false" indicator-position="outside">
       <el-carousel-item v-for="item in banners" :key="item.momentId">
-        <div>
+        <div @click="bannerRouter(item)">
           <img :src="item.pictures[0]" class="postit-img" alt="用户头像"/>
           <div class="title">{{item.title}}</div>
         </div>
@@ -95,6 +95,16 @@ export default {
              }
            })
       }
+    },
+    bannerRouter(item)
+    {
+      this.$router.push({
+        path:'/momentDetail',
+        query:{
+          momentId:item.momentId,
+          userId:item.user.userId
+        }
+      })
     }
   }
 }

@@ -28,7 +28,7 @@
       </li>
     </ul>
     <!--专题-->
-    <div class="user-cate" v-show="searchRes.topic.length!==0">
+    <div class="user-cate" v-show="searchRes.topic&&searchRes.topic.length!==0">
       <i class="iconfont icon-zhuanti1" style="color: #000"></i>
       专题
     </div>

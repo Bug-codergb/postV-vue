@@ -176,6 +176,7 @@ export default {
           this.$toast.show("简介不能为空",1500);
         }
         else{
+          this.isShow=false;
           setUserDesc(this.desc).then(data=>{
             this.getUserDetail(this.userId)
           })

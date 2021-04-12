@@ -30,3 +30,14 @@ export function getVideoToplist(offset=0,limit=30)
         }
     })
 }
+//获取文章榜单
+export function getArticleToplist(offset,limit=30)
+{
+    return request({
+        url:'/toplist/article',
+        params:{
+            offset,
+            limit
+        }
+    })
+}

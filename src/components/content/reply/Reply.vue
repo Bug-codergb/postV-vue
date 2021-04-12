@@ -152,6 +152,7 @@ name: "Reply",
         this.isShowCom=false;
         publishTopicCom(this.id,this.content).then(data=>{
           this.$toast.show("回复成功",2000);
+          this.$emit('reply')
         })
       }
       //回复专题评论

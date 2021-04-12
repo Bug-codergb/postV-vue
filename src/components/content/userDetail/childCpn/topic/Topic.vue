@@ -3,11 +3,11 @@
     <create-topic/>
     <p class="already-join">已经加入的专题</p>
     <ul>
-      <li v-for="(item,index) in topic" :key="item.topicId">
+      <li v-for="(item,index) in topic" :key="item.topicId" @click="topicRouter(item)">
         <topic-item :topic="item" />
       </li>
     </ul>
-    <p class="created-topic">创建的专题</p>
+<!--    <p class="created-topic">创建的专题</p>-->
   </div>
 </template>
 
@@ -36,6 +36,17 @@ export default {
     getUserJoinTopic(this.userId).then(data=>{
       this.topic=data.topic;
     })
+  },
+  methods:{
+    topicRouter(item)
+    {
+      this.$router.push({
+        path:'/topicDetail',
+        query:{
+          topicId:item.topicId
+        }
+      })
+    }
   }
 }
 </script>

@@ -1,6 +1,6 @@
 <template>
   <div class="login-cpn">
-    <h1>postIt</h1>
+    <h1>键行键近</h1>
     <slot name="transition"></slot>
     <div class="inp">
       <div class="username">

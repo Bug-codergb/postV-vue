@@ -25,8 +25,14 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="less">
+  .play{
+    border-right:1px solid #3a8ee6;
+  }
   video{
-    width: 300px;
+    width: 500px;
+    outline: none;
+    display: block;
+    margin: 0 auto;
   }
 </style>

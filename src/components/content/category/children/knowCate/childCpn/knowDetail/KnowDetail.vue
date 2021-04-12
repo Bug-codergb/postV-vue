@@ -6,7 +6,7 @@
       </div>
       <div class="right-content">
         <div class="title">{{knowDetail.title}}</div>
-        <div class="desc">{{knowDetail.description.substring(0,100)}}...</div>
+        <div class="desc" v-if="knowDetail.description">{{knowDetail.description.substring(0,100)}}...</div>
       </div>
     </div>
     <div class="line"></div>
@@ -40,6 +40,7 @@ export default {
   },
   created() {
     getHotKnowContent(this.$route.query.kid).then(data=>{
+      console.log(data)
       this.knowDetail=data;
     })
   },
