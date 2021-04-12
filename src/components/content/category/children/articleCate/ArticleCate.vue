@@ -11,6 +11,7 @@
 <script>
 import {getCateDetail} from "@/network/category";
 import ArticleItem from "@/components/common/articleItem/ArticleItem";
+import {momentView} from "@/network/moment";
 
 export default {
 name: "ArticleCate",
@@ -30,6 +31,7 @@ name: "ArticleCate",
   methods:{
     articleRouter(item)
     {
+      momentView(item.momentId);
       this.$router.push({
         path:'/momentDetail',
         query:{

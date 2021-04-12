@@ -27,6 +27,16 @@
         <div>{{item.userName}}</div>
       </li>
     </ul>
+    <!--专题-->
+    <div class="user-cate" v-show="searchRes.topic.length!==0">
+      <i class="iconfont icon-zhuanti1" style="color: #000"></i>
+      专题
+    </div>
+    <ul class="search-topic">
+      <li v-for="(item,index) in searchRes.topic" :key="item.topicId" @click.stop="topicRouter(item)">
+        <div>{{item.name}}</div>
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -40,7 +50,8 @@ name: "SearchResult",
       {
         return {
           user:[],
-          moment:[]
+          moment:[],
+          topic:[]
         }
       }
     }
@@ -66,6 +77,16 @@ name: "SearchResult",
           id:item.userId
         }
       })
+    },
+    topicRouter(item)
+    {
+      this.$emit('moment-match',item);
+      this.$router.push({
+        path:'/topicDetail',
+        query:{
+          topicId:item.topicId
+        }
+      })
     }
   }
 }
@@ -83,7 +104,7 @@ name: "SearchResult",
     padding:15px 20px;
     box-shadow: 0 0 15px rgba(0,0,0,.3);
     border-radius: 5px;
-    .search-moment,.search-user{
+    .search-moment,.search-user,.search-topic{
       font-size: 12px;
       li{
         display: flex;

@@ -54,6 +54,7 @@ export default {
       if (this.keywords.length !== 0) {
         this.isShowHistory=false;
         search(this.keywords).then(data => {
+          console.log(data);
           this.searchRes = data;
         })
         this.isShow = true;
@@ -116,7 +117,8 @@ export default {
     },
     focus()
     {
-      if(this.keywords==='')
+      console.log(this.keywords)
+      if(!this.keywords)
       {
         this.isShowHistory=true
       }

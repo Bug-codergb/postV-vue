@@ -32,7 +32,6 @@
 </template>
 
 <script>
-import {allMoments, momentDetail} from "@/network/home";
 import Tags from "@/components/content/tags/Tags";
 import Reply from "@/components/content/reply/Reply";
 import Moment from "@/components/content/moment/Moment";

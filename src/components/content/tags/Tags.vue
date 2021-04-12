@@ -61,6 +61,9 @@ name: "Tags",
             type:'getMomentDetail',
             momentId:this.momentDetail.momentId
           })
+          this.$store.dispatch({
+            type:'getAllMomentsAction'
+          })
           this.content=''
         })
       }

@@ -16,8 +16,8 @@ export default {
   {
     return {
       currentIndex:0,
-      list:['动态','用户'],
-      path:['moment','user']
+      list:['动态','用户','专题'],
+      path:['moment','user','topic']
     }
   },
   methods:{

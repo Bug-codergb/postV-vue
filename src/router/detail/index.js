@@ -16,6 +16,7 @@ const topicContentDetail=()=>import('../../components/content/topicContentDetail
 //搜索子路由
 const user=()=>import('../../components/content/searchDetail/childCpn/user/User');
 const moment=()=>import('../../components/content/searchDetail/childCpn/moment/Moment');
+const topic=()=>import('../../components/content/searchDetail/childCpn/topic/Topic')
 
 //分类详情页
 //视频分类详情页
@@ -107,6 +108,11 @@ export const searchDetailRouter={
             path:'moment',
             name:'moment',
             component:moment
+        },
+        {
+            path:'topic',
+            name:'topic',
+            component:topic
         }
     ]
 }
