@@ -37,7 +37,7 @@ export default {
     getAllCheckMoment()
     {
       getAllCheckMoment().then(data=>{
-        console.log(data);
+        //console.log(data);
         this.allCheckMoment=data;
       })
     },
