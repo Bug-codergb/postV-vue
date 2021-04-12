@@ -22,8 +22,8 @@ export default {
   data()
   {
     return {
-      list:['动态','专题','视频','放映厅','课堂'],
-      path:['/admin/moment','/admin/topic','/admin/video','/admin/movie','/admin/knowledge'],
+      list:['动态','专题','视频','放映厅','课堂','广告'],
+      path:['/admin/moment','/admin/topic','/admin/video','/admin/movie','/admin/knowledge','/admin/advert'],
       currentIndex:0
     }
   },
