@@ -1,6 +1,9 @@
 <template>
-  <div class="advert" v-if="this.$store.state.userDetail.vip!==1">
-    <el-carousel height="160px" v-if="allAdvert.length" arrow="never" :autoplay="false" indicator-position="outside">
+  <div class="advert" v-if="this.$store.state.userDetail.vip!==1&&isShow">
+    <div class="cancel" @click="closeAdvert">
+      <i class="iconfont icon-chahao"></i>
+    </div>
+    <el-carousel height="160px" v-if="allAdvert.length" arrow="never" :autoplay="true" indicator-position="outside">
       <el-carousel-item v-for="item in allAdvert" :key="item.advertId">
        <div class="content">
          <a class="small" style="display: block" :href="item.url" target="_blank">
@@ -22,7 +25,8 @@ export default {
   data()
   {
     return {
-      allAdvert:[]
+      allAdvert:[],
+      isShow:true
     }
   },
   created() {
@@ -30,6 +34,12 @@ export default {
       console.log(data);
       this.allAdvert=data;
     })
+  },
+  methods:{
+    closeAdvert()
+    {
+      this.isShow=false;
+    }
   }
 }
 </script>
@@ -44,6 +54,27 @@ export default {
   }
   .el-carousel__item {
     background-color: rgba(0,0,0,.4);
+  }
+  .advert{
+    position: relative;
+    &:hover{
+      .cancel{
+        display: block;
+      }
+    }
+    .cancel{
+      display: none;
+      position: absolute;
+      left: 100%;
+      transform: translate(-100%);
+      top: 0;
+      z-index: 9;
+      background-color: #96c0ec;
+      cursor:pointer;
+      i{
+        color: #ffffff;
+      }
+    }
   }
   .content{
     position: relative;

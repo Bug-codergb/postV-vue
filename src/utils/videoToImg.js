@@ -9,7 +9,7 @@ export function getVideoBase64(url) {
         video.setAttribute('controls',"controls");
         console.log(video.offsetHeight,video.offsetWidth)
         video.src=url;
-        video.currentTime =0.1;
+        video.currentTime =1;
         video.oncanplay=function (){
             //console.log(video.videoHeight,video.videoWidth)
             canvas.height = video.videoHeight;

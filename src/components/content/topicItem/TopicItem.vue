@@ -14,7 +14,7 @@
               <div class="avatar">
                 <img :src="topic.user.avatarUrl" />
               </div>
-              <div class="user-name">{{topic.user.userName}}</div>
+              <div class="user-name" @click.stop="userRouter">{{topic.user.userName}}</div>
               <!--创建实践-->
               <div class="time">{{topic.updateTime.substring(0,10)}}</div>
             </div>
@@ -96,6 +96,15 @@ export default {
         path:"/topicUserDetail",
         query:{
           topicId:this.topic.topicId
+        }
+      })
+    },
+    userRouter()
+    {
+      this.$router.push({
+        path:'/userDetail',
+        query:{
+          id:this.topic.user.userId
         }
       })
     }

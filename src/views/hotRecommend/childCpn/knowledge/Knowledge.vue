@@ -109,6 +109,7 @@ name: "Knowledge",
       justify-content: space-between;
       flex-wrap: wrap;
       li{
+        margin: 0 0 15px 0;
         .img-container{
           width:200px;
           height:105px;

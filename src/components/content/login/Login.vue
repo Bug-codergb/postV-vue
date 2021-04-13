@@ -77,7 +77,8 @@ name: "Login",
 }
 </script>
 
-<style scoped>
+<style scoped lang="less">
+
 .login .enter{
   display: block;
   width: 220px;

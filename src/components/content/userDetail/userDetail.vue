@@ -34,7 +34,9 @@
        <tab-control :list="['动态','关注','粉丝','收藏','专题']">
          <ul slot='动态'>
            <li v-for="(item,index) in moments" :key="item.id" class="detail-moments">
-             <Moment :momentDetail="momentDetail[index]" v-if="momentDetail.length!==0">
+             <Moment :momentDetail="momentDetail[index]"
+                     v-if="momentDetail.length!==0"
+                     :key="userId">
                <div slot="delete" class="delete-moment" title="删除动态" @click="deleteMoment(item)">
                  <i class="iconfont icon-template_delete-copy"></i>
                </div>
@@ -56,22 +58,35 @@
            <fans :fans="userDetail.fans"/>
          </div>
          <div slot="收藏">
-           <subscriber :user-id="userId" v-if="userId"/>
+           <subscriber :user-id="userId" v-if="userId" :key="userId"/>
          </div>
          <div slot="专题">
-           <topic :user-id="userId" v-if="userId"/>
+           <topic :user-id="userId" v-if="userId" :key="userId"/>
          </div>
        </tab-control>
      </div>
     <div class="right-content">
-      右部内容
+      <h4>推荐用户</h4>
+      <ul class="rec-user">
+        <li v-for="(item,index) in recommendUser" :key="item.userId" @click="userRouter(item)">
+          <div v-if="item.userId!==userId">
+            <div class="avatar">
+              <img :src="item.avatarUrl" />
+            </div>
+            <div class="rec-user-info">
+              <div class="rec-user-name">{{item.userName}}</div>
+              <div class="rec-user-desc text-nowrap">{{item.desc}}</div>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </template>
 
 <script>
 import TabControl from "@/components/common/tabControl/TabControl";
-import {setUserDesc, userDetail, userMoment} from "@/network/user";
+import {recommendUser, setUserDesc, userDetail, userMoment} from "@/network/user";
 import {momentDetail} from "@/network/home";
 import Moment from "@/components/content/moment/Moment";
 import {delMoment} from "@/network/moment";
@@ -97,31 +112,42 @@ export default {
       moments:[],
       userId:'',
       isShow:false,
-      desc:''
+      desc:'',
+      recommendUser:[]
     }
   },
   created() {
     this.userId=this.$route.query.id;
     this.getUserDetail(this.userId);
-    userMoment(this.$route.query.id).then(data=>{
-     // console.log(data.moments)
-      this.moments=data.moments
-      let promise=this.moments.map((item,index)=>{
-        return momentDetail(item.id);
-      })
-      Promise.all(promise).then(data=>{
-         this.momentDetail=data
-        //console.log(this.momentDetail)
-      })
-    })
   },
   methods:{
     getUserDetail(userId)
     {
       userDetail(userId).then(data=>{
-        //console.log(data)
         this.userDetail=data
       })
+      userMoment(this.userId).then(data=>{
+        if(data.moments)
+        {
+          this.moments=data.moments
+          let promise=this.moments.map((item,index)=>{
+            return momentDetail(item.id);
+          })
+          Promise.all(promise).then(data=>{
+            this.momentDetail=data
+          })
+        }
+      })
+      //推荐用户
+      recommendUser().then(data=>{
+        this.recommendUser=data;
+      })
+    },
+    //切换用户信息
+    userRouter(item)
+    {
+      this.userId=item.userId;
+      this.getUserDetail(this.userId);
     },
     deleteMoment(item)
     {
@@ -298,6 +324,41 @@ export default {
          outline: 1px solid rgba(0,0,0,.1);
          width:400px;
          margin: 0 auto;
+       }
+     }
+   }
+   .right-content{
+     h4{
+       margin: 0 0 15px 0;
+     }
+     padding: 0 0 0 10px;
+     li{
+       &>div{
+         padding:5px 0;
+         display: flex;
+       }
+       .avatar{
+         position: relative;
+         width: 50px;
+         height: 50px;
+         overflow: hidden;
+         background-color: #333;
+         img{
+           height: 100%;
+           .center();
+         }
+       }
+       .rec-user-info{
+         margin: 0 0 0 20px;
+         .rec-user-name{
+           color: #3a8ee6;
+           font-size: 12px;
+           margin: 0 0 10px 0;
+         }
+         .rec-user-desc{
+           font-size: 12px;
+           width: 180px;
+         }
        }
      }
    }

@@ -60,13 +60,26 @@ name: "SearchResult",
     momentRouter(item)
     {
       this.$emit('moment-match',item)
-      this.$router.push({
-        path:'/momentDetail',
-        query:{
-          momentId:item.momentId,
-          userId:item.user.userId
-        }
-      })
+      const {type}=item;
+      if(type===1)
+      {
+        this.$router.push({
+          path:'/videoDetail',
+          query:{
+            vid:item.vid
+          }
+        })
+      }
+      else if(type===0)
+      {
+        this.$router.push({
+          path:'/momentDetail',
+          query:{
+            momentId:item.momentId,
+            userId:item.user.userId
+          }
+        })
+      }
     },
     userRouter(item)
     {

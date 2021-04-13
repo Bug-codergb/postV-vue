@@ -1,6 +1,6 @@
 <template>
   <div class="topic">
-    <create-topic/>
+    <create-topic v-show="userId===this.$store.state.userMsg.userId"/>
     <p class="already-join">已经加入的专题</p>
     <ul>
       <li v-for="(item,index) in topic" :key="item.topicId" @click="topicRouter(item)">

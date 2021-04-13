@@ -27,6 +27,9 @@
           </div>
         </div>
       </li>
+      <li v-for="(item,index) in holder(videoList.videos.length,3)" style="opacity: 0">
+        <div class="img-container"></div>
+      </li>
     </ul>
   </div>
 </template>
@@ -35,6 +38,7 @@
 import CateList from "@/components/common/cateList/CateList";
 import {getAllVideoCate} from "@/network/admin";
 import {getCateVideo} from "@/network/video";
+import {holder} from "@/utils/holder";
 export default {
   name: "VideoCate",
   components: {CateList},
@@ -73,6 +77,10 @@ export default {
           vid:item.vid
         }
       })
+    },
+    holder(count,line)
+    {
+      return holder(count,line);
     }
   }
 }
@@ -87,6 +95,7 @@ export default {
     position:absolute;
   }
   .video-cate{
+    border-right: 1px solid #d8e8fa;
     ul.video-list{
       margin: 20px 0 0 0;
       display: flex;

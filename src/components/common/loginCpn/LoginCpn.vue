@@ -15,7 +15,7 @@
           <span>密码:</span>
           <span v-show="isShowPass">密码不能为空</span>
         </div>
-        <input type="text" placeholder="请输入密码" v-model="password" @input="isShowPassTip"/>
+        <input type="password" placeholder="请输入密码" v-model="password" @input="isShowPassTip"/>
       </div>
     </div>
     <!--邮箱-->
