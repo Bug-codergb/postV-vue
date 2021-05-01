@@ -66,7 +66,7 @@ export default {
               let formData=new FormData();
               formData.append('knowImg',this.knowCover);
               addKnowPic(formData,data).then(data=>{
-                console.log(data);
+                this.isShow=false;
               })
             }
           })

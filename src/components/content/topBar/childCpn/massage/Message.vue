@@ -1,7 +1,7 @@
 <template>
   <div class="message">
     <i class="iconfont icon-xinxi"></i>
-    <div class="notice">0</div>
+<!--    <div class="notice">0</div>-->
   </div>
 </template>
 

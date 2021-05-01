@@ -5,7 +5,7 @@
         <ul class="moment" slot="动态">
           <li v-for="(item,index) in momentDetails" :key="item.momentId">
             <div class="moment-left">
-              <div class="moment-img-container">
+              <div class="moment-img-container" @click="momentRouter(item)">
                 <img :src="item.picUrl[0].picUrl" />
               </div>
             </div>
@@ -26,7 +26,7 @@
         <ul class="topic" slot="专题">
           <li v-for="(item,index) in topicDetails" :key="item.topic_content_id">
             <div class="topic-left">
-              <div class="title">{{item.title}}</div>
+              <div class="title" @click="topicRouter(item)">{{item.title}}</div>
               <div class="msg">
                 <div class="user-msg" v-if="user">
                   <div class="avatar">
@@ -75,7 +75,7 @@ name: "Subscriber",
     }
   },
   created() {
-  console.log(this.userId)
+  //console.log(this.userId)
     getUserSub(this.userId).then(data=>{
       console.log(data)
       this.momentDetails=data.moments
@@ -84,7 +84,39 @@ name: "Subscriber",
     })
   },
   methods:{
-
+    momentRouter(item)
+    {
+      console.log(item);
+      if(item.type===0)
+      {
+        this.$router.push({
+          path:'/momentDetail',
+          query:{
+            momentId:item.momentId,
+            userId:item.user.userId
+          }
+        })
+      }
+      else if(item.type===1)
+      {
+        this.$router.push({
+          path:'/videoDetail',
+          query:{
+            vid:item.vid
+          }
+        })
+      }
+    },
+    topicRouter(item)
+    {
+      console.log(item);
+      this.$router.push({
+        path:'/topicContentDetail',
+        query:{
+          topic_content_id:item.topic_content_id
+        }
+      })
+    }
   }
 }
 </script>
@@ -161,6 +193,7 @@ name: "Subscriber",
       .title{
         font-size: 20px;
         margin: 0 0 30px 0;
+        cursor:pointer;
       }
       .msg{
         .user-msg{
