@@ -24,7 +24,7 @@
 
 <script>
 import CateList from "@/components/common/cateList/CateList";
-import {getAllVideoCate} from "@/network/admin";
+import {getAllVideoCate} from "@/network/video";
 import {getCateVideo} from "@/network/video";
 import {holder} from "@/utils/holder";
 import MsgList from "@/components/common/msgList/MsgList";

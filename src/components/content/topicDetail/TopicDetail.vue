@@ -44,12 +44,11 @@
 <script>
 import {getTopicContent} from "@/network/topic";
 import TopicItem from "@/components/content/topicItem/TopicItem";
-import TopicContent from "@/components/content/admin/childCpn/topic/childCpn/TopicContent";
 import TopicRecommend from "@/components/content/topicRecommend/TopicRecommend";
-
+import TopicContent from "@/views/topic/childCpn/topicContent/TopicContent";
 export default {
   name: "TopicDetail",
-  components: {TopicRecommend, TopicContent, TopicItem},
+  components: {TopicRecommend,TopicItem,TopicContent},
   data()
   {
     return {

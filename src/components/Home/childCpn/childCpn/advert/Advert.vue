@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import {getAllAdvert} from "@/network/admin/advertisement";
+import {getAllAdvert} from "@/network/advert";
 
 export default {
   name: "Advert",

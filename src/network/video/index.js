@@ -63,6 +63,13 @@ export function addVideoPlayCouont(vid)
         }
     })
 }
+//获取所有视频分类
+export function getAllVideoCate()
+{
+    return request({
+        url:'/video/cate/all'
+    })
+}
 //获取分类下视频
 export function getCateVideo(categoryId)
 {

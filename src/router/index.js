@@ -9,18 +9,7 @@ import HotRecommend from "@/views/hotRecommend/HotRecommend";
 
 const Register=()=>import('../components/content/register/Register');
 const Home=()=>import('../components/Home/Home')
-//管理员
-const admin=()=>import('../components/content/admin/Admin')
-const adminMoment=()=>import('../components/content/admin/childCpn/moment/moment');
-const adminTopic=()=>import('../components/content/admin/childCpn/topic/Topic');
-const adminVideo=()=>import('../components/content/admin/childCpn/video/Video');
-const adminMovie=()=>import('../components/content/admin/childCpn/movie/Movie');
-const videoPlay=()=>import('../components/content/admin/childCpn/videoPlay/VideoPlay')
-const adminKnowledge=()=>import('../components/content/admin/childCpn/knowledge/Knowledge');
-const knowDetail=()=>import('../components/content/admin/childCpn/knowledge/childCpn/KnowDetail');
-const adminMomentDetail=()=>import('../components/content/admin/childCpn/moment/childCpn/momentDetail/momentDetail');
-const advertisement=()=>import('../components/content/admin/childCpn/advertisement/Advertisement')
-//
+
 const hotRecommend=()=>import('../views/hotRecommend/HotRecommend');
 const news=()=>import('../views/news/News');
 const topList=()=>import('../views/topList/TopList');
@@ -67,68 +56,6 @@ const routes = [
     components:{
       login:Login
     }
-  },
-    //管理员
-  {
-    path:'/admin',
-    name:"admin",
-    components:{
-      login:admin
-    },
-    meta:{
-      isRequireLogin:true
-    },
-    children:[
-      {
-        path:'/admin',
-        redirect:'/admin/moment'
-      },
-      {
-        path:'moment',
-        name:"moment",
-        component:adminMoment
-      },
-      {
-        path:'topic',
-        name:"topic",
-        component:adminTopic
-      },
-      {
-        path:'video',
-        name:"video",
-        component:adminVideo
-      },
-      {
-        path:'movie',
-        name:'movie',
-        component:adminMovie
-      },
-      {
-        path:'knowledge',
-        name:'knowledge',
-        component:adminKnowledge
-      },
-      {
-        path:'knowDetail',
-        name:'knowDetail',
-        component:knowDetail
-      },
-      {
-        path:'videoPlay',
-        name:'videoPlay',
-        component:videoPlay
-      },
-      {
-        path:'adminMomentDetail',
-        name:'adminMomentDetail',
-        component:adminMomentDetail
-      },
-      {
-        path:'advert',
-        name:'advertisement',
-        component:advertisement
-      }
-    ]
   },
   {
     path:'/Home',

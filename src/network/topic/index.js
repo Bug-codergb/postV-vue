@@ -119,3 +119,37 @@ export function getRecTopic()
         url:'/topic/recommend'
     })
 }
+/*为专题添加内容*/
+export function addContent(topicId,title,content)
+{
+    console.log(title,content)
+    return request({
+        url:'/topic/content',
+        method:'post',
+        params:{
+            topicId
+        },
+        data:{
+            title,
+            content
+        },
+        headers:{
+            'authorization':store.state.userMsg.token
+        }
+    })
+}
+export function addContentImg(topic_content_Id,formData)
+{
+    return request({
+        url:'/topic/content/img',
+        data:formData,
+        method:'post',
+        headers:{
+            'authorization':store.state.userMsg.token,
+            'Content-type':'multipart/form-data',
+        },
+        params:{
+            topic_content_Id
+        }
+    })
+}
