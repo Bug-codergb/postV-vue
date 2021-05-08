@@ -3,9 +3,14 @@
     <!--推荐轮播图-->
     <el-carousel indicator-position="outside" height="260px">
       <el-carousel-item v-for="(item,index) in banner" :key="item.momentId">
-        <div class="img-container" @click="momentRouter(item)">
-          <img :src="item.picUrl[0].picUrl" :alt="item.title" />
-          <div class="state text-nowrap">{{item.title}}</div>
+        <div class="img-outer">
+          <!--模糊-->
+          <div class="img-blur" :style="{backgroundImage:`url(${item.picUrl[0].picUrl})`}"></div>
+          <!--轮播图片-->
+          <div class="img-container" @click="momentRouter(item)" >
+            <img :src="item.picUrl[0].picUrl" :alt="item.title"/>
+            <div class="state text-nowrap">{{item.title}}</div>
+          </div>
         </div>
       </el-carousel-item>
     </el-carousel>
@@ -94,6 +99,11 @@ name: "HotRecommend",
       width: 650px!important;
       margin: 0 auto;
     }
+    .img-outer{
+      width: 100%;
+      height: 100%;
+      position: relative;
+    }
     .img-container{
       width: 100%;
       height: 100%;
@@ -102,8 +112,9 @@ name: "HotRecommend",
       display: flex;
       flex-wrap: wrap;
       align-items: center;
-      background-image:linear-gradient(#9cc6f2 170px,rgba(0,0,0,.6));
-      position: relative;
+      background-image:linear-gradient(transparent 170px,rgba(0,0,0,.6));
+      position: absolute;
+      z-index: 999;
       img{
         vertical-align: bottom;
         width: 400px;
@@ -118,6 +129,14 @@ name: "HotRecommend",
         font-size: 18px;
         color: #fff;
       }
+    }
+    .img-blur{
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      background-repeat: no-repeat;
+      filter:blur(10px);
+      background-size: cover;
     }
   }
 </style>

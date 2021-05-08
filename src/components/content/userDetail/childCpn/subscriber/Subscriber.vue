@@ -77,7 +77,6 @@ name: "Subscriber",
   created() {
   //console.log(this.userId)
     getUserSub(this.userId).then(data=>{
-      console.log(data)
       this.momentDetails=data.moments
       this.topicDetails=data.topicContent;
       this.user=data.user;

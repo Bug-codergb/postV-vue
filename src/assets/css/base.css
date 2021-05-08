@@ -47,3 +47,31 @@ textarea{
 {
     background-color: #3a8ee6!important;
 }
+.el-slider__button-wrapper,.el-slider__button{
+    cursor: pointer!important;
+}
+
+.el-slider__runway{
+    margin: 0!important;
+    background-color: #c1c1c1!important;
+    height: 5px!important;
+}
+.el-slider__bar{
+    height: 5px!important;
+}
+.el-slider__button{
+    width: 8px!important;
+    height:8px!important;
+    background-color: #3a8ee6!important;
+}
+#volume-progress .el-slider__runway {
+    height: 4px !important;
+}
+#volume-progress .el-slider__bar{
+    height: 4px !important;
+}
+#volume-progress .el-slider__button{
+    width: 5px!important;
+    height: 5px!important;
+    margin-top: -1px;
+}

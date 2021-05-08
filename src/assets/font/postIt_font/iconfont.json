@@ -6,6 +6,76 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "17412196",
+      "name": "More Vertical",
+      "font_class": "MoreVertical",
+      "unicode": "e66c",
+      "unicode_decimal": 58988
+    },
+    {
+      "icon_id": "4933432",
+      "name": "扬声器",
+      "font_class": "yangshengqi",
+      "unicode": "e766",
+      "unicode_decimal": 59238
+    },
+    {
+      "icon_id": "129101",
+      "name": "pause",
+      "font_class": "pause1",
+      "unicode": "e81f",
+      "unicode_decimal": 59423
+    },
+    {
+      "icon_id": "6151262",
+      "name": "play circle",
+      "font_class": "playcircle",
+      "unicode": "e80f",
+      "unicode_decimal": 59407
+    },
+    {
+      "icon_id": "588161",
+      "name": "部门",
+      "font_class": "bumen",
+      "unicode": "e6ae",
+      "unicode_decimal": 59054
+    },
+    {
+      "icon_id": "924718",
+      "name": "文件",
+      "font_class": "wenjian1",
+      "unicode": "e623",
+      "unicode_decimal": 58915
+    },
+    {
+      "icon_id": "1376050",
+      "name": "回收站",
+      "font_class": "huishouzhan",
+      "unicode": "e61a",
+      "unicode_decimal": 58906
+    },
+    {
+      "icon_id": "19594587",
+      "name": "分类",
+      "font_class": "class",
+      "unicode": "e686",
+      "unicode_decimal": 59014
+    },
+    {
+      "icon_id": "20831085",
+      "name": "箱子打开",
+      "font_class": "xiangzidakai",
+      "unicode": "e612",
+      "unicode_decimal": 58898
+    },
+    {
+      "icon_id": "10907201",
+      "name": "文件",
+      "font_class": "wenjian",
+      "unicode": "e8cd",
+      "unicode_decimal": 59597
+    },
+    {
       "icon_id": "18863200",
       "name": "专题",
       "font_class": "zhuanti1",
@@ -95,20 +165,6 @@
       "font_class": "fuwuqi",
       "unicode": "e61c",
       "unicode_decimal": 58908
-    },
-    {
-      "icon_id": "12600749",
-      "name": "java",
-      "font_class": "java",
-      "unicode": "e639",
-      "unicode_decimal": 58937
-    },
-    {
-      "icon_id": "9058317",
-      "name": "8_3前端开发",
-      "font_class": "_qianduankaifa",
-      "unicode": "e611",
-      "unicode_decimal": 58897
     },
     {
       "icon_id": "16648570",

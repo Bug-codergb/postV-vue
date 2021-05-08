@@ -4,26 +4,37 @@
       <div class="vio-container">
         <video :src="videoDetail.url"
                ref="vio"
-               @play.once="play"
-               controls="controls"
-               autoplay>
+               @timeupdate="getCurrentTime"
+               @ended="endHandle"
+               autoplay
+               @canplay="canPlay">
         </video>
-<!--        <button @click="playVideo">565播放</button>-->
-      </div>
-      <!--进度条设置-->
-<!--      <el-slider v-model="value1" @change="endChange"></el-slider>-->
-      <div class="profile">
-        <div class="img-container">
-          <img :src="videoDetail.user.avatarUrl" />
+        <div class="control">
+          <!--视频进度条-->
+          <div class="wrapper" @mousedown="silderDown">
+            <el-slider v-model="progress" @change="changeEnd" @input="change" :show-tooltip="false"></el-slider>
+          </div>
+          <div class="control-btn">
+            <div class="play" @click="play">
+              <div class="play-or-pause">
+                <i class="iconfont icon-playcircle" v-show="!isPlay"></i>
+                <i class="iconfont icon-pause1" v-show="isPlay"></i>
+              </div>
+              <div class="dt">
+                {{format(currentTime,"mm:ss")}}/{{format(videoDetail.duration,"mm:ss")}}
+              </div>
+            </div>
+            <div class="volume">
+              <i class="iconfont icon-yangshengqi"></i>
+              <div id="volume-progress">
+                <el-slider v-model="volume" @change="volumeChange" @input="volumeEnd"/>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="user-name">{{videoDetail.user.userName}}</div>
       </div>
-      <!--视频标题-->
-      <h2>{{videoDetail.moment.title}}</h2>
-      <div class="vio-msg">
-        <span>发布于: {{videoDetail.updateTime.substring(0,10)}}</span>
-        <span>播放: {{videoDetail.playCount}}次</span>
-      </div>
+      <!--视频信息-->
+      <video-msg :video-detail="videoDetail" />
       <reply :id="videoDetail.moment.momentId"
              v-if="videoDetail.moment"
              @reply="reply"/>
@@ -45,10 +56,12 @@ import Reply from "@/components/content/reply/Reply";
 import Avatar from "@/components/content/avatar/Avatar";
 import Comment from "@/components/content/comment/Comment";
 import RecommendVideo from "@/components/content/videoDetail/childCpn/recommendVideo/RecommendVideo";
+import VideoMsg from "@/components/content/videoDetail/childCpn/videoMsg/VideoMsg";
+import {formatDate} from "@/utils/formatDate";
 
 export default {
 name: "VideoDetail",
-  components: {RecommendVideo, Comment, Avatar, Reply},
+  components: {VideoMsg, RecommendVideo, Comment, Avatar, Reply},
   data()
   {
     return {
@@ -61,17 +74,19 @@ name: "VideoDetail",
       },
       //是否播放
       isPlay:false,
-      value1:0,
-      duration:0,
       currentTime:0,
       keyId:1,
-      vid:''
+      vid:'',
+      progress:0,
+      isDrag:false,
+      isMove: false,
+      volume:10
     }
   },
   created() {
     this.vid=this.$route.query.vid;
     getVideoDetail(this.$route.query.vid).then(data=>{
-      //console.log(data);
+      console.log(data);
       this.videoDetail=data;
     })
   },
@@ -83,15 +98,20 @@ name: "VideoDetail",
     })
   },
   methods: {
+    format(time,ft)
+    {
+      return formatDate(time,ft);
+    },
     reply()
     {
       this.keyId+=1;
     },
     play()
     {
-      addVideoPlayCouont(this.videoDetail.vid).then(data => {
-        console.log(data)
-      })
+      /*addVideoPlayCouont(this.videoDetail.vid).then(data => {
+      })*/
+      this.isPlay=!this.isPlay;
+      this.isPlay?this.$refs.vio.play():this.$refs.vio.pause();
     },
     playVideo(vid)
     {
@@ -101,37 +121,51 @@ name: "VideoDetail",
         this.keyId+=1;
         this.vid=vid;
       })
-    }
-    /*getCurrentTime(e)
-    {
-     //console.log(e.target.currentTime);
-     this.currentTime=e.target.currentTime*1000;
     },
-    playVideo() {
-      if(this.isPlay)
+    silderDown()
+    {
+      this.isMove=true
+    },
+    getCurrentTime(e)
+    {
+      if(!this.isDrag)
       {
-        console.log(this.duration)
-        this.$refs.vio.pause();
-        this.isPlay=false;
-      }
-      else{
-        this.$refs.vio.play();
-        this.isPlay=true;
+        this.currentTime=e.target.currentTime*1000;
+        this.progress=(this.currentTime/this.videoDetail.duration)*100;
       }
     },
-    canplay()
+    canPlay()
     {
-      this.duration=this.$refs.vio.duration*1000;
-      console.log(this.duration)
+      this.isPlay=true;
     },
-    //鼠标松开后出发
-    endChange(val)
+    change(val)
     {
-      console.log(val/100);
-      const time=val/100;
-      this.$refs.vio.currentTime=time*this.duration*1000;
-      console.log(this.$refs.vio)
-    }*/
+      if(this.isMove) {
+        this.isDrag = true;
+        this.currentTime = this.videoDetail.duration * (val / 100);
+      }
+    },
+    changeEnd(val)
+    {
+      this.isDrag=false;
+      this.$refs.vio.currentTime=this.currentTime/1000;
+      this.progress=val;
+      this.isMove=false;
+    },
+    endHandle()
+    {
+      this.isMove=false;
+      this.isPlay=false;
+    },
+    //音量
+    volumeChange(val)
+    {
+      this.$refs.vio.volume=val/100;
+    },
+    volumeEnd(val)
+    {
+      this.$refs.vio.volume=val/100;
+    }
   }
 }
 </script>
@@ -147,42 +181,53 @@ name: "VideoDetail",
       .vio-container{
         width: 700px;
         height:300px;
-        overflow: hidden;
         text-align: center;
-        background-color: rgba(0,0,0,.8);
+        background-color:#111111;
         border-radius: 5px;
         video{
-          height:100%;
+          height:85%;
           outline: none;
         }
-      }
-      .profile{
-        margin: 20px 0 ;
-        display: flex;
-        align-items: center;
-        .img-container{
-          width:50px;
-          height:50px;
-          margin: 0 15px 0 0;
-          border-radius: 50%;
-          background-color: rgba(209, 225, 243);
-          overflow: hidden;
-          img{
-            width: 100%;
+        .el-slider{
+          height: 3px!important;
+        }
+        //控制信息
+        .control{
+          .wrapper{
+            padding: 0 10px;
+          }
+          .control-btn{
+            margin: 10px 0 0 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: #c1c1c1;
+            .play{
+              display: flex;
+              align-items: center;
+              .play-or-pause{
+                cursor: pointer;
+                margin: 0 10px 0 10px;
+                i{
+                  font-size: 22px;
+                }
+              }
+            }
+            .volume{
+              display: flex;
+              align-items: center;
+              width: 100px;
+              i{
+                font-size: 20px;
+              }
+              #volume-progress{
+                flex: 1;
+                margin: 0 10px 0 5px;
+              }
+            }
           }
         }
-        .user-name{
-          font-size: 14px;
-        }
       }
-    .vio-msg{
-      margin: 10px 0 0 0;
-      font-size: 12px;
-      color: #cfcfcf;
-      span{
-        margin: 0 20px 0 0;
-      }
-    }
     }
     .right-content{
        flex: 1;

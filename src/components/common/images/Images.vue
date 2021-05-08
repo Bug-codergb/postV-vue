@@ -21,7 +21,7 @@
     <div class="right-content">
       <!--图片内容-->
       <div class="img-container" @click="imgRouter">
-        <img :src="imgDetail.picUrl[0].picUrl" />
+        <img :src="imgDetail.picUrl[0].picUrl||imgDetail.picUrl" />
       </div>
     </div>
   </div>
