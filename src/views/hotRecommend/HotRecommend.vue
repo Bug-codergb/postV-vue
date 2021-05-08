@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import {hotMoment} from "@/network/moment";
+import {getCateMsg} from "@/network/moment";
 import Moment from "@/components/content/moment/Moment";
 import {getHotBanner} from "@/network/recommend";
 import Article from "@/views/hotRecommend/childCpn/article/Article";
@@ -48,7 +48,7 @@ name: "HotRecommend",
     })
     getAllCate(0,10).then(data=>{
       let promise=data.map((item,index)=>{
-        return hotMoment(item.categoryId)
+        return getCateMsg(item.categoryId)
       })
       Promise.all(promise).then(data=>{
         this.recommendArc=data.filter((item,index)=>{

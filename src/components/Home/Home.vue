@@ -83,6 +83,7 @@ export default {
   width: 1020px;
   margin: 0 auto;
   padding: 0 20px 0 0;
+  background-color:red;
 }
 .back-top{
   position: fixed;

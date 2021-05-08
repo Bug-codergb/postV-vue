@@ -3,7 +3,7 @@
   <div class="moment-bar">
     <div class="time">
       <i class="iconfont icon-shijian"></i>
-      {{momentDetail.updateTime.toString().substr(0,10)}}
+      {{momentDetail.updateTime.replace("T"," ").slice(0,19)}}
     </div>
     <div class="views">
       <i class="iconfont icon-chakan"></i>

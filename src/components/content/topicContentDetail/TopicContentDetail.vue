@@ -42,13 +42,24 @@ export default {
   {
     return {
       contentDetail:{user:{},updateTime:''},
-      keyId:1
+      keyId:0
     }
   },
   created() {
     getTopicContentDetail(this.$route.query.topic_content_id).then(data=>{
       this.contentDetail=data;
     })
+  },
+  mounted() {
+    this.$bus.$on("replyTopicComment",()=>{
+      getTopicContentDetail(this.$route.query.topic_content_id).then(data=>{
+        this.contentDetail=data;
+        this.keyId+=1;
+      })
+    })
+  },
+  destroyed() {
+    this.$bus.$off("replyTopicComment")
   },
   methods:{
     reply()

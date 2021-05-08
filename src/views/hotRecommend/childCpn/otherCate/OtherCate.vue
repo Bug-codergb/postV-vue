@@ -3,23 +3,25 @@
     <p class="title" @click="detailRouter(cateDetail.name)">{{cateDetail.name}}
       <i class="iconfont icon-svgarrowsright"></i>
     </p>
+    <!--具体内容-->
     <ul class="outer">
       <li v-for="(item,index) in cateDetail.moments" :key="item.momentId">
-        <div class="img-container" @click="videoRouter(item)">
-          <img :src="item.picUrl[0].picUrl" :class="{active:cateDetail.name==='视频'}" />
-          <div class="play" v-show="cateDetail.name==='视频'" >
-            <i class="iconfont icon-play"></i>
+        <msg-list img-container-height="110px"
+                  :is-show-play="cateDetail.name==='视频'||cateDetail.name==='预告片'"
+                  :is-show-time="cateDetail.name==='视频'||cateDetail.name==='预告片'">
+          <div slot="img-container" @click="videoRouter(item)">
+            <img :src="item.picUrl[0].picUrl" />
           </div>
-        </div>
-        <div class="state text-nowrap">{{item.title}}</div>
-        <div class="msg">
-          <div class="user-msg">
-            <div class="avatar">
-              <img :src="item.user.avatarUrl"/>
-            </div>
-            <div class="user-name" @click="userRouter(item)">{{item.user.userName}}</div>
+          <div slot="playCount" v-if="item.video">{{item.video.playCount}}</div>
+          <div slot="dt" v-if="item.video&&item.video.duration!==0">
+            {{formatDate (item.video.duration,"mm:ss") }}
           </div>
-        </div>
+          <div slot="state" @click="videoRouter(item)">{{item.title}}</div>
+          <div slot="avatarUrl" @click="userRouter(item)">
+            <img :src="item.user.avatarUrl"/>
+          </div>
+          <div slot="userName" @click="userRouter(item)">{{item.user.userName}}</div>
+        </msg-list>
       </li>
       <!--占位-->
       <li v-for="(item,index) in holder(cateDetail.moments.length,3)" style="opacity: 0">
@@ -31,9 +33,12 @@
 
 <script>
 import {holder} from "@/utils/holder";
+import MsgList from "@/components/common/msgList/MsgList";
+import {formatDate} from "@/utils/formatDate";
 
 export default {
 name: "OtherCate",
+  components: {MsgList},
   props:{
     cateDetail:{
       type:Object,
@@ -44,7 +49,7 @@ name: "OtherCate",
     }
   },
   created() {
-    //console.log(this.cateDetail)
+    console.log(this.cateDetail)
   },
   methods:{
     detailRouter(name)
@@ -84,7 +89,7 @@ name: "OtherCate",
         this.$router.push({
           path:'/videoDetail',
           query:{
-            vid:item.vid
+            vid:item.video.vid
           }
         })
       }
@@ -106,6 +111,9 @@ name: "OtherCate",
           id:item.user.userId
         }
       })
+    },
+    formatDate(time,ft){
+      return formatDate(time,ft)
     }
   }
 }
@@ -126,76 +134,8 @@ name: "OtherCate",
     flex-wrap: wrap;
     justify-content: space-between;
     li{
-      margin: 0 0 15px 0;
-    }
-    .img-container{
-      width: 200px;
-      height: 104px;
-      overflow: hidden;
-      border-radius:3px;
-      background-color:#333333;
-      text-align: center;
-      position: relative;
-      img{
-        height: 104px;
-        transition: transform 0.3s;
-      }
-      .play{
-        width:45px;
-        height: 45px;
-        background-color:rgba(255,255,255,.7);
-        position: absolute;
-        top: 50%;
-        left:50%;
-        transform: translate(-50%,-50%);
-        border-radius: 50%;
-        line-height: 45px;
-        text-align: center;
-        display: none;
-        i{
-          font-size: 30px;
-          color: #3a8ee6;
-        }
-      }
-      &:hover .play{
-        display: block;
-      }
-      &:hover .active{
-        transform: scale(1.3);
-      }
-    }
-    /*state*/
-    .state{
-      font-size: 14px;
-      margin: 5px 0;
-      width: 200px;
-    }
-    /*视频信息*/
-    .msg{
-      .user-msg{
-        display: flex;
-        align-items: center;
-        .avatar{
-          width: 20px;
-          height: 20px;
-          overflow: hidden;
-          position: relative;
-          border-radius: 50%;
-          margin: 0 5px 0 0;
-          img{
-            height: 20px;
-            position: absolute;
-            transform: translate(-50%,-50%);
-            left: 50%;
-            top: 50%;
-          }
-        }
-        .user-name{
-          color: #3a8ee6;
-          font-size: 12px;
-          cursor:pointer;
-        }
-      }
+      width: 215px;
+      margin: 0 0 20px 0;
     }
   }
 </style>

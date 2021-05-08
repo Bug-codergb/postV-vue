@@ -24,10 +24,10 @@ export default new Vuex.Store({
       fans:[],
       follow:[]
     },
-    //所有动态
+    //最新所有动态
     allMoments:[],
     //热门动态
-    hotMoment:[],
+    /*hotMoment:[],*/
     //动态详情
     momentDetail:[],
     //搜索结果

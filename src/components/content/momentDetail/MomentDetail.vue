@@ -40,10 +40,6 @@ export default {
     this.userId=this.$route.query.userId;
     this.momentId=this.$route.query.momentId;
     //获取动态详情
-   // momentDetail(this.momentId).then(data=>{
-      //console.log(data)
-     // this.momentDetail=data;
-   // })
     this.$store.dispatch({
       type:'getMomentDetail',
       momentId:this.momentId

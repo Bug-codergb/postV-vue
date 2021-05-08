@@ -43,6 +43,7 @@ export default{
            })
        })
     },
+    //获取最新页所有动态
     getAllMomentsAction(context,payload) {
         allMoments().then(data=>{
             // console.log(data)
@@ -65,7 +66,7 @@ export default{
         })
     },
     /*获取曾经的热门动态*/
-    getHotMomentAction(context, payload)
+    /*getHotMomentAction(context, payload)
     {
         const {categoryId}=payload;
         hotMoment(categoryId).then(data => {
@@ -80,7 +81,7 @@ export default{
                 })
             })
         })
-    },
+    },*/
     //获取动态详情(用于评论的实时更新)
     getMomentDetail(context,payload)
     {

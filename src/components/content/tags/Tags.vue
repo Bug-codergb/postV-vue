@@ -49,6 +49,7 @@ name: "Tags",
     {
       this.isShow=!this.isShow
     },
+    //添加标签
     end()
     {
       this.isShow=!this.isShow;
@@ -61,10 +62,12 @@ name: "Tags",
             type:'getMomentDetail',
             momentId:this.momentDetail.momentId
           })
+          //最新页tag
           this.$store.dispatch({
             type:'getAllMomentsAction'
           })
-          this.content=''
+          this.content='';
+          this.$toast.show("tag添加成功",1000)
         })
       }
     },
@@ -72,10 +75,14 @@ name: "Tags",
     delTag(momentId,tagId)
     {
       deleteTag(momentId,tagId).then(data=>{
-        console.log(data)
+        this.$store.dispatch({
+          type:'getMomentDetail',
+          momentId:this.momentDetail.momentId
+        })
         this.$store.dispatch({
           type:'getAllMomentsAction'
         })
+        this.$toast.show("tag删除成功",1000)
       })
     },
   }

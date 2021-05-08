@@ -80,7 +80,7 @@ export function momentView(momentId)
     })
 }
 //推荐分类下动态
-export function hotMoment(categoryId)
+export function getCateMsg(categoryId)
 {
     return request({
         url:'/moment/hot',

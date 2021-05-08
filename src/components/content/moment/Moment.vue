@@ -9,9 +9,9 @@
           <div class="creator">
             {{momentDetail.user.name}}
           </div>
-
           <slot name="delete"></slot>
         </div>
+
         <!--标题-->
         <h3 class="moment-title">{{momentDetail.title}}</h3>
         <!--内容-->
@@ -22,12 +22,12 @@
        <moment-bar :moment-detail="momentDetail"/>
        <!--标签-->
        <Tags :momentDetail="momentDetail"/>
-        <!--动态回复按钮-->
+        <!--动态回复，评论，点赞按钮-->
         <reply :id="momentDetail.momentId" v-if="isShowCom"/>
         <!--评论回复-->
         <comment :momentId="momentDetail.momentId"
                  v-if="momentDetail&&isShowCom"
-                 :key="momentDetail.momentId+momentDetail.comments.length"/>
+                 :key="momentDetail.momentId+momentDetail.comments.length+keyId"/>
   </div>
 </template>
 
@@ -69,14 +69,22 @@ export default {
   data()
   {
     return {
-      replies:[]
+      replies:[],
+      keyId:0
     }
   },
   created() {
     //console.log(this.momentDetail)
   },
+  mounted() {
+    this.$bus.$on("replyComment",()=>{
+      this.keyId+=1;
+    })
+  },
+  destroyed() {
+    this.$bus.$off("replyComment");
+  },
   methods:{
-
     userRouter(user)
     {
       console.log(this.user)

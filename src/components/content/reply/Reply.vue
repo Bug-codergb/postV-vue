@@ -133,7 +133,7 @@ name: "Reply",
             momentId:this.id
           })
           this.isShowCom=false;
-          this.$toast.show("回复成功",2000);
+          this.$toast.show("评论成功",2000);
           this.$emit('reply')
         })
       }
@@ -151,7 +151,7 @@ name: "Reply",
       {
         this.isShowCom=false;
         publishTopicCom(this.id,this.content).then(data=>{
-          this.$toast.show("回复成功",2000);
+          this.$toast.show("评论成功",2000);
           this.$emit('reply')
         })
       }
@@ -161,6 +161,7 @@ name: "Reply",
         this.isShowCom=false;
         replyTopicCom(this.id,this.content).then(data=>{
           this.$toast.show("回复成功",2000);
+          this.$bus.$emit('replyTopicComment');
         })
       }
     },

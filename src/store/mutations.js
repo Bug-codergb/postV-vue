@@ -18,16 +18,16 @@ export default{
     {
         state.userDetail=payload.userDetail;
     },
-    //所有动态
+    //最新页所有动态
     changeAllMoments(state,payload)
     {
         state.allMoments=payload.allMoments
     },
     //
-    changeHotMoment(state,payload)
+    /*changeHotMoment(state,payload)
     {
         state.hotMoment=payload.hotMoment
-    },
+    }*/
     //动态详情
     changeMomentDetail(state,payload)
     {

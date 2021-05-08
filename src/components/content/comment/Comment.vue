@@ -11,7 +11,7 @@
         <div class="comment-content">
           <span class="comment-user-name">{{item.user.userName}}: </span>
           {{item.content}}
-          <div class="comment-time">{{item.createTime?item.createTime.slice(0,10):item.updateTime.slice(0,10)}}</div>
+          <div class="comment-time">{{item.createTime?item.createTime.slice(0,19):item.updateTime.slice(0,19)}}</div>
           <reply :replyStyle="{fontSize:'14px'}"
                  :status="status"
                  :id="item.commentId"

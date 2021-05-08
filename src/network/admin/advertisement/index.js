@@ -1,7 +1,8 @@
 import {request} from "@/network/request";
 import store from "@/store";
-export function getAllAdvert(offset,limit)
+export function getAllAdvert(offset=0,limit=30)
 {
+    console.log("all")
     return request({
         url:'/advert/all',
         params:{
