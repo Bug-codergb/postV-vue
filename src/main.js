@@ -19,7 +19,9 @@ Vue.use(VueLazyload, {
 })
 
 import toast from '@/components/common/toast/index';
-Vue.use(toast)
+import message from "./components/common/message/index";
+Vue.use(toast);
+Vue.use(message);
 Vue.config.productionTip = false
 new Vue({
   router,

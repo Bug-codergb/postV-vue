@@ -32,7 +32,6 @@ export default {
     }
   },
   created() {
-    console.log("789")
     getUserJoinTopic(this.userId).then(data=>{
       this.topic=data.topic;
     })

@@ -34,7 +34,9 @@ const knowDetail=()=>import('../../components/content/category/children/knowCate
 //课程播放
 const knowPlay=()=>import('../../components/content/category/children/knowCate/childCpn/videoPlay/VideoPlay');
 //图片详情页
-const imageDetail=()=>import('../../components/content/imageDetail/ImageDetail')
+const imageDetail=()=>import('../../components/content/imageDetail/ImageDetail');
+//聊天
+const chatDetail=()=>import("../../components/content/chat/Chat");
 export const userDetailRouter={
     path:'/userDetail',
     name:userDetail,
@@ -183,5 +185,13 @@ export const knowPlayRouter={
     name:'knowPlay',
     components:{
         detail:knowPlay
+    }
+}
+//聊天
+export const chatDetailRouter={
+    path:'/chatDetail',
+    name:'chatDetail',
+    components:{
+        detail:chatDetail
     }
 }

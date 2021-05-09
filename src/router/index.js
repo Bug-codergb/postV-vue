@@ -30,7 +30,8 @@ import {
   articleCateRouter,
   knowCateRouter,
   knowDetailRouter,
-  knowPlayRouter
+  knowPlayRouter,
+  chatDetailRouter
 } from './detail/index'
 
 //榜单子路由
@@ -154,7 +155,9 @@ const routes = [
         //课程详情
       knowDetailRouter,
         //课程播放
-      knowPlayRouter
+      knowPlayRouter,
+        //聊天
+      chatDetailRouter
     ]
   },
   {

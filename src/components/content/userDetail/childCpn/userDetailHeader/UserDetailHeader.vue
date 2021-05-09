@@ -26,6 +26,10 @@
             </label>
           </div>
         </div>
+        <div class="chat" @click="chatRouter">
+          <i class="iconfont icon-pinglun1"></i>
+          <div class="tip">发私信</div>
+        </div>
       </div>
   </div>
 </template>
@@ -101,6 +105,15 @@ export default {
           })
         }
       }
+    },
+    chatRouter()
+    {
+      this.$router.push({
+        path:'/chatDetail',
+        query:{
+          userId:this.userDetail.userId
+        }
+      })
     }
   },
   computed:{
@@ -137,6 +150,7 @@ export default {
   @size: 170px;
   display: flex;
   flex-wrap: wrap;
+  margin: 0 0 30px 0;
   .img-container {
     width: @size;
     height: @size;
@@ -181,6 +195,26 @@ export default {
       background-color: #3a8ee6;
       color: #fff;
       padding: 3px 10px;
+    }
+  }
+  //聊天
+  .chat{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0 0 0;
+    border:1px solid #3a8ee6;
+    padding: 5px 0;
+    border-radius: 15px;
+    width: 100px;
+    cursor: pointer;
+    .tip{
+      font-size: 14px;
+      color: #9b9b9b;
+      margin: 0 0 0 10px;
+    }
+    i{
+      color: #3a8ee6;
     }
   }
 }
