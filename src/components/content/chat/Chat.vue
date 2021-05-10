@@ -8,10 +8,13 @@
       <div class="content">
         <div class="content-text">
           <ul class="user-message" ref="content">
-            <li class="profile" v-for="(item,index) in contentText" :key="item.id">
-              <span class="bubble">{{item.content}}</span>
-              <div class="avatar">
-                <img :src="item.user.avatarUrl" />
+            <li class="profile" v-for="(item,index) in contentText" :key="item.id" >
+              <div class="msg" v-if="item.user.userId===store.state.userMsg.userId||item.user.userId===userId"
+                               :class="{active:item.user.userId===userId}">
+                <span class="bubble">{{item.content}}</span>
+                <div class="avatar" v-if="item.user">
+                  <img :src="item.user.avatarUrl" />
+                </div>
               </div>
             </li>
           </ul>
@@ -27,6 +30,7 @@
 
 <script>
 import {userDetail} from "@/network/user";
+import store from "../../../store"
 export default {
   name: "Chat",
   data()
@@ -37,47 +41,43 @@ export default {
       content:'',
       contentText:[],
       socket:null,
+      message:null,
+      store:null,
+      //当前用户
+      currentUser:null,
+      //在线用户
+      chatUsers:[]
     }
   },
   created() {
+    this.store=store;
     this.userId=this.$route.query.userId;
     userDetail(this.userId).then(data=>{
       console.log(data);
       this.userDetail=data;
     })
+    this.currentUser={
+      userId:this.userId
+    }
+    this.chatUsers.push({
+      userId:this.userId
+    })
     this.chat();
   },
   methods:{
-    createFragment(tool)
-    {
-      const fragment=document.createDocumentFragment();
-      let li=document.createElement('li');
-      let span=document.createElement("span");
-      let div=document.createElement("div");
-      let img=document.createElement("img");
-      img.src=this.userDetail.avatarUrl;
-      span.innerHTML=tool;
-      li.appendChild(span);
-      div.appendChild(img);
-      div.className="avatar";
-      li.appendChild(div);
-      li.className="profile";
-      fragment.appendChild(li);
-      this.$refs.content.appendChild(fragment);
-    },
     send()
     {
        let content={
          id:new Date().getTime(),
          content:this.content,
          user:{
-           avatarUrl:this.userDetail.avatarUrl
+           avatarUrl:this.$store.state.userMsg.avatarUrl,
+           userId:this.$store.state.userMsg.userId
          }
        }
        this.contentText.push(content);
        this.sendMessage(this.content);
        this.content="";
-
     },
     chat()
     {
@@ -91,7 +91,17 @@ export default {
     },
     getMessage(msg)
     {
-      console.log(msg.data)
+      const {
+        content,user
+      }=JSON.parse(msg.data)
+      this.message={
+        id:new Date().getTime(),
+        content:content,
+        user:user
+      }
+      console.log(this.message);
+      this.contentText.push(this.message);
+      console.log(JSON.parse(msg.data));
     },
     sendMessage(content)
     {
@@ -130,38 +140,47 @@ export default {
         .content-text{
           padding: 10px 20px;
           height: 410px;
+          overflow-y: scroll;
           background:#fff;
           border-bottom: 1px solid rgba(135, 206, 235,.4);
           border-right: 1px solid rgba(135, 206, 235,.4);
           .user-message{
             li{
-              padding: 8px 0;
-            }
-            .profile{
-              display: flex;
-              align-items: center;
-              justify-content: flex-end;
-              .bubble{
-                background-color: #12b7f5;
-                font-size: 13px;
-                color: #fff;
-                padding: 5px 10px;
-                border-radius: 10px;
-              }
-              .avatar{
-                width: 30px;
-                height: 30px;
-                background-color: #111;
-                margin: 0 0 0 15px;
-                border-radius: 50%;
-                position: relative;
-                overflow:hidden;
-                img{
-                  height: 100%;
-                  .center();
+              .msg{
+                padding: 8px 0;
+                display: flex;
+                align-items: center;
+                justify-content: flex-end;
+                .bubble{
+                  background-color: #12b7f5;
+                  font-size: 13px;
+                  color: #fff;
+                  padding: 5px 10px;
+                  border-radius: 10px;
+                }
+                .avatar{
+                  width: 30px;
+                  height: 30px;
+                  background-color: #111;
+                  margin: 0 0 0 15px;
+                  border-radius: 50%;
+                  position: relative;
+                  overflow:hidden;
+                  img{
+                    height: 100%;
+                    .center();
+                  }
+                }
+                &.active{
+                  flex-direction: row-reverse;
+                  justify-content:flex-end;
+                  .avatar{
+                    margin: 0 15px 0 0;
+                  }
                 }
               }
             }
+
           }
         }
         .inp{
