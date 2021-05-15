@@ -10,15 +10,25 @@
             <div class="content-text">
               <!--聊天记录-->
               <ul class="user-message">
-                <li class="profile" v-for="(item,index) in contentText" :key="item.id" >
-                  <div class="msg" v-if="item.user.userId===store.state.userMsg.userId||item.user.userId===userId">
-                    <div v-for="(it,i) in item.content" key="i" style="display: flex" :class="{active:item.user.userId===userId}">
-                      <span class="bubble">{{it}}</span>
+                <!--历史记录-->
+                <li v-for="(item,index) in historyMsg" :key="item.id">
+                  <div class="msg" :class="{active:item.user.userId===userId}">
+                    <span class="bubble">{{item.content}}</span>
+                    <div class="avatar" v-if="item.user">
+                      <img :src="item.user.avatarUrl" alt="暂无头像" />
+                    </div>
+                  </div>
+                </li>
+                <!--当前记录-->
+                <li class="profile" v-for="(item,index) in contentText" :key="item.id"
+                    v-if="item.user.userId===store.state.userMsg.userId||item.user.userId===userId">
+                  <div class="msg" :class="{active:item.user.userId===userId}">
+                      <span class="bubble">{{item.content}}</span>
                       <div class="avatar" v-if="item.user">
                         <img :src="item.user.avatarUrl" alt="暂无头像" />
                       </div>
-                    </div>
                   </div>
+
                 </li>
               </ul>
             </div>
@@ -36,6 +46,7 @@
 import {userDetail} from "@/network/user";
 import store from "../../../store"
 import NavBarControl from "@/components/common/navBarControl/NavBarControl";
+import {getAllChatUserMsg} from "@/network/chat";
 export default {
   name: "Chat",
   components: {NavBarControl},
@@ -53,18 +64,23 @@ export default {
       currentUser:null,
       //在线用户
       chatUsers:[],
-      isCurrentUser:true
+      isCurrentUser:true,
+      historyMsg:[]
     }
   },
   created() {
     this.store=store;
     this.userId=this.$route.query.userId;
+    getAllChatUserMsg(this.$store.state.userMsg.userId,this.userId).then(data=>{
+      console.log(data);
+      this.historyMsg=data;
+    })
     userDetail(this.userId).then(data=>{
       console.log(data);
       this.userDetail=data;
 
       this.chatUsers.push({
-        content:'',
+        content:[],
         user:{
           userId:this.userId,
           userName:this.userDetail.userName,
@@ -78,6 +94,10 @@ export default {
 
     this.chat();
   },
+  destroyed() {
+    console.log("页面")
+    this.socket.close();
+  },
   computed:{
     currentContent()
     {
@@ -88,26 +108,14 @@ export default {
     send()
     {
        let content={
-         content:[this.content],
+         content:this.content,
          user:{
            id:new Date().getTime(),
            avatarUrl:this.$store.state.userMsg.avatarUrl,
            userId:this.$store.state.userMsg.userId
          }
        }
-       const isExists=this.contentText.findIndex((item,index)=>{
-         console.log(this.$store.state.userMsg.userId);
-         console.log(item.user.userId)
-         return item.user.userId===this.$store.state.userMsg.userId
-       })
-      console.log(isExists);
-      if(isExists===-1)
-      {
-        this.contentText.push(content);
-      }
-      else if(isExists!==-1){
-        this.contentText[isExists].content.push(this.content);
-      }
+       this.contentText.push(content);
        this.sendMessage(this.content);
        this.content="";
     },
@@ -127,6 +135,7 @@ export default {
         content,user
       }=JSON.parse(msg.data);
       //不是当前聊天用户
+      console.log(user.userId,this.userId);
       if(user.userId!==this.userId)
       {
         let message=[];
@@ -150,18 +159,10 @@ export default {
       else{
         this.message={
           id:new Date().getTime(),
-          content:[content],
+          content:content,
           user:user
         }
-        const isExists=this.contentText.findIndex((item,index)=>{
-          return item.user.userId===user.userId
-        })
-        if(isExists===-1)
-        {
-          this.contentText.push(this.message);
-        }else if(isExists!==-1){
-          this.contentText[isExists].content.push(content);
-        }
+        this.contentText.push(this.message);
       }
     },
     sendMessage(content)
@@ -174,7 +175,7 @@ export default {
       this.socket.close();
       this.userId=item.user.userId;
       this.chat();
-      this.contentText=this.chatUsers;
+      this.contentText=[...this.chatUsers];
       console.log(item);
     }
   }
@@ -217,7 +218,6 @@ export default {
           .user-message{
             li{
               .msg{
-                &>div{
                   padding: 8px 0;
                   display: flex;
                   align-items: center;
@@ -249,7 +249,6 @@ export default {
                       margin: 0 15px 0 0;
                     }
                   }
-                }
               }
             }
 
