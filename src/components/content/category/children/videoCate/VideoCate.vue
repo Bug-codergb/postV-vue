@@ -3,12 +3,12 @@
     <cate-list title="类别" :list="videoCate" v-if="videoCate.length" @cate="cate" />
     <ul class="video-list" v-if="videoList.videos">
       <li v-for="(item,index) in videoList.videos" :key="item.vid">
-        <msg-list img-container-height="120px">
+        <msg-list img-container-height="130px">
           <div slot="img-container" @click="videoRouter(item)">
             <img :src="item.coverUrl"/>
           </div>
           <div slot="state">
-            <div>{{item.title}}</div>
+            <div class="video-cate-state">{{item.title}}</div>
           </div>
           <div slot="avatarUrl"><img :src="item.user.avatarUrl"/>}}</div>
           <div slot="userName">{{item.user.userName}}</div>
@@ -85,6 +85,7 @@ export default {
   }
   .video-cate{
     border-right: 1px solid #d8e8fa;
+    width: 70%;
     ul.video-list{
       margin: 20px 0 0 0;
       display: flex;
@@ -92,7 +93,10 @@ export default {
       flex-wrap: wrap;
       li{
         margin: 0 0 20px 0;
-        width: 225px;
+        width: 245px;
+      }
+      .video-cate-state{
+        margin: 20px 0 0 0;
       }
     }
   }

@@ -4,7 +4,7 @@
     <ul>
       <li v-for="(item,index) in momentDetail" :key="item.momentId">
         <div class="msg-outer">
-          <div class="img-container" @click="momentRouter(item,index)">
+          <div class="img-container" @click="momentRouter(item,index)" v-if="item.picUrl">
             <img :src="item.picUrl[0].picUrl" alt="item.title"/>
           </div>
           <div class="msg">

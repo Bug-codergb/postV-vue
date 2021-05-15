@@ -163,7 +163,7 @@ export default {
           .state{
             display: flex;
             align-items: flex-start;
-            width:500px;
+            width:600px;
             justify-content: space-between;
             .follow{
               background-color: rgba(58, 142, 230,.75);

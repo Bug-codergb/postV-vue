@@ -44,7 +44,6 @@
                :key="keyId"/>
     </div>
     <div class="right-content">
-      <avatar :user-id="videoDetail.user.userId" v-if="videoDetail.user.userId"/>
       <RecommendVideo :vid="vid" @play-video="playVideo"/>
     </div>
   </div>
@@ -174,8 +173,9 @@ name: "VideoDetail",
   .video-detail{
     /*border: 1px solid #3a8ee6;*/
     display: flex;
+    width: 1180px;
     .left-content{
-      width: 710px;
+      width: 70%;
       border-right: 1px solid rgba(58, 142, 230,.2);
       height: 1500px;
       .vio-container{

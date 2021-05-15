@@ -6,6 +6,34 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "1294838",
+      "name": "热门",
+      "font_class": "remen",
+      "unicode": "e633",
+      "unicode_decimal": 58931
+    },
+    {
+      "icon_id": "4868919",
+      "name": "rank_fill",
+      "font_class": "rank_fill",
+      "unicode": "e60e",
+      "unicode_decimal": 58894
+    },
+    {
+      "icon_id": "7454290",
+      "name": "news",
+      "font_class": "news",
+      "unicode": "e6f1",
+      "unicode_decimal": 59121
+    },
+    {
+      "icon_id": "14152463",
+      "name": "专题",
+      "font_class": "zhuanti",
+      "unicode": "e60a",
+      "unicode_decimal": 58890
+    },
+    {
       "icon_id": "17412196",
       "name": "More Vertical",
       "font_class": "MoreVertical",

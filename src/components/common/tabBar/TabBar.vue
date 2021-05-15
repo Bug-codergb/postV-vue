@@ -2,6 +2,7 @@
   <div class="tab-bar">
     <ul>
       <li v-for="(item,index) in list" :class="{active:currentIndex===index}" @click="liClick(index)">
+        <slot :name="item"></slot>
         {{item}}
         <div class="indicate" v-show="currentIndex===index">
           <i class="iconfont icon-right-triangle"></i>
@@ -43,7 +44,7 @@ export default {
       this.$router.push({
         path:`/Home${this.path[index]}`
       })
-    }
+    },
   }
 }
 </script>
@@ -52,7 +53,7 @@ export default {
  .tab-bar{
    position: fixed;
    transform: translateX(-100%);
-   left: 200px;
+   left: 8%;
    top: 30%;
  }
  .tab-bar ul li
@@ -64,6 +65,7 @@ export default {
    padding: 5px 10px;
    cursor: pointer;
    position: relative;
+   border-radius: 3px;
    &:hover{
      background-color: #0c73c2;
    }

@@ -162,6 +162,7 @@ export default {
     img {
       .center();
       width: @size;
+      outline: 1px solid rgba(0,0,0,.08);
     }
   }
   .user-msg {
@@ -204,12 +205,12 @@ export default {
     justify-content: center;
     margin: 20px 0 0 0;
     border:1px solid #3a8ee6;
-    padding: 5px 0;
+    padding: 3px;
     border-radius: 15px;
-    width: 100px;
+    width:80px;
     cursor: pointer;
     .tip{
-      font-size: 14px;
+      font-size: 13px;
       color: #9b9b9b;
       margin: 0 0 0 10px;
     }

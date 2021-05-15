@@ -64,7 +64,7 @@ export default {
 <style scoped lang="less">
   .rec-video{
     .rec-title{
-      margin: 150px 0 0 15px;
+      margin: 0 0 0 15px;
     }
     li .video-list{
       display: flex;

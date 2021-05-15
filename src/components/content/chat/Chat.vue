@@ -20,16 +20,16 @@
                   </div>
                 </li>
                 <!--当前记录-->
-                <li class="profile" v-for="(item,index) in contentText" :key="item.id"
+<!--                <li class="profile" v-for="(item,index) in contentText" :key="item.id"
                     v-if="item.user.userId===store.state.userMsg.userId||item.user.userId===userId">
                   <div class="msg" :class="{active:item.user.userId===userId}">
                       <span class="bubble">{{item.content}}</span>
                       <div class="avatar" v-if="item.user">
                         <img :src="item.user.avatarUrl" alt="暂无头像" />
                       </div>
-                  </div>
+                  </div>-->
 
-                </li>
+<!--                </li>-->
               </ul>
             </div>
             <div class="inp">
@@ -115,9 +115,12 @@ export default {
            userId:this.$store.state.userMsg.userId
          }
        }
-       this.contentText.push(content);
+       //this.contentText.push(content);
        this.sendMessage(this.content);
        this.content="";
+      getAllChatUserMsg(this.$store.state.userMsg.userId,this.userId).then(data=>{
+        this.historyMsg=data;
+      })
     },
     chat()
     {
@@ -135,7 +138,7 @@ export default {
         content,user
       }=JSON.parse(msg.data);
       //不是当前聊天用户
-      console.log(user.userId,this.userId);
+      //console.log(user.userId,this.userId);
       if(user.userId!==this.userId)
       {
         let message=[];
@@ -153,16 +156,14 @@ export default {
             user:user,
             content:message
           })
-        }
+         }
       }
       //是当前聊天用户
       else{
-        this.message={
-          id:new Date().getTime(),
-          content:content,
-          user:user
-        }
-        this.contentText.push(this.message);
+        console.log("我再执行")
+        getAllChatUserMsg(this.$store.state.userMsg.userId,this.userId).then(data=>{
+          this.historyMsg=data;
+        })
       }
     },
     sendMessage(content)
@@ -174,9 +175,12 @@ export default {
     {
       this.socket.close();
       this.userId=item.user.userId;
+      getAllChatUserMsg(this.$store.state.userMsg.userId,this.userId).then(data=>{
+        console.log(data);
+        this.historyMsg=data;
+      })
       this.chat();
-      this.contentText=[...this.chatUsers];
-      console.log(item);
+      //console.log(item);
     }
   }
 }
@@ -208,6 +212,7 @@ export default {
       }
       .content{
         width: 840px;
+        box-shadow: 0 4px 10px rgba(0,0,0,.1);
         .content-text{
           padding: 10px 20px;
           height: 410px;
@@ -215,6 +220,9 @@ export default {
           background:#fff;
           border-bottom: 1px solid rgba(135, 206, 235,.4);
           border-right: 1px solid rgba(135, 206, 235,.4);
+          &::-webkit-scrollbar{
+            width: 10px;
+          }
           .user-message{
             li{
               .msg{
@@ -256,8 +264,9 @@ export default {
         }
         .inp{
           height: 120px;
-          background: skyblue;
+          background: #fff;
           position: relative;
+          overflow: hidden;
           textarea{
             border: none;
             outline: none;

@@ -59,6 +59,9 @@ export default {
 </script>
 
 <style scoped lang="less">
+  .know-detail{
+    width: 70%;
+  }
   .header{
     display: flex;
     .img-container{

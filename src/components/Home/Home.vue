@@ -2,7 +2,12 @@
   <div class="home">
     <top-bar/>
     <div class="content-body">
-      <tab-bar :list="['热门','最新','榜单','专题']" :path="['/HotRecommend','/News','/TopList','/Topic']"/>
+      <tab-bar :list="['热门','最新','榜单','专题']" :path="['/HotRecommend','/News','/TopList','/Topic']">
+        <i class="iconfont icon-remen" slot="热门"></i>
+        <i class="iconfont icon-news" slot="最新"></i>
+        <i class="iconfont icon-rank_fill" slot="榜单"></i>
+        <i class="iconfont icon-zhuanti" slot="专题"></i>
+      </tab-bar>
       <router-view class="routerView" name="detail"/>
         <left-content/>
         <right-content v-if="!livePath.includes('Detail')"/>
@@ -70,8 +75,7 @@ export default {
 
 <style scoped>
 .content-body{
-  width: 1010px;
-  /*height: 2500px;*/
+  width: 1180px;
   margin: 0 auto;
   border: 1px solid rgba(58, 142, 230,.6);
   display: flex;
@@ -80,9 +84,8 @@ export default {
 }
 .routerView{
   /*border:1px solid #3a8ee6;*/
-  width: 1020px;
-  margin: 0 auto;
-  padding: 0 20px 0 0;
+  /*margin: 0 auto;*/
+  /*background: skyblue;*/
 }
 .back-top{
   position: fixed;

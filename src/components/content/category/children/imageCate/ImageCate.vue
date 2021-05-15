@@ -33,6 +33,7 @@ export default {
 
 <style scoped lang="less">
   .image-cate{
+    width: 70%;
     ul{
       li{
         border-bottom: 1px solid rgba(58, 142, 230,.2);

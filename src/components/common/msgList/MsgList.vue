@@ -63,13 +63,15 @@ name: "MsgList",
     top: 50%;
     transform: translate(-50%,-50%);
   }
+  .list-item{
+    position: relative;
+  }
   .img-container{
     border-radius: 5px;
     overflow: hidden;
     background-color: #333;
     position: relative;
     width: 100%;
-    height: 100%;
     img{
       .center();
       height: 100%;
@@ -126,20 +128,26 @@ name: "MsgList",
     cursor: pointer;
     display: flex;
     align-items: center;
+    position: absolute;
+    top: 86%;
+    left: 5%;
+    transform: translate(0,-100%);
     .avatar{
-      width: 20px;
-      height: 20px;
+      width: 40px;
+      height: 40px;
       overflow: hidden;
       position: relative;
       border-radius: 50%;
+      background: #333;
       img{
         .center();
-        height: 20px;
+        height: 40px;
       }
     }
     .user-name{
       color: #3a8ee6;
-      font-size: 12px;
+      font-size: 13px;
+      margin: 10px 0 0 10px;
     }
   }
 </style>

@@ -8,21 +8,6 @@
        <tab-control :list="['动态','关注','粉丝','收藏','专题']">
          <div slot='动态'>
            <moment-item :moment-detail="momentDetail"/>
-<!--             <Moment :momentDetail="momentDetail[index]"
-                     v-if="momentDetail.length!==0"
-                     :key="userId">
-               <div slot="delete" class="delete-moment" title="删除动态" @click="deleteMoment(item)">
-                 <i class="iconfont icon-template_delete-copy"></i>
-               </div>
-               &lt;!&ndash;动态内容&ndash;&gt;
-               <div slot="momentContent">
-                 <div class="content">
-                   <div class="state" v-if="momentDetail.length">
-                     <span v-html="momentDetail[index].content">{{momentDetail.content}}</span>
-                   </div>
-                 </div>
-               </div>
-             </Moment>-->
          </div>
          <div slot="关注">
            <follow :follow="userDetail.follow"/>
@@ -149,10 +134,11 @@ export default {
     transform: translate(-50%, -50%);
   }
   .user-detail{
+    width: 1180px;
     display: flex;
     flex-wrap:nowrap ;
     .left-content {
-      width: 720px;
+      width: 70%;
       border-right: 1px solid #d8e8fa;
       .detail-moments{
         border-bottom: 1px solid #c4ddf7;

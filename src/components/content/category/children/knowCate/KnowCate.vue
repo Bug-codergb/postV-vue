@@ -64,6 +64,7 @@ export default {
 
 <style scoped lang="less">
   .know-cate{
+    width: 70%;
     ul{
       li{
         display: flex;

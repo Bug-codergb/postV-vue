@@ -50,7 +50,7 @@ export default {
 
 <style scoped lang="less">
    .moment-detail{
-     width: 1020px;
+     width: 1180px;
      display: flex;
      overflow: hidden;
    }
@@ -66,7 +66,7 @@ export default {
     }
   }
   .left-content{
-    width: 710px;
+    width:70%;
     border-right: 1px solid rgba(58, 142, 230,.2);
   }
   .right-content{

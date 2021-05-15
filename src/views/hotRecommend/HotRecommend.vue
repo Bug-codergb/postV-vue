@@ -96,7 +96,7 @@ name: "HotRecommend",
 <style scoped lang="less">
   .hot-rec{
     .el-carousel--horizontal{
-      width: 650px!important;
+      width: 780px!important;
       margin: 0 auto;
     }
     .img-outer{

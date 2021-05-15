@@ -105,8 +105,9 @@ export default {
   }
   .topic-detail{
     display: flex;
+    width: 1180px;
     .left-content{
-      width: 750px;
+      width: 70%;
       height: 1000px;
       border-right: 1px solid rgba(58, 142, 230,.2);
       /*发布专题内容*/

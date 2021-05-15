@@ -27,6 +27,7 @@ export default {
 
 <style scoped lang="less">
   .play{
+    width: 70%;
     border-right:1px solid #3a8ee6;
   }
   video{

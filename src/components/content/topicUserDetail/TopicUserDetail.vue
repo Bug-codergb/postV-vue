@@ -68,9 +68,10 @@ export default {
   }
   .topic-user-detail{
     display: flex;
+    width: 1180px;
   }
   .left-content{
-    width:750px;
+    width:70%;
     height: 1500px;
     border-right: 1px solid #d8e8fa;
     .member{
@@ -80,6 +81,7 @@ export default {
       li{
         display: flex;
         align-items: center;
+        flex-wrap: wrap;
         width: 350px;
         padding: 15px 0;
       }

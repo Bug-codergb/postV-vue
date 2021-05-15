@@ -6,7 +6,7 @@
     <!--具体内容-->
     <ul class="outer">
       <li v-for="(item,index) in cateDetail.moments" :key="item.momentId">
-        <msg-list img-container-height="110px"
+        <msg-list img-container-height="130px"
                   :is-show-play="cateDetail.name==='视频'||cateDetail.name==='预告片'"
                   :is-show-time="cateDetail.name==='视频'||cateDetail.name==='预告片'">
           <div slot="img-container" @click="videoRouter(item)">
@@ -16,7 +16,7 @@
           <div slot="dt" v-if="item.video&&item.video.duration!==0">
             {{formatDate (item.video.duration,"mm:ss") }}
           </div>
-          <div slot="state" @click="videoRouter(item)">{{item.title}}</div>
+          <div slot="state" @click="videoRouter(item)" class="other-state">{{item.title}}</div>
           <div slot="avatarUrl" @click="userRouter(item)">
             <img :src="item.user.avatarUrl"/>
           </div>
@@ -134,8 +134,11 @@ name: "OtherCate",
     flex-wrap: wrap;
     justify-content: space-between;
     li{
-      width: 215px;
+      width: 245px;
       margin: 0 0 20px 0;
+    }
+    .other-state{
+      margin: 20px 0 0 0;
     }
   }
 </style>

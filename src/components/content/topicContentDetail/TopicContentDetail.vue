@@ -81,9 +81,11 @@ export default {
     top: 50%;
     transform: translate(-50%,-50%);
   }
+  .topic-content-detail{
+    width: 1180px;
+  }
   .left-content{
-    width:750px;
-
+    width:70%;
     border-right: 1px solid rgba(58, 142, 230,.2);
     .user-msg{
       display: flex;
