@@ -11,7 +11,6 @@
       </div>
       <!--设置搜索框-->
       <search/>
-      <button class="moment" @click="publish">发动态</button>
       <!--设置用户信息-->
       <div class="user">
         <div class="avatar" @click="showLogin">
@@ -31,6 +30,13 @@
         </transition>
       </div>
       <message/>
+      <!--创作-->
+      <div class="innovate" @mouseover="showInnovate" @mouseleave="hideInnovate">
+        <button class="moment">创作</button>
+        <transition name="innovate">
+          <Innovate v-show="isShowInnovate" @publishMoment="publish"/>
+        </transition>
+      </div>
     </div>
   </div>
 </template>
@@ -40,16 +46,19 @@ import PublishMoment from '@/components/content/publishMoment/PublishMoment'
 import Login from "./childCpn/login/Login";
 import search from './childCpn/search/Search'
 import Message from "@/components/content/topBar/childCpn/massage/Message";
+import Innovate from "@/components/content/topBar/childCpn/innovate/Innovate";
 export default {
 name: "TopBar",
   data()
   {
     return {
       isShow: false,
-      isShowLogin:false
+      isShowLogin:false,
+      isShowInnovate:false
     }
   },
   components:{
+    Innovate,
     Message,
     Login,
     PublishMoment,
@@ -72,6 +81,16 @@ name: "TopBar",
     showLogin()
     {
       this.isShowLogin=!this.isShowLogin
+    },
+    //显示创作动态，频道
+    showInnovate()
+    {
+      this.isShowInnovate=true;
+    },
+    //隐藏动态，频道
+    hideInnovate()
+    {
+      this.isShowInnovate=false;
     }
   }
 }
@@ -90,7 +109,7 @@ name: "TopBar",
   background-color:#fff;
 }
 .top-bar-content{
-  width: 1140px;
+  width: 1180px;
   height: 100%;
   margin: 0 auto;
   display: flex;
@@ -101,14 +120,24 @@ name: "TopBar",
   cursor:pointer;
   height: 35px;
 }
-.moment{
-  padding: 7px 20px;
-  border-radius: 8px;
-  background-color: @themeColor;
-  color: #fff;
-  margin: 0 0 0 40px;
-  cursor:pointer;
+//创作中心
+.innovate{
+  margin: 0 0 0 30px;
+  position: relative;
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  .moment{
+    padding: 7px 25px;
+    border-radius:3px;
+    background-color:rgba(58, 142, 230,.8);
+    color: #fff;
+    margin: 0 0 0 40px;
+    cursor:pointer;
+  }
 }
+
 /*用户头像，信息*/
 .user{
   position: relative;
@@ -116,7 +145,7 @@ name: "TopBar",
 .avatar{
   display: flex;
   align-items: center;
-  margin: 0 0 0 50px;
+  margin: 0 0 0 80px;
   i{
     font-size: 20px;
     color: @themeColor;
@@ -137,9 +166,11 @@ name: "TopBar",
     text-align: center;
     background-color:rgba(58, 142, 230,.2);
     position: relative;
+    border: 1px solid rgba(0,0,0,.08);
     img{
       .center();
       height: 30px;
+
     }
   }
   .vip{

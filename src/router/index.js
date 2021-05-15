@@ -13,7 +13,8 @@ const Home=()=>import('../components/Home/Home')
 const hotRecommend=()=>import('../views/hotRecommend/HotRecommend');
 const news=()=>import('../views/news/News');
 const topList=()=>import('../views/topList/TopList');
-const topic=()=>import('../views/topic/Topic')
+const topic=()=>import('../views/topic/Topic');
+const channel=()=>import("../views/channel/Channel");
 //详情页
 import {
   userDetailRouter,
@@ -125,7 +126,11 @@ const routes = [
           }
         ]
       },
-
+      {
+        path:'Channel',
+        name:'Channel',
+        component:channel
+      },
       //动态详情
       momentDetailRouter,
       //用户详情

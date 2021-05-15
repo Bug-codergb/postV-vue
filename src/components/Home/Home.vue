@@ -2,11 +2,12 @@
   <div class="home">
     <top-bar/>
     <div class="content-body">
-      <tab-bar :list="['热门','最新','榜单','专题']" :path="['/HotRecommend','/News','/TopList','/Topic']">
+      <tab-bar :list="['热门','最新','榜单','专题','频道']" :path="['/HotRecommend','/News','/TopList','/Topic','/Channel']">
         <i class="iconfont icon-remen" slot="热门"></i>
         <i class="iconfont icon-news" slot="最新"></i>
         <i class="iconfont icon-rank_fill" slot="榜单"></i>
         <i class="iconfont icon-zhuanti" slot="专题"></i>
+        <i class="iconfont icon-channel2" slot="频道"></i>
       </tab-bar>
       <router-view class="routerView" name="detail"/>
         <left-content/>

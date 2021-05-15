@@ -61,9 +61,8 @@
 
 <script>
 import {momentPic, publishMoment} from "@/network/moment";
-import {delMomentPic} from "../../../network/moment";
 import {uploadVio, uploadVioImg} from "../../../network/video";
-import {getVideoBase64, getVideoDuration, getVideoImage} from "../../../utils/videoToImg";
+import {getVideoBase64, getVideoDuration, getVideoImage} from "@/utils/videoToImg";
 import {getAllCate} from "@/network/toplist";
 
 export default {
