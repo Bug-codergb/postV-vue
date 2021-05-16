@@ -14,7 +14,15 @@ export function request(config)
     instance.interceptors.response.use(res=>{
         return res.data;
     },err=>{
-
+        console.log(err);
+       const response={
+           message:err.response.data,
+           status:err.response.status
+       }
+       store.commit({
+           type:'changeResponse',
+           response
+       })
     })
     return instance(config);
 }

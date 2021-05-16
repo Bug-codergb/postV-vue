@@ -81,7 +81,7 @@ name: "Login",
 
 .login .enter{
   display: block;
-  width: 220px;
+  width: 257px;
   margin:40px auto 20px;
   padding: 10px 0;
   background-color: #3a8ee6;

@@ -20,6 +20,7 @@
     </div>
     <!--邮箱-->
     <slot name="email"></slot>
+    <slot name="captcha"></slot>
     <!--登录注册按钮-->
     <div @click="loginEnter">
       <slot name="enter"></slot>
@@ -95,13 +96,13 @@ h1{
   left: 60%;
   top: 10%;
   padding: 30px 20px 0 20px;
-  box-shadow: 0px 0px 20px rgba(58, 142, 230,.3);
+  box-shadow: 0 0 20px rgba(58, 142, 230,.3);
   border-radius: 5px;
   background-color: #fff;
   z-index: 99;
 }
 .inp{
-  width: 220px;
+  width: 257px;
   margin: 0 auto;
 }
 .username{
@@ -109,9 +110,9 @@ h1{
 }
 .username input,.password input{
   height: 30px;
-  width: 200px;
+  width: 240px;
   border: 1px solid #3a8ee6;
-  padding: 0 0 0 15px;
+  padding: 3px 0 3px 15px;
 }
 .username div:nth-child(1)
 {

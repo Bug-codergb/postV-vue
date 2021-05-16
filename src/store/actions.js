@@ -6,7 +6,7 @@ export default{
     /*获取用户登录信息*/
     getUserMsgAction(context,payload)
     {
-        const {userName,password}=payload
+        const {userName,password}=payload;
         return new Promise((resolve,reject)=>{
             login(userName,password).then(data=>{
                if(data)
