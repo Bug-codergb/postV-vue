@@ -5,6 +5,10 @@
     <transition name="moment">
       <publish-moment v-if="isShow" @changeShow="changeShow"/>
     </transition>
+    <!--创作专栏-->
+    <transition name="channel">
+      <ChannelPublish v-show="isShowChannel" @cancel="publishChannel"/>
+    </transition>
     <div class="top-bar-content">
       <div class="logo" @click="homeRouter">
         <img src="../../../assets/img/logo2.png"/>
@@ -34,7 +38,7 @@
       <div class="innovate" @mouseover="showInnovate" @mouseleave="hideInnovate">
         <button class="moment">创作</button>
         <transition name="innovate">
-          <Innovate v-show="isShowInnovate" @publishMoment="publish"/>
+          <Innovate v-show="isShowInnovate" @publishMoment="publish" @publishChannel="publishChannel"/>
         </transition>
       </div>
     </div>
@@ -47,6 +51,7 @@ import Login from "./childCpn/login/Login";
 import search from './childCpn/search/Search'
 import Message from "@/components/content/topBar/childCpn/massage/Message";
 import Innovate from "@/components/content/topBar/childCpn/innovate/Innovate";
+import ChannelPublish from "@/components/content/channelPublish/ChannelPublish";
 export default {
 name: "TopBar",
   data()
@@ -54,10 +59,12 @@ name: "TopBar",
     return {
       isShow: false,
       isShowLogin:false,
-      isShowInnovate:false
+      isShowInnovate:false,
+      isShowChannel:false
     }
   },
   components:{
+    ChannelPublish,
     Innovate,
     Message,
     Login,
@@ -67,6 +74,10 @@ name: "TopBar",
   methods:{
     publish() {
       this.isShow=true
+    },
+    publishChannel(){
+      console.log("d")
+      this.isShowChannel=!this.isShowChannel;
     },
     changeShow()
     {
@@ -202,6 +213,17 @@ name: "TopBar",
 .moment-enter-to{
   opacity: 1;
 }
+/*channel*/
+  .channel-enter{
+    opacity: 0;
+  }
+  .channel-enter-active{
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .channel-enter-to{
+    opacity: 1;
+  }
 /*登录*/
 .login-enter{
   opacity: 0;
