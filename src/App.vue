@@ -15,7 +15,7 @@
     mounted() {
       this.$nextTick(()=>{
           let homeContainer=this.$refs.homeContainer;
-          document.onselectstart=new Function("return false");
+          //document.onselectstart=new Function("return false");
       })
     }
   }

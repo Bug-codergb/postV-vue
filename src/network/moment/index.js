@@ -1,6 +1,6 @@
 import {request} from '../request';
 import store from '../../store/index'
-export function publishMoment(title,cate,content)
+export function publishMoment(momentId,title,cate,content)
 {
     return request({
         url:'/moment/add',
@@ -9,6 +9,7 @@ export function publishMoment(title,cate,content)
           'authorization':store.state.userMsg.token
         },
         data:{
+            momentId,
             title,
             content,
             cate

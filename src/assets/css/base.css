@@ -2,6 +2,8 @@
     margin: 0;
     padding: 0;
     font-family: Arial,Helvetica,sans-serif;
+    box-sizing: border-box;
+    font-size:14px ;
 }
 a{
     text-decoration: none;
@@ -74,4 +76,11 @@ textarea{
     width: 5px!important;
     height: 5px!important;
     margin-top: -1px;
+}
+
+.w-e-text-container,.w-e-toolbar{
+    border: 1px solid #aecfea!important;
+}
+.w-e-toolbar .w-e-menu i {
+    color: rgba(58, 142, 230,.7);
 }

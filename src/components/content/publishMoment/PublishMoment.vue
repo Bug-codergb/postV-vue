@@ -1,8 +1,5 @@
 <template>
   <div class="publish-moment">
-    <div class="exit" @click="exit">
-      <i class="iconfont icon-cha"></i>
-    </div>
     <div  class="momentTile">
       <span>标题</span>
       <textarea v-model="title"/>
@@ -19,18 +16,11 @@
          </option>
        </select>
      </div>
-    <textarea v-model="content" class="momentContent"/>
 
-    <!--上传文件预览-->
+    <textarea v-model="content" class="momentContent" v-show="cate==='视频'"/>
+    <div id="edt" ref="edit" v-show="cate!=='视频'"></div>
+    <!--上传视频预览-->
     <div class="upload-img">
-      <!--图片预览-->
-      <div class="img-container" v-for="(item,index) in images">
-        <img :src="item" alt="动态图片"/>
-        <div class="cancelImg" title="取消" @click="cancelUploadImg(index)">
-          <i class="iconfont icon-chahao "></i>
-        </div>
-      </div>
-      <!--视频预览-->
       <div class="vio-container" v-for="(item,index) in videos">
         <img :src="item"/>
         <div class="cancelVio" title="取消" @click="cancelUploadVio(index)">
@@ -41,19 +31,13 @@
     <!--发表动态，配图按钮-->
     <div class="control-btn">
       <div class="upload">
-        <!--上传图片-->
-        <div class="upload-img-btn" v-show="cate!=='视频'">
-          <input type="file" @change="previewImg" ref="momentPic" name="picture" multiple="multiple" title="上传图片"/>
-          <span>
-            <i class="iconfont icon-tu"></i>
-          </span>
-        </div>
         <!--上传视频-->
         <div class="upload-vio" v-show="cate!=='文章'&&cate!=='图片'">
-          <input type="file" @change="previewVio" ref="momentVio" title="上传视频"/>
+          <input type="file" @change="previewVio" title="上传视频"/>
           <span><i class="iconfont icon-shipin"></i></span>
         </div>
         <button class="publish-btn" @click="publishMoment">发布</button>
+        <button class="exit" @click="exit">取消</button>
       </div>
     </div>
   </div>
@@ -64,6 +48,10 @@ import {momentPic, publishMoment} from "@/network/moment";
 import {uploadVio, uploadVioImg} from "../../../network/video";
 import {getVideoBase64, getVideoDuration, getVideoImage} from "@/utils/videoToImg";
 import {getAllCate} from "@/network/toplist";
+
+import E from 'wangeditor';
+import store from "@/store";
+
 
 export default {
   name: "PublishMoment",
@@ -77,7 +65,8 @@ export default {
       vioImg:[],//根据视频生成的图片
       category:[],
       cate:'文章',
-      cateMap:new Map()
+      cateMap:new Map(),
+      momentId:''
     }
   },
   created() {
@@ -86,8 +75,34 @@ export default {
       this.category.forEach((item,index)=>{
         this.cateMap.set(item.name,item.categoryId);
       })
-      console.log(this.cateMap)
     })
+  },
+  mounted() {
+    const editor = new E(this.$refs.edit);
+    editor.config.showLinkImg = false
+    editor.config.uploadImgServer ="http://localhost:7876/upload/moment/picture";
+    editor.config.uploadFileName = 'picture';
+    editor.config.excludeMenus = [
+      'link',
+      'video',
+      'code',
+      'redo',
+    ]
+    editor.config.uploadImgHeaders = {
+      authorization:store.state.userMsg.token
+    }
+    editor.config.uploadImgParamsWithUrl = true
+    editor.create();
+    editor.config.onchange =(html)=>{
+      // 第二步，监控变化，同步更新到 textarea
+      this.content=html;
+    }
+    editor.config.uploadImgHooks = {
+      success:(xhr)=>{
+        const {momentId}=JSON.parse(xhr.response);
+        this.momentId=momentId;
+      },
+    }
   },
   methods:{
     publishMoment()
@@ -97,8 +112,11 @@ export default {
         this.$toast.show("为你的动态添加一个标题吧!",1500)
       }
      else{
-        publishMoment(this.title,this.cateMap.get(this.cate),this.content).then(data=>{
-          this.upload(this.fileList,data,this.cate)
+        publishMoment(this.momentId,this.title,this.cateMap.get(this.cate),this.content).then(data=>{
+          if(this.cate==='视频')
+          {
+            this.upload(this.fileList,data)
+          }
           this.$emit('changeShow')
         })
       }
@@ -108,101 +126,46 @@ export default {
     {
       this.$emit('changeShow')
     },
-    //图片预览
-    previewImg()
-    {
-      let reader=new FileReader();
-      reader.addEventListener('load',()=>{
-        console.log(this.$refs.momentPic.files[0])
-        this.images.push(reader.result);
-        this.fileList.push(this.$refs.momentPic.files[0]);
-        //动态中显示图片名字
-        this.content+=`[${this.$refs.momentPic.files[0].name}]`
-      })
-      if(this.$refs.momentPic.files[0])
-      {
-        reader.readAsDataURL(this.$refs.momentPic.files[0])
-      }
-    },
     //视频预览
-    previewVio()
+    previewVio(e)
     {
+      let videoFile=e.target.files[0];
          //上传的视频文件的图片
-        getVideoDuration(this.$refs.momentVio.files[0]).then(data=>{
+        getVideoDuration(videoFile).then(data=>{
           //上传的视频文件
           this.fileList.push({
-            file:this.$refs.momentVio.files[0],
+            file:videoFile,
             duration:data
           })
         })
-        let url=URL.createObjectURL(this.$refs.momentVio.files[0]);
+        let url=URL.createObjectURL(videoFile);
         getVideoBase64(url).then(data=>{
           this.videos.push(data)
-          this.vioImg.push(getVideoImage(data,this.$refs.momentVio.files[0].name));
+          this.vioImg.push(getVideoImage(data,videoFile.name));
         })
     },
-    upload(files,momentId,cate)
+    upload(files,momentId)
     {
       if(files.length!==0)
       {
-        let imgFormData=new FormData();
         let vioForData=new FormData();
-        let flag=true
         for(let item of files)
         {
-          //判断文件时视频文件还是图片文件；
-          let type='';
-          if(cate==='视频'||cate==='预告片')
-          {
-            type=item.file.type;
-          }
-          else{
-            type=item.type;
-          }
-          //如果是图片
-          if(type.includes('image'))
-          {
-            imgFormData.append('picture',item)
-          }
-          //如果是视频
-          else if(type.includes("video"))
-          {
-            flag=false;
-            vioForData.append('video',item.file);
-            vioForData.append('duration',item.duration)
-          }
-        }
-        //上传图片
-        if(flag)
-        {
-          momentPic(imgFormData,momentId).then(data=>{
-          console.log(data)
-          })
+          vioForData.append('video',item.file);
+          vioForData.append('duration',item.duration)
         }
         //上传视频
-        if(!flag)
-        {
-          uploadVio(vioForData,momentId).then(data=>{
-            //console.log(data)
-            const formData=new FormData();
-            for(let item of this.vioImg)
-            {
-              formData.append('videoImg',item);
-            }
-           uploadVioImg(formData,data).then(data=>{
+        uploadVio(vioForData,momentId).then(data=>{
+          const formData=new FormData();
+          for(let item of this.vioImg)
+          {
+            formData.append('videoImg',item);
+          }
+          uploadVioImg(formData,data).then(data=>{
              console.log(data);
            })
           })
-        }
       }
-    },
-    //取消图片
-    cancelUploadImg(index)
-    {
-      this.content=this.content.replace(`[${this.fileList[index].name}]`,'')
-      this.fileList.splice(index,1);
-      this.images.splice(index,1);
-      //console.log(this.fileList)
     },
     //取消视频
     cancelUploadVio(index)
@@ -210,7 +173,6 @@ export default {
       this.fileList.splice(index,1);
       this.videos.splice(index,1);
       this.vioImg.splice(index,1);
-      //console.log(this.fileList)
     }
   }
 }
@@ -227,72 +189,87 @@ export default {
     top: 50%;
     background-color: #fff;
     cursor: default;
-    padding: 20px 20px 30px 20px;
+    padding:40px 40px 30px;
     border-radius: 10px;
-  }
-  .exit{
-     width: 30px;
-    height: 30px;
-    background-color: rgba(0,0,0,.1);
-    border-radius: 50%;
-    cursor:pointer;
-    text-align: center;
-    line-height: 30px;
-    float: right;
-  }
-  .exit i{
-    font-size: 20px;
-    color: #3a8ee6;
-  }
-  //动态标题
-  .momentTile{
-    margin: 30px 0 0 80px;
-    display: flex;
-    align-items: center;
-    textarea{
-      outline: none;
+    //动态标题
+    .momentTile{
+      display: flex;
+      align-items: center;
+      textarea{
+        outline: none;
+        border: 1px solid #3a8ee6;
+        width: 480px;
+        margin: 0 0 0 15px;
+      }
+    }
+    /*分类*/
+    .category{
+      margin: 20px 0 0 0;
+      select{
+        margin: 0 0 0 15px;
+        outline: 1px solid #3a8ee6;
+        border: none;
+        padding: 5px 10px;
+      }
+    }
+    //内容框
+    .momentContent{
+      display: block;
       border: 1px solid #3a8ee6;
-      width: 480px;
-      margin: 0 0 0 15px;
+      outline: none;
+      margin: 30px 0 0 0;
+      height: 200px;
+      width: 100%;
+      font-family: "微软雅黑" ;
+      padding: 15px;
+      background-color: #fff;
     }
-  }
-  .category{
-    margin: 30px 0 0 80px;
-    select{
-      margin: 0 0 0 15px;
-      outline: 1px solid #3a8ee6;
-      border: none;
-      padding: 5px 10px;
-
+    /*文件上传图片展示*/
+    .upload-img{
+      height: 60px;
+      width:86%;
+      background-color:rgba(58, 142, 230,.1);
+      position: absolute;
+      top:65%;
+      left: 50%;
+      transform: translate(-50%,0);
+      display: flex;
+      overflow: hidden;
+      .img-container{
+        height: 60px;
+        margin: 0 10px 0 0;
+        position: relative;
+        img{
+          height: 60px;
+        }
+        overflow: hidden;
+        .cancelImg:extend(.cancel){
+          i{
+            color: #f4f4f4;
+          }
+        }
+      }
+      /*文件上传视频展示*/
+      .vio-container{
+        position: relative;
+        img{
+          height: 60px;
+          margin:0 10px 0 0;
+        }
+        .cancelVio:extend(.cancel){
+          i{
+            color: #f4f4f4;
+          }
+        }
+      }
     }
-  }
-  .momentContent{
-    display: block;
-    border: 1px solid #3a8ee6;
-    outline: none;
-    margin: 30px auto 0;
-    height: 200px;
-    width: 500px;
-    font-family: 微软雅黑;
-    padding: 15px;
-  }
-  .publish-btn{
-    font-size: 14px;
-    padding: 5px 20px;
-    background-color: #3a8ee6;
-    color: #fff;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  .publish-btn:hover{
-    background-color: #0c73c2;
   }
   .cancel{
     text-align: center;
     line-height: 15px;
     width:15px;
     height:15px;
-    background-color: red;
+    background-color: #fff;
     position: absolute;
     top: 0;
     left: 100%;
@@ -300,57 +277,44 @@ export default {
     cursor: pointer;
     background-color: rgba(58, 142, 230,.9);
   }
-  /*文件上传图片展示*/
-  .upload-img{
-    height: 60px;
-    width:525px;
-    background-color:rgba(58, 142, 230,.1);
-    position: absolute;
-    left:14.5%;
-    top:72%;
-    display: flex;
-    overflow: hidden;
-    .img-container{
-      height: 60px;
-      margin: 0 10px 0 0;
-      position: relative;
-      img{
-        height: 60px;
-      }
-      overflow: hidden;
-      .cancelImg:extend(.cancel){
-        i{
-          color: #f4f4f4;
-        }
-      }
-    }
+  #edt{
+    margin: 20px 0 0 0;
   }
-  /*文件上传视频展示*/
-  .vio-container{
-    position: relative;
-    img{
-      height: 60px;
-      margin:0 10px 0 0;
-    }
-    .cancelVio:extend(.cancel){
-      i{
-        color: #f4f4f4;
-      }
-    }
-  }
-  /*设置上传，配图按钮*/
-  .control-btn{
-    margin: 15px 0 0 230px;
-  }
+
   //文件上传按钮
   .upload{
-    width: 180px;
+    margin: 20px 0 0 0;
+    width: 100%;
     height: 30px;
     overflow: hidden;
-    margin: 0 0 0 205px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content:flex-end;
+    /*确认发布*/
+    .publish-btn{
+      font-size: 14px;
+      padding: 5px 15px;
+      background-color: #3a8ee6;
+      color: #fff;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+    .publish-btn:hover{
+      background-color: #0c73c2;
+    }
+    /*取消上传*/
+    .exit{
+      background-color: rgba(0,0,0,.08);
+      color: #000000;
+      cursor:pointer;
+      margin: 0 0 0 20px;
+      padding: 5px 15px;
+      i{
+        font-size: 20px;
+        color: #3a8ee6;
+      }
+    }
+
     input{
       border:1px solid #3a8ee6;
       opacity:0;
@@ -362,11 +326,6 @@ export default {
         color: #3a8ee6;
         font-size: 24px;
       }
-    }
-    .upload-img-btn
-    {
-       position: relative;
-      margin: 0 20px 0 0;
     }
     .upload-vio{
       position: relative;

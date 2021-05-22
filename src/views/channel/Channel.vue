@@ -1,12 +1,14 @@
 <template>
   <div class="channel">
-    频道
+    <cate-list/>
   </div>
 </template>
 
 <script>
+import CateList from "./childCpn/cataList/CateList";
 export default {
-  name: "Channel"
+  name: "Channel",
+  components: {CateList}
 }
 </script>
 
