@@ -5,6 +5,7 @@
         {{item.name}}
       </li>
     </ul>
+
   </div>
 </template>
 
@@ -20,7 +21,7 @@ export default {
   },
   created() {
     getAllCate().then(data=>{
-      console.log(data);
+     // console.log(data);
       this.cateList=data;
     })
   }

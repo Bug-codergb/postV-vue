@@ -91,3 +91,14 @@ export function addCateConCover(formData,id){
         },
     })
 }
+//获取分类下（体育，搞笑）内容
+export function getChannelCateDetail(cateId,offset=0,limit=30){
+    return request({
+       url:"/channel/cate/detail",
+        params:{
+           cateId,
+            offset,
+            limit
+        }
+    })
+}

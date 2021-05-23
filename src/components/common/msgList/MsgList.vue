@@ -19,11 +19,11 @@
       </div>
     </div>
     <!--标题-->
-    <div class="state text-nowrap" >
+    <div class="state text-nowrap" :style="{width:itemWidth}" >
       <slot name="state"></slot>
     </div>
     <!--作者-->
-    <div class="creator">
+    <div class="creator" :style="{top:creatorTop}">
       <div class="avatar">
         <slot name="avatarUrl"></slot>
       </div>
@@ -49,6 +49,14 @@ name: "MsgList",
     isShowTime:{
       type:Boolean,
       default:true
+    },
+    itemWidth:{
+      type:String,
+      default:"200px"
+    },
+    creatorTop:{
+      type:String,
+      default:"86%"
     }
   }
 }
@@ -120,7 +128,6 @@ name: "MsgList",
     }
   }
   .state{
-    width: @itemWidth;
     font-size: 14px;
     margin: 15px 0 10px 0;
   }
@@ -129,7 +136,6 @@ name: "MsgList",
     display: flex;
     align-items: center;
     position: absolute;
-    top: 86%;
     left: 5%;
     transform: translate(0,-100%);
     .avatar{
