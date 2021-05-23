@@ -45,27 +45,27 @@
     </div>
 
     <!--二级类别-->
-    <ul v-if="cateCon.length!==0" class="cate-con">
-      <li v-for="(item,index) in cateCon" :key="item.id"
-          :class="{active:cateCurrentIndex===index}"
-           @click="cateClick(item,index)">
-        {{item.name}}
-      </li>
-    </ul>
+    <cate-con :cate-con="cateCon"
+              @cate-click="cateClick"
+              v-show="isShowCateCon"
+              @cancel="cancelCate"
+              :cate-id="cateId"
+              @add-cate-con="addCateCon"/>
   </div>
 </template>
 
 <script>
 import {addChannelCon, getAllCate, getChannelCateCon, uploadChannelVio, uploadCover} from "@/network/channel";
 import {getVideoBase64, getVideoDuration} from "@/utils/videoToImg";
+import CateCon from "@/components/content/channelPublish/childCpn/cateCon/CateCon";
 
 export default {
   name: "ChannelPublish",
+  components: {CateCon},
   data(){
     return {
       cate:[],
       currentIndex:0,
-      cateCurrentIndex:0,
       isShowImgControl:true,
       isShowVideoControl:true,
       previewImgURL:"",
@@ -74,16 +74,17 @@ export default {
       cover:null,
       video:null,
       cateId:'',
+      cateConId:"",
       content:"",
       title:"",
       dt:0,
-      cateCon:[]
+      cateCon:[],
+      isShowCateCon:false
     }
   },
   created() {
     getAllCate().then(data=>{
       this.cate=data;
-      this.cateId=data[0].id
     })
   },
   methods:{
@@ -110,15 +111,25 @@ export default {
 
     liClick(item,index){
       this.currentIndex=index;
+      this.cateId=item.id;
       getChannelCateCon(item.id).then(data=>{
         console.log(data);
         this.cateCon=data;
+        if(data.length!==0){
+          this.cateConId=data[0].id;
+        }else{
+          this.cateConId="";
+        }
       });
+      this.isShowCateCon=true;
     },
-    cateClick(item,index){
-      this.cateCurrentIndex=index;
-      this.cateId=item.id;
+    cateClick(id){
+      this.cateConId=id;
     },
+    cancelCate(){
+      this.isShowCateCon=!this.isShowCateCon;
+    },
+
 
     //取消
     cancel(){
@@ -126,7 +137,7 @@ export default {
     },
     //确认发布
     publish(){
-      addChannelCon(this.title,this.content,this.cateId).then(data=>{
+      addChannelCon(this.title,this.content,this.cateConId).then(data=>{
         if(data){
           const {id}=data;
           let formData=new FormData();
@@ -144,6 +155,11 @@ export default {
           })
         }
       })
+    },
+    addCateCon(){
+      getChannelCateCon(this.cateId).then(data=>{
+        this.cateCon=data;
+      });
     }
   }
 }
@@ -248,31 +264,6 @@ export default {
           background-color: #fff;
           color:#757575;
         }
-        &.active{
-          background-color: #3a8ee6;
-        }
-      }
-    }
-    .cate-con{
-      background-color: #fff;
-      z-index: 99;
-      .center(absolute,50%,30%,-50%,-50%);
-      box-shadow: 0 0 20px rgba(0,0,0,.2);
-      display: flex;
-      padding: 30px;
-      flex-wrap: wrap;
-      width: 450px;
-      height: 200px;
-      overflow-y: scroll;
-      align-items: flex-start;
-      li{
-        padding: 5px 10px;
-        background-color: #a0c9f3;
-        color: #fff;
-        font-size: 13px;
-        margin: 0 10px;
-        border-radius: 3px;
-        cursor: pointer;
         &.active{
           background-color: #3a8ee6;
         }

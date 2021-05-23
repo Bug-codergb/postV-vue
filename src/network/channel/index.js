@@ -60,3 +60,34 @@ export function getChannelCateCon(id){
         }
     })
 }
+//添加子分类
+export function addChannelCateCon(cateId,name){
+    return request({
+        url:"/channel/cate/con",
+        method:"post",
+        params:{
+            cateId
+        },
+        data:{
+          name
+        },
+        headers:{
+            'authorization':store.state.userMsg.token
+        },
+    })
+}
+//添加子分类头图
+export function addCateConCover(formData,id){
+    return request({
+        url:"/channel/cate/con/cover",
+        data:formData,
+        method:"post",
+        params:{
+            id
+        },
+        headers:{
+            'authorization':store.state.userMsg.token,
+            'Content-type':'multipart/form-data',
+        },
+    })
+}

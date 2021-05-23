@@ -7,7 +7,7 @@
     </transition>
     <!--创作专栏-->
     <transition name="channel">
-      <ChannelPublish v-show="isShowChannel" @cancel="publishChannel"/>
+      <ChannelPublish v-if="isShowChannel" @cancel="publishChannel"/>
     </transition>
     <div class="top-bar-content">
       <div class="logo" @click="homeRouter">
