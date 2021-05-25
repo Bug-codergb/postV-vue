@@ -12,6 +12,10 @@
       <span slot="register">没有账号? </span>
       <span slot="register" @click="registerRouter"> 注册</span>
     </login-cpn>
+    <lottie-player src="https://assets6.lottiefiles.com/private_files/lf30_imyUMa.json"
+                   background="#3a8ee6"
+                   speed="1"  style="width:80%; height: 700px;"
+                   loop autoplay></lottie-player>
   </div>
 </template>
 
@@ -78,7 +82,10 @@ name: "Login",
 </script>
 
 <style scoped lang="less">
-
+  .login{
+    height: 700px;
+    background: #3a8ee6;
+  }
 .login .enter{
   display: block;
   width: 257px;

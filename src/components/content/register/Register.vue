@@ -24,6 +24,10 @@
           </div>
         </div>
       </div>-->
+      <lottie-player src="https://assets6.lottiefiles.com/private_files/lf30_imyUMa.json"
+                     background="#3a8ee6"
+                     speed="1"  style="width:80%; height: 700px;"
+                     loop autoplay></lottie-player>
     </login-cpn>
   </div>
 </template>
@@ -73,10 +77,9 @@ export default {
 
 <style scoped lang="less">
   .register{
-    width:440px;
-    height: 600px;
+    height: 700px;
     position: relative;
-    left: 15%;
+    background-color:#3a8ee6;
     /*错误信息提示*/
     .tip{
       position: absolute;
