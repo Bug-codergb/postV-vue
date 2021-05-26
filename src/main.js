@@ -10,7 +10,7 @@ Vue.use(ElementUI);
 Vue.use(less);
 
 Vue.prototype.$bus=new Vue();
-
+import "./assets/js/lottie"
 import VueLazyload from 'vue-lazyload';
 Vue.use(VueLazyload, {
   preLoad: 1.3,

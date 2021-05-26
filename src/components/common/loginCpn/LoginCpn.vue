@@ -90,7 +90,7 @@ h1{
   text-align: center;
 }
 .login-cpn{
-  width: 400px;
+  width: 430px;
   height:500px;
   position: absolute;
   left: 60%;
@@ -109,7 +109,7 @@ h1{
   margin: 50px 0 20px 0;
 }
 .username input,.password input{
-  height: 30px;
+  height: 40px;
   width: 240px;
   border: 1px solid #3a8ee6;
   padding: 3px 0 3px 15px;

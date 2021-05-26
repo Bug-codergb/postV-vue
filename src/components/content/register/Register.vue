@@ -14,21 +14,11 @@
           <img src="http://localhost:7876/getimgCode" alt="暂无图片" v-if="change" @click="changeCode"/>
         </div>
       </div>
-<!--      <div slot="email">
-        <div class="email">
-          <div>邮箱</div>
-          <input type="text" placeholder="请输入邮箱"/>
-          <div class="verify">
-            <input type="text" />
-            <button>发送</button>
-          </div>
-        </div>
-      </div>-->
-      <lottie-player src="https://assets6.lottiefiles.com/private_files/lf30_imyUMa.json"
-                     background="#3a8ee6"
-                     speed="1"  style="width:80%; height: 700px;"
-                     loop autoplay></lottie-player>
     </login-cpn>
+    <lottie-player src="https://assets6.lottiefiles.com/private_files/lf30_imyUMa.json"
+                   background="#3a8ee6"
+                   speed="1"  style="width:80%; height: 700px;"
+                   loop autoplay></lottie-player>
   </div>
 </template>
 
