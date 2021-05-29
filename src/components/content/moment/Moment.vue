@@ -118,6 +118,7 @@ export default {
 .moment-title{
   margin: 15px 0 15px 0;
   color:#333333;
+  font-size: 18px;
 }
 .moments ul.moments-content > li{
   margin: 0 0 30px 0;

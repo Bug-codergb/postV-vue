@@ -10,7 +10,7 @@
         <!--用户回复内容-->
         <div class="comment-content">
           <span class="comment-user-name">{{item.user.userName}}: </span>
-          {{item.content}}
+          <div v-html="item.content" class="content"></div>
           <div class="comment-time">{{item.createTime?item.createTime.slice(0,19):item.updateTime.slice(0,19)}}</div>
           <reply :replyStyle="{fontSize:'14px'}"
                  :status="status"
@@ -20,8 +20,13 @@
           <ul class="reply-comment" v-if="item.reply">
             <li v-for="(iten,i) in item.reply"
                 :key="iten.commentId">
-              <div class="replyName">{{iten.user.userName}}: </div>
-              <div>{{iten.content}}</div>
+              <div class="reply-user-msg">
+                <div class="reply-user-avatar">
+                  <img :src="iten.user.avatarUrl"/>
+                </div>
+                <div class="reply-user-name">{{iten.user.userName}}: </div>
+              </div>
+              <div v-html="iten.content" class="reply-content"></div>
             </li>
           </ul>
         </div>
@@ -66,7 +71,7 @@ export default {
     if(this.status===1)
     {
       getMomentCom(this.momentId).then(data=>{
-        //console.log(data.comments);
+        console.log(data.comments);
         if(data.comments)
         {
           this.comments=data.comments;
@@ -83,15 +88,23 @@ export default {
 </script>
 
 <style scoped lang="less">
+  .center(){
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+  }
 /*评论用户*/
 .comments li{
   display: flex;
   margin: 0 0 10px 0;
 }
 .comment-user-name{
-  font-size: 13px;
+  font-size: 14px;
   color: #3a8ee6;
-  margin: 0 0 0 5px;
+  margin: 0 0 10px 5px;
+  font-weight: bold;
+  display: block;
 }
 .comment-avatar{
   width: 40px;
@@ -105,9 +118,19 @@ export default {
 }
 .comments .comment-content{
   border-bottom:1px solid rgba(0,0,0,.09);
-  padding: 5px 0 5px 10px;
+  padding: 5px 0 5px 15px;
   font-size: 13px;
   width: 630px;
+}
+.comment-content{
+  /deep/img{
+    width: 60px;
+    display: block;
+    margin: 5px 0;
+  }
+  .content{
+    color: #616162;
+  }
 }
 .comments .comment-time{
   font-size: 13px;
@@ -115,16 +138,39 @@ export default {
   text-align:left;
   margin: 10px 0 0 0;
 }
-.reply-comment{
-li{
-  background-color: rgba(0,0,0,.03);
-  margin: 0 0 5px 0;
-  padding: 5px 10px;
-}
-}
-.replyName{
-  color: #3a8ee6;
-  white-space: nowrap;
-  margin: 0 5px 0 0;
+/*回复评论信息*/
+.reply-comment {
+  li {
+    margin: 0 0 5px 0;
+    padding: 5px 10px;
+    display: flex;
+    align-items: center;
+    .reply-content {
+      color: #616162;
+    }
+    .reply-user-msg {
+      display: flex;
+      align-items: center;
+      .reply-user-avatar{
+        width: 25px;
+        height: 25px;
+        overflow: hidden;
+        position: relative;
+        border: 1px solid #dddddd;
+        border-radius: 50%;
+        img{
+          width: 100%;
+          .center();
+        }
+      }
+      .reply-user-name{
+        color: #3a8ee6;
+        font-size: 13px;
+        font-weight: bold;
+        white-space: nowrap;
+        margin: 0 5px 0 15px;
+      }
+    }
+  }
 }
 </style>

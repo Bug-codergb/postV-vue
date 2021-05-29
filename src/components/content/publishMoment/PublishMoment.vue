@@ -16,35 +16,41 @@
          </option>
        </select>
      </div>
-
-    <textarea v-model="content" class="momentContent" v-show="cate==='视频'"/>
+    <!--内容编辑-->
+    <textarea v-model="content" class="momentContent" v-show="cate==='视频'" placeholder="简介"/>
     <div id="edt" ref="edit" v-show="cate!=='视频'"></div>
+
     <!--上传视频预览-->
-    <div class="upload-img">
-      <div class="vio-container" v-for="(item,index) in videos">
-        <img :src="item"/>
-        <div class="cancelVio" title="取消" @click="cancelUploadVio(index)">
-          <i class="iconfont icon-chahao "></i>
+    <div class="video-outer" v-if="cate==='视频'">
+      <div>
+        <p class="select-video-cover">选择视频</p>
+        <div class="upload-img">
+          <input type="file" @change="previewVio" title="上传视频" v-show="!isShowVideoPrev"/>
+          <i class="iconfont icon-shipin" v-show="!isShowVideoPrev"></i>
+          <img :src="previewUrl" alt="" v-show="isShowVideoPrev"/>
+        </div>
+      </div>
+      <!--上传视频封面-->
+      <div>
+        <p class="select-video-cover" >选择视频封面</p>
+        <div class="video-cover" >
+          <input type="file" @change="selectCover" v-show="!isShowCover"/>
+          <i class="iconfont icon-tu" v-show="!isShowCover"></i>
+          <img :src="coverUrl" v-show="isShowCover" alt=""/>
         </div>
       </div>
     </div>
+
     <!--发表动态，配图按钮-->
     <div class="control-btn">
-      <div class="upload">
-        <!--上传视频-->
-        <div class="upload-vio" v-show="cate!=='文章'&&cate!=='图片'">
-          <input type="file" @change="previewVio" title="上传视频"/>
-          <span><i class="iconfont icon-shipin"></i></span>
-        </div>
         <button class="publish-btn" @click="publishMoment">发布</button>
         <button class="exit" @click="exit">取消</button>
-      </div>
     </div>
   </div>
 </template>
 
 <script>
-import {momentPic, publishMoment} from "@/network/moment";
+import {publishMoment} from "@/network/moment";
 import {uploadVio, uploadVioImg} from "../../../network/video";
 import {getVideoBase64, getVideoDuration, getVideoImage} from "@/utils/videoToImg";
 import {getAllCate} from "@/network/toplist";
@@ -60,9 +66,12 @@ export default {
       content:``,
       title:'',
       images:[],
-      videos:[],
       fileList:[],
-      vioImg:[],//根据视频生成的图片
+      vioImg:[],//视频封面
+      coverUrl:'',//视频封面url
+      previewUrl:"",//视频预览url,
+      isShowCover:false,//是否显示视频封面
+      isShowVideoPrev:false,
       category:[],
       cate:'文章',
       cateMap:new Map(),
@@ -117,7 +126,7 @@ export default {
           {
             this.upload(this.fileList,data)
           }
-          this.$emit('changeShow')
+          this.$emit('changeShow');
         })
       }
     },
@@ -140,12 +149,19 @@ export default {
         })
         let url=URL.createObjectURL(videoFile);
         getVideoBase64(url).then(data=>{
-          this.videos.push(data)
-          this.vioImg.push(getVideoImage(data,videoFile.name));
+          this.previewUrl=data;
+          this.isShowVideoPrev=true;
         })
+    },
+    //视频封面预览
+    selectCover(e){
+      this.coverUrl=URL.createObjectURL(e.target.files[0]);
+      this.vioImg=e.target.files[0];
+      this.isShowCover=true;
     },
     upload(files,momentId)
     {
+      console.log(files);
       if(files.length!==0)
       {
         let vioForData=new FormData();
@@ -156,23 +172,14 @@ export default {
         }
         //上传视频
         uploadVio(vioForData,momentId).then(data=>{
+          console.log(data);
           const formData=new FormData();
-          for(let item of this.vioImg)
-          {
-            formData.append('videoImg',item);
-          }
+          formData.append('videoImg',this.vioImg);
           uploadVioImg(formData,data).then(data=>{
              console.log(data);
-           })
+             })
           })
       }
-    },
-    //取消视频
-    cancelUploadVio(index)
-    {
-      this.fileList.splice(index,1);
-      this.videos.splice(index,1);
-      this.vioImg.splice(index,1);
     }
   }
 }
@@ -218,71 +225,75 @@ export default {
       border: 1px solid #3a8ee6;
       outline: none;
       margin: 30px 0 0 0;
-      height: 200px;
+      height: 150px;
       width: 100%;
       font-family: "微软雅黑" ;
       padding: 15px;
       background-color: #fff;
     }
-    /*文件上传图片展示*/
-    .upload-img{
-      height: 60px;
-      width:86%;
-      background-color:rgba(58, 142, 230,.1);
-      position: absolute;
-      top:65%;
-      left: 50%;
-      transform: translate(-50%,0);
+    .video-outer{
       display: flex;
-      overflow: hidden;
-      .img-container{
-        height: 60px;
-        margin: 0 10px 0 0;
-        position: relative;
-        img{
-          height: 60px;
-        }
-        overflow: hidden;
-        .cancelImg:extend(.cancel){
-          i{
-            color: #f4f4f4;
-          }
-        }
-      }
-      /*文件上传视频展示*/
-      .vio-container{
-        position: relative;
-        img{
-          height: 60px;
-          margin:0 10px 0 0;
-        }
-        .cancelVio:extend(.cancel){
-          i{
-            color: #f4f4f4;
-          }
-        }
+      &>div{
+        flex: 1;
       }
     }
-  }
-  .cancel{
-    text-align: center;
-    line-height: 15px;
-    width:15px;
-    height:15px;
-    background-color: #fff;
-    position: absolute;
-    top: 0;
-    left: 100%;
-    transform: translateX(-100%);
-    cursor: pointer;
-    background-color: rgba(58, 142, 230,.9);
+    /*视频上传图片展示*/
+    .upload-img{
+      height:100px;
+      width:100%;
+      background-color:rgba(58, 142, 230,.1);
+      overflow: hidden;
+      position: relative;
+      text-align: center;
+      line-height: 100px;
+      input{
+        position: absolute;
+        display: block;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+      }
+      i{
+        font-size: 40px;
+        color: #3a8ee6;
+      }
+      img{
+        height: 100px;
+      }
+    }
   }
   #edt{
     margin: 20px 0 0 0;
   }
-
+  //选择视频封面
+  .video-cover{
+    height: 100px;
+    background-color: rgba(77, 153, 232,.08);
+    position: relative;
+    text-align: center;
+    line-height: 100px;
+    input{
+      position: absolute;
+      opacity: 0;
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+    i{
+      color: #3a8ee6;
+      font-size: 30px;
+    }
+    img{
+      height: 100%;
+    }
+  }
+  .select-video-cover{
+    color: #676767;
+    font-size: 14px;
+    margin: 15px 0;
+  }
   //文件上传按钮
-  .upload{
+  .control-btn{
     margin: 20px 0 0 0;
     width: 100%;
     height: 30px;
@@ -312,26 +323,6 @@ export default {
       i{
         font-size: 20px;
         color: #3a8ee6;
-      }
-    }
-
-    input{
-      border:1px solid #3a8ee6;
-      opacity:0;
-      width: 40px;
-      position: absolute;
-    }
-    span {
-      i {
-        color: #3a8ee6;
-        font-size: 24px;
-      }
-    }
-    .upload-vio{
-      position: relative;
-      width: 60px;
-      i{
-        font-size: 30px;
       }
     }
   }

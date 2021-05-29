@@ -15,7 +15,7 @@
       </el-carousel-item>
     </el-carousel>
     <!--推荐动态-->
-    <Article :article="recommendArc" v-if="recommendArc.moments"/>
+    <Article :article="recommendArc" v-if="recommendArc&&recommendArc.moments"/>
     <!--视频，图片科技等-->
     <ul>
       <li v-for="(item,index) in otherRec" :key="item.categoryId">
@@ -48,7 +48,6 @@ name: "HotRecommend",
   },
   created() {
     getHotBanner().then(data=>{
-      //console.log(data);
       this.banner=data;
     })
     getAllCate(0,10).then(data=>{

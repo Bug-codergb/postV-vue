@@ -46,7 +46,7 @@ export default{
     //获取最新页所有动态
     getAllMomentsAction(context,payload) {
         allMoments().then(data=>{
-            // console.log(data)
+            console.log(data)
             context.commit({
                 type:'changeAllMoments',
                 allMoments:data

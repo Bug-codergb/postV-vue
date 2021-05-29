@@ -83,7 +83,7 @@ name: "Login",
 
 <style scoped lang="less">
   .login{
-    height: 700px;
+    height: 720px;
     background: #3a8ee6;
   }
 .login .enter{

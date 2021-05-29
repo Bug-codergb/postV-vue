@@ -1,7 +1,9 @@
 <template>
   <div class="cate-list">
     <ul>
-      <li v-for="(item,index) in cateList" :key="item.id">
+      <li v-for="(item,index) in cateList" :key="item.id"
+          @click="cateClick(item,index)"
+          :class="{active:currentIndex===index}">
         {{item.name}}
       </li>
     </ul>
@@ -16,7 +18,8 @@ export default {
   name: "CateList",
   data(){
     return {
-     cateList:[]
+     cateList:[],
+      currentIndex:0
     }
   },
   created() {
@@ -24,6 +27,12 @@ export default {
      // console.log(data);
       this.cateList=data;
     })
+  },
+  methods:{
+    cateClick(item,index){
+      this.currentIndex=index;
+      this.$emit("cate-click",item);
+    }
   }
 }
 </script>
@@ -34,8 +43,15 @@ export default {
       display: flex;
       flex-wrap: wrap;
       li{
-        padding: 5px 10px;
+        padding: 5px 15px;
         margin: 0 15px 0 0;
+        cursor:pointer;
+        font-size: 13px;
+        border-radius: 5px;
+        &.active{
+          background-color:#d8e8fa;
+          color: #3a8ee6;
+        }
       }
     }
   }

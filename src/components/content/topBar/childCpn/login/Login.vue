@@ -23,11 +23,13 @@
         退出登录
       </div>
     </div>
-    <LoginCpn v-if="this.$store.state.loginType===0" class="login-cpn" @enter="enter">
-      <div slot="enter" class="login-btn">
-        登录
-      </div>
-    </LoginCpn>
+    <div class="home-login" v-if="this.$store.state.loginType===0">
+      <LoginCpn class="login-cpn" @enter="enter">
+        <div slot="enter" class="login-btn">
+          登录
+        </div>
+      </LoginCpn>
+    </div>
   </div>
 </template>
 
@@ -93,9 +95,9 @@ name: "Login",
     position: absolute;
     top:100%;
     left: -50%;
-    background-color: #fff;
+    background-color:#fff;
     height:350px;
-    width: 300px;
+    width: 340px;
     z-index: 999;
     border-radius: 5px;
     box-shadow: 0 0 15px rgba(0,0,0,.2);
@@ -139,7 +141,7 @@ name: "Login",
     cursor:pointer;
   }
   .login-cpn{
-    width: 310px;
+    width: 100%;
     position: static;
     .login-btn{
       background-color: #3a8ee6;

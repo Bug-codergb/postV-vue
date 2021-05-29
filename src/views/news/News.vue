@@ -48,8 +48,6 @@ export default {
   data(){
     return {
       banners:[],
-      /*moments:[],
-      momentDetail:[],*/
       isRouterAlive:true,
       _this:{}
     }

@@ -1,6 +1,6 @@
 import {request} from '../request';
 import store from '../../store/index'
-export function publishMoment(momentId,title,cate,content)
+export function publishMoment(momentId=new Date().getTime(),title,cate,content)
 {
     return request({
         url:'/moment/add',

@@ -32,7 +32,9 @@ import {
   knowCateRouter,
   knowDetailRouter,
   knowPlayRouter,
-  chatDetailRouter
+  chatDetailRouter,
+  channelDetailRouter,
+  channelCateDetailRouter
 } from './detail/index'
 
 //榜单子路由
@@ -162,7 +164,11 @@ const routes = [
         //课程播放
       knowPlayRouter,
         //聊天
-      chatDetailRouter
+      chatDetailRouter,
+        //频道内容详情
+      channelDetailRouter,
+        //频道分类下内容详情
+      channelCateDetailRouter
     ]
   },
   {

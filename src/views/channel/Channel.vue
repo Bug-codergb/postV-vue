@@ -1,11 +1,11 @@
 <template>
   <div class="channel">
-    <cate-list/>
+    <cate-list @cate-click="cateClick"/>
     <ul class="cate-detail-list">
       <li v-for="(item,index) in cateDetail" :key="item.id">
         <!--频道头-->
         <div class="title">
-          <div class="img-container">
+          <div class="img-container" @click="channelCateRouter(item,index)">
             <img :src="item.coverUrl"/>
           </div>
           <div class="msg">
@@ -17,7 +17,7 @@
         </div>
         <!--频道内容-->
         <ul class="cate-content">
-          <li v-for="(iten,i) in item.channels" :key="iten.cId">
+          <li v-for="(iten,i) in item.channels" :key="iten.cId" @click="channelPlay(iten,index)">
             <msg-list :is-show-play="false" item-width="168px" :is-show-time="false" creator-top="85%">
               <div slot="img-container">
                 <img :src="iten.picUrl"/>
@@ -51,9 +51,32 @@ export default {
   },
   created() {
     getChannelCateDetail(1621165270587).then(data=>{
-      console.log(data);
       this.cateDetail=data;
     })
+  },
+  methods:{
+    channelPlay(item,index){
+      this.$router.push({
+        path:"/channelDetail",
+        query:{
+          cId:item.cId
+        }
+      });
+    },
+    cateClick(item){
+      console.log(item);
+      getChannelCateDetail(item.id).then(data=>{
+        this.cateDetail=data;
+      })
+    },
+    channelCateRouter(item,index){
+      this.$router.push({
+        path:"/channelCateDetail",
+        query:{
+          id:item.id
+        }
+      })
+    }
   }
 }
 </script>

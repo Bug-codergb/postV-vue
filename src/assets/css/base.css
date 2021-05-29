@@ -84,3 +84,6 @@ textarea{
 .w-e-toolbar .w-e-menu i {
     color: rgba(58, 142, 230,.7);
 }
+#comment-edit .w-e-text-container{
+    height: 150px!important;
+}

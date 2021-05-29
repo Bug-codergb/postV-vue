@@ -28,7 +28,7 @@ export function uploadVioImg(formData,vid)
         },
         data:formData,
         params:{
-            vids:JSON.stringify(vid)
+            vid
         }
     })
 }

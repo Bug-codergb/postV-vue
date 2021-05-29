@@ -82,7 +82,7 @@ name: "MsgList",
     width: 100%;
     img{
       .center();
-      height: 100%;
+      width: 100%;
       transition: transform 0.3s;
     }
     .play{

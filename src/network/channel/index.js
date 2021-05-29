@@ -102,3 +102,46 @@ export function getChannelCateDetail(cateId,offset=0,limit=30){
         }
     })
 }
+//获取频道内容详情
+export function getChannelDetail(cId){
+    return request({
+        url:"/channel/content/detail",
+        params:{
+            cId
+        }
+    })
+}
+//获取频道播放地址
+export function getChannelUrl(cId){
+    return request({
+        url:"/channel/url",
+        params:{
+            cId
+        }
+    })
+}
+//发表频道内容评论
+export function publishChannelComment(cId,content){
+    return request({
+        url:"/channel/comment",
+        method:"post",
+        data:{
+            cId,
+            content,
+        },
+        headers:{
+            'authorization':store.state.userMsg.token,
+        },
+    })
+}
+//获取子分类内容详情
+export function getCateConDetail(id,offset=0,limit=30){
+    return request({
+        url:"/channel/cate/con/detail",
+        params:{
+            id,
+            offset,
+            limit
+        }
+    })
+}

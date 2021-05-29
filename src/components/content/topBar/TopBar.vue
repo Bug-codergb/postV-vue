@@ -213,7 +213,7 @@ name: "TopBar",
 .moment-enter-to{
   opacity: 1;
 }
-/*channel*/
+/*channelCateDetail*/
   .channel-enter{
     opacity: 0;
   }

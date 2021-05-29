@@ -23,6 +23,7 @@
     <div class="comment-content" v-show="isShowCom">
       <textarea v-model="content" rows="5" cols="80"
                 :disabled="this.$store.state.loginType!==1"/>
+      <div ref="commentEdit" id="comment-edit"></div>
       <button class="reply-btn" @click="replyBtn">发表评论</button>
     </div>
   </div>
@@ -33,6 +34,10 @@ import {publishCom, publishTopicCom, replyComment, replyTopicCom} from "@/networ
 import {cancelThumb, thumbs} from "@/network/thumbs";
 import {cancelSubMoment, subMoment} from "@/network/moment";
 import {subTopic} from "@/network/topic";
+import E from "wangeditor";
+import {publishChannelComment} from "@/network/channel";
+import {APP_HOST} from "@/constants/config/config";
+import store from "@/store";
 
 export default {
 name: "Reply",
@@ -64,6 +69,47 @@ name: "Reply",
       default:true
     }
   },
+  mounted() {
+    const editor = new E(this.$refs.commentEdit);
+    editor.config.showLinkImg = false;
+    editor.config.excludeMenus = [
+      'head',
+      'video',
+      'code',
+      'redo',
+      'italic',
+      'underline',
+      'strikeThrough',
+      'indent',
+      'lineHeight',
+      'list',
+      'todo',
+      'justify',
+      'table',
+      'code',
+      'splitLine',
+      'undo',
+      'redo',
+    ];
+    editor.config.showFullScreen =false;
+    editor.config.onchange =(html)=>{
+      this.content=html;
+    }
+    editor.config.uploadImgHeaders = {
+      authorization:store.state.userMsg.token
+    }
+    editor.config.uploadImgServer =`${APP_HOST}/comment/upload/pic`;
+    editor.config.uploadFileName = 'comment_picture';
+    editor.config.uploadImgParamsWithUrl = true;
+
+    editor.config.uploadImgHooks = {
+      success:(xhr)=>{
+        const {momentId}=JSON.parse(xhr.response);
+        this.momentId=momentId;
+      },
+    }
+    editor.create();
+  },
   computed:{
     isThumbs()
     {
@@ -83,7 +129,6 @@ name: "Reply",
           return this.id===item.momentId
         })
       }
-
       if(commentFlag===-1&&momentFlag===-1)
       {
         return false
@@ -162,6 +207,12 @@ name: "Reply",
         replyTopicCom(this.id,this.content).then(data=>{
           this.$toast.show("回复成功",2000);
           this.$bus.$emit('replyTopicComment');
+        })
+      }
+      //发表频道评论
+      if(this.content&&this.status===99){
+        publishChannelComment(this.id,this.content).then(data=>{
+          this.$toast.show("发表成功",2000);
         })
       }
     },
@@ -259,14 +310,18 @@ name: "Reply",
   .comment-content{
      display: flex;
      align-items: center;
-    width: 610px;
-    margin: 10px auto 20px;
+     width: 90%;
+     margin: 10px auto 20px;
+    #comment-edit{
+      width: 100%;
+      height: 200px;
+    }
   }
   .comment-content textarea{
     width: 500px;
-    display: block;
-    height: 25px;
+    height: 65px;
     padding: 20px;
+    display: none;
     &:focus{
       outline:1px solid #3a8ee6;
       border: none;

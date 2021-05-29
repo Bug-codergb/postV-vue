@@ -37,6 +37,10 @@ const knowPlay=()=>import('../../components/content/category/children/knowCate/c
 const imageDetail=()=>import('../../components/content/imageDetail/ImageDetail');
 //聊天
 const chatDetail=()=>import("../../components/content/chat/Chat");
+//频道内容详情
+const channelDetail=()=>import("../../components/content/channelDetail/ChannelDetail");
+//频道分类详情
+const channelCateDetail=()=>import("../../components/content/channelCateDetail/ChannelCateDetail")
 export const userDetailRouter={
     path:'/userDetail',
     name:userDetail,
@@ -193,5 +197,21 @@ export const chatDetailRouter={
     name:'chatDetail',
     components:{
         detail:chatDetail
+    }
+}
+//频道内容详情
+export const channelDetailRouter={
+    path:"/channelDetail",
+    name:"channelDetail",
+    components:{
+        detail:channelDetail
+    }
+}
+//频道分类详情
+export const channelCateDetailRouter={
+    path:'/channelCateDetail',
+    name:"channelCateDetail",
+    components:{
+        detail:channelCateDetail
     }
 }
