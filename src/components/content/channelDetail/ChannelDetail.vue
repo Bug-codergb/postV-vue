@@ -8,6 +8,9 @@
     <div class="comment-channel">
       <reply :status="99" :id="cId"/>
     </div>
+    <div class="channel-comment">
+      <comment :status="3" :comment-detail="comment" v-if="comment.length!==0"/>
+    </div>
   </div>
   </div>
 </template>
@@ -15,11 +18,13 @@
 <script>
 import VideoPlay from "@/components/common/videoPlay/VideoPlay";
 import ChannelMsg from "@/components/content/channelDetail/childCpn/ChannelMsg";
-import {getChannelDetail, getChannelUrl} from "@/network/channel";
+import {getChannelComment, getChannelDetail, getChannelUrl} from "@/network/channel";
 import Reply from "@/components/content/reply/Reply";
+import Comment from "@/components/content/comment/Comment";
 export default {
   name: "ChannelDetail",
   components: {
+    Comment,
     Reply,
     VideoPlay,
     ChannelMsg
@@ -29,13 +34,14 @@ export default {
       cId:"",
       url:"",
       dt:0,
-      channelDetail:{}
+      channelDetail:{},
+      comment:[]
     }
   },
   created() {
     this.cId=this.$route.query.cId
     getChannelUrl(this.cId).then(data=>{
-      console.log(data);
+      //console.log(data);
       const {vidUrl,duration}=data;
       this.url=vidUrl;
       this.dt=duration;
@@ -43,6 +49,10 @@ export default {
     getChannelDetail(this.cId).then(data=>{
       //console.log(data)
       this.channelDetail=data;
+    })
+    getChannelComment(this.cId).then(data=>{
+      console.log(data.comment);
+      this.comment=data.comment;
     })
   }
 }

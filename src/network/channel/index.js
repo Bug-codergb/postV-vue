@@ -145,3 +145,29 @@ export function getCateConDetail(id,offset=0,limit=30){
         }
     })
 }
+//获取频道评论内容
+export function getChannelComment(cId,offset=0,limit=30){
+    return request({
+        url:"/channel/comment",
+        params:{
+            id:cId,
+            offset,
+            limit
+        }
+    })
+}
+//回复频道内容评论
+export function replyChannelComment(commentId,content,cId){
+    return request({
+      url:"/channel/comment",
+      method:"post",
+      headers:{
+          'authorization':store.state.userMsg.token,
+      },
+      data:{
+          commentId,
+          content,
+          cId,
+      }
+    })
+}

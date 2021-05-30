@@ -31,6 +31,8 @@
               </div>
             </msg-list>
           </li>
+          <li v-for="(item,index) in (Math.ceil(item.channels.length/4)*4-(item.channels.length))"
+              class="complement"></li>
         </ul>
       </li>
     </ul>
@@ -127,6 +129,9 @@ export default {
         flex-wrap: wrap;
         li{
           width:168px;
+          .complement{
+            width: 168px;
+          }
         }
         .cate-content-state{
           margin:20px 0 0 0 ;

@@ -11,7 +11,9 @@
         <div class="comment-content">
           <span class="comment-user-name">{{item.user.userName}}: </span>
           <div v-html="item.content" class="content"></div>
-          <div class="comment-time">{{item.createTime?item.createTime.slice(0,19):item.updateTime.slice(0,19)}}</div>
+          <div class="comment-time">
+            {{item.createTime?formatTime(item.createTime,"yyyy-MM-dd hh:mm:ss"):formatTime(item.updateTime,"yyyy-MM-dd hh:mm:ss")}}
+          </div>
           <reply :replyStyle="{fontSize:'14px'}"
                  :status="status"
                  :id="item.commentId"
@@ -38,6 +40,7 @@
 <script>
 import {commentDetail, getMomentCom} from "@/network/comment";
 import reply from '@/components/content/reply/Reply'
+import {formatDate} from "@/utils/formatDate";
 export default {
   name: "Comment",
   components:{
@@ -83,6 +86,9 @@ export default {
     }
   },
   methods:{
+    formatTime(time,ft){
+      return formatDate(time,ft)
+    }
   }
 }
 </script>
@@ -94,11 +100,14 @@ export default {
     top: 50%;
     transform: translate(-50%,-50%);
   }
-/*评论用户*/
-.comments li{
-  display: flex;
-  margin: 0 0 10px 0;
-}
+  .comments{
+    border-top:1px solid #d8e8fa;
+    padding: 30px 0 0 0;
+    li{
+      display: flex;
+      margin: 0 0 10px 0;
+    }
+  }
 .comment-user-name{
   font-size: 14px;
   color: #3a8ee6;
@@ -130,6 +139,7 @@ export default {
   }
   .content{
     color: #616162;
+    line-height: 22px;
   }
 }
 .comments .comment-time{
