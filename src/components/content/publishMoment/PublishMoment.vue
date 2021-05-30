@@ -10,7 +10,7 @@
        <select v-model="cate">
          <option v-for="(item,index) in category"
                  :key="item.categoryId"
-                 :selected="item.name==='文章'"
+                 :selected="item.name==='专栏'"
                   :value="item.name">
            {{item.name}}
          </option>
@@ -73,7 +73,7 @@ export default {
       isShowCover:false,//是否显示视频封面
       isShowVideoPrev:false,
       category:[],
-      cate:'文章',
+      cate:'专栏',
       cateMap:new Map(),
       momentId:''
     }

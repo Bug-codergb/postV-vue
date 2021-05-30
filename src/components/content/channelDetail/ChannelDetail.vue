@@ -6,10 +6,14 @@
       <ChannelMsg :channelDetail="channelDetail"/>
     </div>
     <div class="comment-channel">
-      <reply :status="99" :id="cId"/>
+      <reply :id="cId" @reply="reply" @thumb="thumb"/>
     </div>
     <div class="channel-comment">
-      <comment :status="3" :comment-detail="comment" v-if="comment.length!==0"/>
+      <comment :status="3" :comment-detail="comment"
+               v-if="comment.length!==0"
+               :key="keyId"
+               @reply-comment="replyComment"
+               @thumb-comment="thumbComment"/>
     </div>
   </div>
   </div>
@@ -18,9 +22,17 @@
 <script>
 import VideoPlay from "@/components/common/videoPlay/VideoPlay";
 import ChannelMsg from "@/components/content/channelDetail/childCpn/ChannelMsg";
-import {getChannelComment, getChannelDetail, getChannelUrl} from "@/network/channel";
+import {
+  cancelThumbChannel,
+  getChannelComment,
+  getChannelDetail,
+  getChannelUrl,
+  publishChannelComment,
+  replyChannelComment, thumbChannel
+} from "@/network/channel";
 import Reply from "@/components/content/reply/Reply";
 import Comment from "@/components/content/comment/Comment";
+import {cancelThumb, thumbs} from "@/network/thumbs";
 export default {
   name: "ChannelDetail",
   components: {
@@ -35,7 +47,8 @@ export default {
       url:"",
       dt:0,
       channelDetail:{},
-      comment:[]
+      comment:[],
+      keyId:0
     }
   },
   created() {
@@ -51,9 +64,65 @@ export default {
       this.channelDetail=data;
     })
     getChannelComment(this.cId).then(data=>{
-      console.log(data.comment);
+      //console.log(data.comment);
       this.comment=data.comment;
     })
+  },
+  methods:{
+    reply(content){
+      publishChannelComment(this.cId,content).then(data=>{
+        getChannelComment(this.cId,0,20).then(data=>{
+          this.$toast.show("发表成功");
+          this.keyId+=1;
+          this.comment=data.comment;
+        })
+      })
+    },
+    replyComment(commentId,content){
+      replyChannelComment(commentId,content,this.cId).then(data=>{
+        getChannelComment(this.cId,0,20).then(data=>{
+          this.$toast.show("回复成功");
+          this.keyId+=1;
+          this.comment=data.comment;
+        })
+      })
+    },
+    //点赞频道
+    thumb(isThumb){
+      if(!isThumb){
+        thumbChannel(this.cId).then(data=>{
+          this.$store.dispatch({
+            type:'getUserDetailAction',
+            userId:this.$store.state.userMsg.userId
+          })
+        })
+      }else{
+        cancelThumbChannel(this.cId).then(data=>{
+          this.$store.dispatch({
+            type:'getUserDetailAction',
+            userId:this.$store.state.userMsg.userId
+          })
+        })
+      }
+    },
+    //点赞频道评论
+    thumbComment(isThumb,commentId){
+      if(!isThumb){
+        thumbs(commentId).then(data=>{
+          this.$store.dispatch({
+            type:'getUserDetailAction',
+            userId:this.$store.state.userMsg.userId
+          })
+        })
+      }else{
+        cancelThumb(commentId).then(data=>{
+          this.$store.dispatch({
+            type:'getUserDetailAction',
+            userId:this.$store.state.userMsg.userId
+          })
+        })
+      }
+    }
   }
 }
 </script>

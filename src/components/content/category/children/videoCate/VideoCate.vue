@@ -1,11 +1,11 @@
 <template>
   <div class="video-cate">
     <cate-list title="类别" :list="videoCate" v-if="videoCate.length" @cate="cate" />
-    <ul class="video-list" v-if="videoList.videos">
+    <ul class="video-list" v-if="videoList.videos[0].vid">
       <li v-for="(item,index) in videoList.videos" :key="item.vid">
         <msg-list img-container-height="130px">
           <div slot="img-container" @click="videoRouter(item)">
-            <img :src="item.coverUrl"/>
+            <img :src="item.coverUrl+'&type=small'"/>
           </div>
           <div slot="state">
             <div class="video-cate-state">{{item.title}}</div>
@@ -36,7 +36,9 @@ export default {
     return {
       videoCate:[],
       videoCatMap:new Map(),
-      videoList:[]
+      videoList:{
+        videos:[{}]
+      }
     }
   },
   created() {
@@ -54,7 +56,6 @@ export default {
     cate(item)
     {
       getCateVideo(this.videoCatMap.get(item)).then(data=>{
-        //console.log(data);
         this.videoList=data;
       })
     },

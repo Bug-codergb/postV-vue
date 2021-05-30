@@ -30,12 +30,9 @@
 </template>
 
 <script>
-import {publishCom, publishTopicCom, replyComment, replyTopicCom} from "@/network/comment";
-import {cancelThumb, thumbs} from "@/network/thumbs";
 import {cancelSubMoment, subMoment} from "@/network/moment";
 import {subTopic} from "@/network/topic";
 import E from "wangeditor";
-import {publishChannelComment} from "@/network/channel";
 import {APP_HOST} from "@/constants/config/config";
 import store from "@/store";
 
@@ -115,6 +112,7 @@ name: "Reply",
     {
       let commentFlag=-1;
       let momentFlag=-1;
+      let channelFlag=-1;
       //是否点赞评论
       if(this.$store.state.userDetail.thumbs.comment)
       {
@@ -129,7 +127,13 @@ name: "Reply",
           return this.id===item.momentId
         })
       }
-      if(commentFlag===-1&&momentFlag===-1)
+      //是否点赞频道
+      if(this.$store.state.userDetail.thumbs.channel){
+        channelFlag=this.$store.state.userDetail.thumbs.channel.findIndex((item,index)=>{
+          return this.id===item.cId
+        })
+      }
+      if(commentFlag===-1&&momentFlag===-1&&channelFlag===-1)
       {
         return false
       }
@@ -179,28 +183,7 @@ name: "Reply",
     //点赞
     thumbs()
     {
-      if(!this.isThumbs)
-      {
-        thumbs(this.id).then(data=>{
-          console.log(data)
-          this.$store.dispatch({
-            type:'getUserDetailAction',
-            userId:this.$store.state.userMsg.userId
-          })
-          this.$toast.show("点赞成功",3000);
-        })
-      }
-      if(this.isThumbs)
-      {
-         cancelThumb(this.id).then(data=>{
-           console.log(data)
-           this.$store.dispatch({
-             type:'getUserDetailAction',
-             userId:this.$store.state.userMsg.userId
-           })
-         })
-      }
-
+      this.$emit("thumb",this.isThumbs);
     },
     //收藏
     subscribe()

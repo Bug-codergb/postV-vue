@@ -1,48 +1,19 @@
 <template>
   <div class="video-detail">
     <div class="left-content">
-      <div class="vio-container">
-        <video :src="videoDetail.url"
-               ref="vio"
-               @timeupdate="getCurrentTime"
-               @ended="endHandle"
-               autoplay
-               @canplay="canPlay">
-        </video>
-        <div class="control">
-          <!--视频进度条-->
-          <div class="wrapper" @mousedown="silderDown">
-            <el-slider v-model="progress" @change="changeEnd" @input="change" :show-tooltip="false"></el-slider>
-          </div>
-          <div class="control-btn">
-            <div class="play" @click="play">
-              <div class="play-or-pause">
-                <i class="iconfont icon-playcircle" v-show="!isPlay"></i>
-                <i class="iconfont icon-pause1" v-show="isPlay"></i>
-              </div>
-              <div class="dt">
-                {{format(currentTime,"mm:ss")}}/{{format(videoDetail.duration,"mm:ss")}}
-              </div>
-            </div>
-            <div class="volume">
-              <i class="iconfont icon-yangshengqi"></i>
-              <div id="volume-progress">
-                <el-slider v-model="volume" @change="volumeChange" @input="volumeEnd"/>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <video-play :url="videoDetail.url" :dt="videoDetail.duration"/>
       <!--视频信息-->
       <video-msg :video-detail="videoDetail" />
       <reply :id="videoDetail.moment.momentId"
              v-if="videoDetail.moment"
-             @reply="reply"/>
+             @reply="reply"
+             @thumb="thumb"/>
       <!--动态（视频）评论-->
       <comment :momentId="videoDetail.moment.momentId"
                v-if="videoDetail.moment.momentId"
                :key="keyId"
-               @reply-comment="replyComment"/>
+               @reply-comment="replyComment"
+               @thumb-comment="thumbComment"/>
     </div>
     <div class="right-content">
       <RecommendVideo :vid="vid" @play-video="playVideo"/>
@@ -59,10 +30,12 @@ import RecommendVideo from "@/components/content/videoDetail/childCpn/recommendV
 import VideoMsg from "@/components/content/videoDetail/childCpn/videoMsg/VideoMsg";
 import {formatDate} from "@/utils/formatDate";
 import {publishCom, replyComment} from "@/network/comment";
+import VideoPlay from "@/components/common/videoPlay/VideoPlay";
+import {cancelThumb, thumbs} from "@/network/thumbs";
 
 export default {
 name: "VideoDetail",
-  components: {VideoMsg, RecommendVideo, Comment, Avatar, Reply},
+  components: {VideoPlay, VideoMsg, RecommendVideo, Comment, Avatar, Reply},
   data()
   {
     return {
@@ -74,34 +47,26 @@ name: "VideoDetail",
         comments:[],
       },
       //是否播放
-      isPlay:false,
-      currentTime:0,
       keyId:1,
       vid:'',
-      progress:0,
-      isDrag:false,
-      isMove: false,
-      volume:10
     }
   },
   created() {
     this.vid=this.$route.query.vid;
     getVideoDetail(this.$route.query.vid).then(data=>{
-      console.log(data);
+      //console.log(data);
       this.videoDetail=data;
     })
   },
-  mounted() {
-    this.$nextTick(()=>{
-      this.$refs.vio.volume=0.1;
-      //console.log(this.reply)
-      this.$bus.$on('replyComment',this.reply);
-    })
-  },
   methods: {
-    format(time,ft)
+    playVideo(vid)
     {
-      return formatDate(time,ft);
+      getVideoDetail(vid).then(data=>{
+        //console.log(data);
+        this.videoDetail=data;
+        this.keyId+=1;
+        this.vid=vid;
+      })
     },
     //发表视频评论
     reply(content)
@@ -118,65 +83,41 @@ name: "VideoDetail",
         this.$toast.show("回复成功");
       })
     },
-    play()
-    {
-      /*addVideoPlayCouont(this.videoDetail.vid).then(data => {
-      })*/
-      this.isPlay=!this.isPlay;
-      this.isPlay?this.$refs.vio.play():this.$refs.vio.pause();
-    },
-    playVideo(vid)
-    {
-      getVideoDetail(vid).then(data=>{
-        //console.log(data);
-        this.videoDetail=data;
-        this.keyId+=1;
-        this.vid=vid;
-      })
-    },
-    silderDown()
-    {
-      this.isMove=true
-    },
-    getCurrentTime(e)
-    {
-      if(!this.isDrag)
-      {
-        this.currentTime=e.target.currentTime*1000;
-        this.progress=(this.currentTime/this.videoDetail.duration)*100;
+    //点赞视频
+    thumb(isThumb){
+      if(!isThumb){
+        thumbs(this.videoDetail.moment.momentId).then(data=>{
+          this.$store.dispatch({
+            type:'getUserDetailAction',
+            userId:this.$store.state.userMsg.userId
+          })
+        })
+      }else{
+        cancelThumb(this.videoDetail.moment.momentId).then(data=>{
+          this.$store.dispatch({
+            type:'getUserDetailAction',
+            userId:this.$store.state.userMsg.userId
+          })
+        })
       }
     },
-    canPlay()
-    {
-      this.isPlay=true;
-    },
-    change(val)
-    {
-      if(this.isMove) {
-        this.isDrag = true;
-        this.currentTime = this.videoDetail.duration * (val / 100);
+    //点赞评论
+    thumbComment(isThumb,commentId){
+      if(!isThumb){
+        thumbs(commentId).then(data=>{
+          this.$store.dispatch({
+            type:'getUserDetailAction',
+            userId:this.$store.state.userMsg.userId
+          })
+        })
+      }else{
+        cancelThumb(commentId).then(data=>{
+          this.$store.dispatch({
+            type:'getUserDetailAction',
+            userId:this.$store.state.userMsg.userId
+          })
+        })
       }
-    },
-    changeEnd(val)
-    {
-      this.isDrag=false;
-      this.$refs.vio.currentTime=this.currentTime/1000;
-      this.progress=val;
-      this.isMove=false;
-    },
-    endHandle()
-    {
-      this.isMove=false;
-      this.isPlay=false;
-    },
-    //音量
-    volumeChange(val)
-    {
-      this.$refs.vio.volume=val/100;
-    },
-    volumeEnd(val)
-    {
-      this.$refs.vio.volume=val/100;
     }
   }
 }

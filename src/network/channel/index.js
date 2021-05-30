@@ -159,7 +159,7 @@ export function getChannelComment(cId,offset=0,limit=30){
 //回复频道内容评论
 export function replyChannelComment(commentId,content,cId){
     return request({
-      url:"/channel/comment",
+      url:"/channel/comment/reply",
       method:"post",
       headers:{
           'authorization':store.state.userMsg.token,
@@ -169,5 +169,31 @@ export function replyChannelComment(commentId,content,cId){
           content,
           cId,
       }
+    })
+}
+//点赞频道
+export function thumbChannel(cId){
+    return request({
+        url:"/channel/thumb",
+        method:"post",
+        headers:{
+            'authorization':store.state.userMsg.token,
+        },
+        data:{
+            id:cId
+        }
+    })
+}
+//取消点赞频道
+export function cancelThumbChannel(cId){
+    return request({
+        url:"/channel/thumb/cancel",
+        method:"post",
+        headers:{
+            'authorization':store.state.userMsg.token,
+        },
+        data:{
+            cId
+        }
     })
 }

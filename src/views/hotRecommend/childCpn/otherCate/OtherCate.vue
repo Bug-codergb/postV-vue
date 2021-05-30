@@ -10,7 +10,7 @@
                   :is-show-play="cateDetail.name==='视频'||cateDetail.name==='预告片'"
                   :is-show-time="cateDetail.name==='视频'||cateDetail.name==='预告片'">
           <div slot="img-container" @click="videoRouter(item)">
-            <img :src="item.picUrl[0].picUrl" />
+            <img :src="item.picUrl[0].picUrl+'&type=small'" />
           </div>
           <div slot="playCount" v-if="item.video">{{item.video.playCount}}</div>
           <div slot="dt" v-if="item.video&&item.video.duration!==0">

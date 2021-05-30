@@ -4,26 +4,13 @@
       <div>标题</div>
       <textarea cols="65" rows="2" v-model="title"></textarea>
     </div>
+
     <div class="content">
-      <div>内容</div>
-      <textarea cols="65" rows="10" v-model="content"></textarea>
+      <textarea cols="10" rows="1" v-model="content"></textarea>
     </div>
-    <!--图片预览-->
-    <div class="preview">
-      <div v-for="(item,index) in uploadImgList"
-           :key="item"
-           class="preview-item">
-        <img :src="item"/>
-        <div class="cancel" @click="cancelImgItem(index)">
-          <i class="iconfont icon-chahao"></i>
-        </div>
-      </div>
-    </div>
+     <div id="edit" ref="topicEdit"></div>
+
     <div class="control-btn">
-      <input type="file" id="topic-img" @change="uploadImg" ref="topicImg"/>
-      <div class="file">
-        <i class="iconfont icon-tu"></i>
-      </div>
       <button @click="publish">发布</button>
       <button @click="cancelPublish">取消</button>
     </div>
@@ -32,6 +19,9 @@
 
 <script>
 import {addContent, addContentImg} from "@/network/topic";
+import E from "wangeditor";
+import store from "@/store";
+import {APP_HOST} from "@/constants/config/config";
 
 export default {
   name: "TopicContent",
@@ -46,45 +36,64 @@ export default {
     return {
       title:'',
       content:'',
-      uploadImgList:[],
-      files:[]
+      topic_content_id:""
     }
   },
+  mounted() {
+    this.topic_content_id=new Date().getTime();
+    const editor = new E(this.$refs.topicEdit);
+    editor.config.showLinkImg = false;
+    editor.config.excludeMenus = [
+      'head',
+      'video',
+      'code',
+      'redo',
+      'italic',
+      'underline',
+      'strikeThrough',
+      'indent',
+      'lineHeight',
+      'list',
+      'todo',
+      'justify',
+      'table',
+      'code',
+      'splitLine',
+      'undo',
+      'redo',
+    ];
+    editor.config.showFullScreen =false;
+    editor.config.onchange =(html)=>{
+      this.content=html;
+    }
+    editor.config.uploadImgHeaders = {
+      authorization:store.state.userMsg.token
+    }
+
+    editor.config.uploadImgParams = {
+      topic_content_id:this.topic_content_id
+    }
+    editor.config.uploadImgParamsWithUrl = true;
+    editor.config.uploadImgServer =`${APP_HOST}/topic/content/img`;
+    editor.config.uploadFileName = 'topicImg';
+
+
+    editor.config.uploadImgHooks = {
+      success:(xhr)=>{
+
+      },
+    }
+    editor.create();
+  },
   methods:{
-    uploadImg()
-    {
-      console.log(this.$refs.topicImg.files);
-      let url=URL.createObjectURL(this.$refs.topicImg.files[0])
-      this.uploadImgList.push(url);
-      this.files.push(this.$refs.topicImg.files[0]);
-      this.content+=`[${this.$refs.topicImg.files[0].name}]`
-    },
-    /*取下某一张图片*/
-    cancelImgItem(index)
-    {
-      this.content=this.content.replace(`[${this.files[index].name}]`,'')
-      this.files.splice(index,1)
-      this.uploadImgList.splice(index,1)
-    },
     /*发布*/
     publish()
     {
-      let formData=new FormData();
-      for(let file of this.files)
-      {
-        formData.append('topicImg',file);
-      }
       if(this.title&&this.content&&this.title.trim().length!==0&&this.content.length!==0)
       {
-        addContent(this.topicId,this.title,this.content).then(data=>{
-          console.log(data.topic_content_id)
-          if(data.topic_content_id)
-          {
-            addContentImg(data.topic_content_id,formData).then(data=>{
-              console.log(data);
-              this.$emit('cancelPublish');
-            })
-          }
+        addContent(this.topic_content_id,this.topicId,this.title,this.content).then(data=>{
+           this.$toast.show("发布成功",1000);
+           this.$emit("cancelPublish");
         })
       }
     },
@@ -106,29 +115,28 @@ export default {
   background-color: #fff;
   box-shadow: 0 0 15px rgba(0,0,0,.3);
   border-radius: 5px;
-  width: 500px;
-  padding: 30px;
-  height: 350px;
-  .title,.content{
+  width: 600px;
+  padding: 30px 40px;
+  height: 500px;
+
+  .title{
     display: flex;
-    margin: 20px 0 0px 0;
+    margin: 20px 0 0 0;
+    div{
+      white-space: nowrap;
+    }
     textarea{
       margin: 0 0 0 15px;
+      border: 1px solid #aecfea;
+      outline: none;
     }
   }
-  .preview{
-    background-color: rgba(58, 142, 230,.1);
-    width: 435px;
-    margin: 0 0 0 42px;
-    height:76px;
-    overflow: hidden;
-    display: flex;
-    img{
-      height: 70px;
+  .content{
+    margin: 20px 0 0 0;
+    textarea{
+      display: none;
     }
-    .preview-item{
-      position: relative;
-    }
+  }
     .cancel{
       font-size: 20px;
       color:#fff;
@@ -154,18 +162,5 @@ export default {
       background-color: #3a8ee6;
       margin: 0 20px 0 0;
     }
-    #topic-img{
-      opacity: 0.1;
-      position: absolute;
-      width: 30px;
-    }
-    .file{
-      color: #3a8ee6;
-      margin: 0 20px 0 0;
-      i{
-        font-size: 20px;
-      }
-    }
-  }
 }
 </style>

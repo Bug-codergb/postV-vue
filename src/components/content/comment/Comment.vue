@@ -18,7 +18,8 @@
                  :status="status"
                  :id="item.commentId"
                  :is-show-sub="false"
-                 @reply="reply($event,item)"/>
+                 @reply="reply($event,item)"
+                 @thumb="thumb($event,item)"/>
           <!--回复评论的评论-->
           <ul class="reply-comment" v-if="item.reply">
             <li v-for="(iten,i) in item.reply"
@@ -94,6 +95,10 @@ export default {
     reply(content,item){
       const {commentId}=arguments[1];
       this.$emit("reply-comment",commentId,content);
+    },
+    //点赞评论
+    thumb(isThumb,item){
+      this.$emit('thumb-comment',isThumb,item.commentId);
     }
   }
 }

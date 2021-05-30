@@ -7,7 +7,7 @@
       </li>
       <li @click="publishChannel">
         <i class="iconfont icon-channel2"></i>
-        专栏创作
+        添加频道
       </li>
     </ul>
   </div>

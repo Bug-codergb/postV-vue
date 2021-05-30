@@ -3,7 +3,7 @@
     <div class="header">
       <div class="left-content">
         <div class="img-container">
-          <img :src="topic.picUrl" />
+          <img :src="topic.picUrl+'&type=small'" />
         </div>
       </div>
       <div class="right-content">

@@ -7,7 +7,7 @@
       <div class="publish-content">
         <p>一起讨论</p>
         <i class="iconfont icon-pinglun1" title="发表内容" @click="publish"></i>
-        <div class="publish-topic-content" v-show="isShow">
+        <div class="publish-topic-content" v-if="isShow">
           <TopicContent :topic-id="topicContent.topicId" @cancelPublish="cancelPublish"/>
         </div>
 
@@ -26,7 +26,7 @@
           </div>
           <div class="right-msg">
             <div class="img-container" v-if="item.picUrl">
-              <img :src="item.picUrl[0].picUrl" />
+              <img :src="item.picUrl[0].picUrl+'&type=small'" />
             </div>
           </div>
 

@@ -56,10 +56,10 @@ name: "HotRecommend",
       })
       Promise.all(promise).then(data=>{
         this.recommendArc=data.filter((item,index)=>{
-          return item.name==='文章'
+          return item.name==='专栏'
         })[0]
         this.otherRec=data.filter((item,index)=>{
-          return item.name!=='文章'
+          return item.name!=='专栏'
         });
         //console.log(this.otherRec)
       })

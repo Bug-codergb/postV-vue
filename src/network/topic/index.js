@@ -120,9 +120,8 @@ export function getRecTopic()
     })
 }
 /*为专题添加内容*/
-export function addContent(topicId,title,content)
+export function addContent(topic_content_id,topicId,title,content)
 {
-    console.log(title,content)
     return request({
         url:'/topic/content',
         method:'post',
@@ -131,7 +130,8 @@ export function addContent(topicId,title,content)
         },
         data:{
             title,
-            content
+            content,
+            topic_content_id
         },
         headers:{
             'authorization':store.state.userMsg.token
