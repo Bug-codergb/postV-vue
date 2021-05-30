@@ -25,10 +25,7 @@ import {
   topicContentDetailRouter,
   searchDetailRouter,
   videoCateRouter,
-  imageDetailRouter,
-  imageCateRouter,
-  technologyCateRouter,
-  articleCateRouter,
+  spcolumnCateRouter,
   knowCateRouter,
   knowDetailRouter,
   knowPlayRouter,
@@ -145,18 +142,12 @@ const routes = [
       topicUserDetailRouter,
         //话题内容详情
       topicContentDetailRouter,
-        //图片详情页
-      imageDetailRouter,
       //搜索详情
       searchDetailRouter,
         //视频分类详情页
       videoCateRouter,
-        //图片分类详情页
-      imageCateRouter,
-        //科技分类详情
-      technologyCateRouter,
         //文章分类详情
-      articleCateRouter,
+      spcolumnCateRouter,
         //课程分类·
       knowCateRouter,
         //课程详情

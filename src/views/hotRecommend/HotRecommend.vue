@@ -15,7 +15,7 @@
       </el-carousel-item>
     </el-carousel>
     <!--推荐动态-->
-    <Article :article="recommendArc" v-if="recommendArc&&recommendArc.moments"/>
+    <Spcolumn :article="recommendArc" v-if="recommendArc&&recommendArc.moments"/>
     <!--视频，图片科技等-->
     <ul>
       <li v-for="(item,index) in otherRec" :key="item.categoryId">
@@ -30,14 +30,14 @@
 import {getCateMsg} from "@/network/moment";
 import Moment from "@/components/content/moment/Moment";
 import {getHotBanner} from "@/network/recommend";
-import Article from "@/views/hotRecommend/childCpn/article/Article";
+import Spcolumn from "@/views/hotRecommend/childCpn/spcolumn/Spcolumn";
 import {getAllCate} from "@/network/toplist";
 import OtherCate from "@/views/hotRecommend/childCpn/otherCate/OtherCate";
 import Knowledge from "@/views/hotRecommend/childCpn/knowledge/Knowledge";
 
 export default {
 name: "HotRecommend",
-  components: {Knowledge, OtherCate, Article, Moment},
+  components: {Knowledge, OtherCate, Spcolumn, Moment},
   data()
   {
     return {

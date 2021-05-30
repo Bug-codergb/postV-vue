@@ -30,7 +30,7 @@
 <script>
 import ControlBtn from "@/components/common/controlBtn/ControlBtn";
 export default {
-  name: "ArticleItem",
+  name: "SpcolumnItem",
   components: {ControlBtn},
   props:{
     article:{
@@ -44,7 +44,7 @@ export default {
     }
   },
   created() {
-    //console.log(this.article)
+    //console.log(this.spcolumn)
   }
 }
 </script>

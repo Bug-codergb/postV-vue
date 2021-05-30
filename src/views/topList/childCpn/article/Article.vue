@@ -13,7 +13,7 @@
 
 <script>
 import {getArticleToplist} from "@/network/toplist";
-import ArticleItem from "@/components/common/articleItem/ArticleItem";
+import ArticleItem from "@/components/common/spcolumnItem/SpcolumnItem";
 
 export default {
   name: "Technology",

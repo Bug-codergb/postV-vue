@@ -21,20 +21,15 @@ const topic=()=>import('../../components/content/searchDetail/childCpn/topic/Top
 //分类详情页
 //视频分类详情页
 const videoCate=()=>import('../../components/content/category/children/videoCate/VideoCate');
-//图片分类详情页
-const imageCate=()=>import('../../components/content/category/children/imageCate/ImageCate');
-//科技分类详情页
-const technologyCate=()=>import('../../components/content/category/children/technology/Technology');
-//文章分类详情
-const articleCate=()=>import('../../components/content/category/children/articleCate/ArticleCate')
+//专栏分类详情
+const spcolumnCate=()=>import('../../components/content/category/children/spcolumnCate/SpcolumnCate')
 //课程分类详情页
 const knowCate=()=>import("../../components/content/category/children/knowCate/KnowCate");
 //课程详情页
 const knowDetail=()=>import('../../components/content/category/children/knowCate/childCpn/knowDetail/KnowDetail');
 //课程播放
 const knowPlay=()=>import('../../components/content/category/children/knowCate/childCpn/videoPlay/VideoPlay');
-//图片详情页
-const imageDetail=()=>import('../../components/content/imageDetail/ImageDetail');
+
 //聊天
 const chatDetail=()=>import("../../components/content/chat/Chat");
 //频道内容详情
@@ -86,14 +81,7 @@ export const topicContentDetailRouter={
         detail:topicContentDetail
     }
 }
-//图片详情页
-export const imageDetailRouter={
-    path:'/imageDetail',
-    name:'imageDetail',
-    components:{
-        detail:imageDetail
-    }
-}
+
 export const searchDetailRouter={
     path:'/searchDetail',
     name:'searchDetail',
@@ -130,28 +118,13 @@ export const videoCateRouter={
         detail:videoCate
     }
 }
-//图片分类详情页
-export const imageCateRouter={
-    path:'/imageCate',
-    name:'imageCate',
-    components:{
-        detail:imageCate
-    }
-}
-//科技分类详情页
-export const technologyCateRouter={
-    path:'/technologyCate',
-    name:'technologyCate',
-    components:{
-        detail:technologyCate
-    }
-}
+
 //文章分类详情
-export const articleCateRouter={
-    path:'/articleCate',
-    name:'articleCate',
+export const spcolumnCateRouter={
+    path:'/spcolumnCate',
+    name:'spcolumnCate',
     components:{
-        detail:articleCate
+        detail:spcolumnCate
     }
 }
 //课程分类详情页

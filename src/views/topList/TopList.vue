@@ -22,7 +22,7 @@ export default {
     return {
       currentIndex:0,
       path:['/Home/TopList/Video','/Home/TopList/Movie','/Home/TopList/Picture',
-             '/Home/TopList/article'],
+             '/Home/TopList/spcolumn'],
       allCate:[]
     }
   },

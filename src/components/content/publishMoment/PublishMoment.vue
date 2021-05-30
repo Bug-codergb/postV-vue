@@ -17,11 +17,11 @@
        </select>
      </div>
     <!--内容编辑-->
-    <textarea v-model="content" class="momentContent" v-show="cate==='视频'" placeholder="简介"/>
-    <div id="edt" ref="edit" v-show="cate!=='视频'"></div>
+    <textarea v-model="content" class="momentContent" v-show="cate==='影视'" placeholder="简介"/>
+    <div id="edt" ref="edit" v-show="cate!=='影视'"></div>
 
     <!--上传视频预览-->
-    <div class="video-outer" v-if="cate==='视频'">
+    <div class="video-outer" v-if="cate==='影视'">
       <div>
         <p class="select-video-cover">选择视频</p>
         <div class="upload-img">

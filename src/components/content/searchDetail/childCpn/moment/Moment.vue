@@ -62,7 +62,7 @@ export default {
           });break;
         case "文章":
           this.$router.push({
-            path:'/articleCate',
+            path:'/spcolumnCate',
             query:{
               categoryId:item.category.categoryId
             }

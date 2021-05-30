@@ -7,8 +7,8 @@
     <ul class="outer">
       <li v-for="(item,index) in cateDetail.moments" :key="item.momentId">
         <msg-list img-container-height="130px"
-                  :is-show-play="cateDetail.name==='视频'||cateDetail.name==='预告片'"
-                  :is-show-time="cateDetail.name==='视频'||cateDetail.name==='预告片'">
+                  :is-show-play="cateDetail.name==='影视'"
+                  :is-show-time="cateDetail.name==='影视'">
           <div slot="img-container" @click="videoRouter(item)">
             <img :src="item.picUrl[0].picUrl+'&type=small'" />
           </div>
@@ -54,27 +54,13 @@ name: "OtherCate",
   methods:{
     detailRouter(name)
     {
-      console.log(name)
+      console.log(name);
       switch(name)
       {
-        case '视频':
+        case '影视':
           this.$router.push({
             path:'/videoCate'
           });break;
-        case "图片":
-          this.$router.push({
-            path:'/imageCate',
-            query:{
-              categoryId:this.cateDetail.categoryId
-            }
-          });break;
-        case '科技':
-          this.$router.push({
-            path:'/technologyCate',
-            query:{
-              categoryId:this.cateDetail.categoryId
-            }
-          })
       }
     },
     //占位
@@ -93,15 +79,6 @@ name: "OtherCate",
           }
         })
       }
-     if(item.name==='图片')
-     {
-       this.$router.push({
-         path:'/imageDetail',
-         query:{
-           momentId:item.momentId
-         }
-       })
-     }
     },
     userRouter(item)
     {

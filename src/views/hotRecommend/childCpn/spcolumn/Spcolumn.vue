@@ -1,6 +1,6 @@
 <template>
   <div class="article">
-    <p class="article-name" @click="articleRouter()">{{article.name}}
+    <p class="article-name" @click="articleRouter">{{article.name}}
       <i class="iconfont icon-svgarrowsright"></i>
     </p>
     <!--文章内容-->
@@ -42,7 +42,7 @@
 import ControlBtn from "@/components/common/controlBtn/ControlBtn";
 import {momentView} from "@/network/moment";
 export default {
-  name: "Article",
+  name: "Spcolumn",
   components: {ControlBtn},
   data()
   {
@@ -61,7 +61,7 @@ export default {
     }
   },
   created() {
-    //console.log(this.article)
+    //console.log(this.spcolumn)
   },
   mounted() {
     this.$nextTick(()=>{
@@ -92,7 +92,7 @@ export default {
     articleRouter()
     {
       this.$router.push({
-        path:'/articleCate',
+        path:'/spcolumnCate',
         query:{
           categoryId:this.article.categoryId
         }
