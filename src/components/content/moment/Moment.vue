@@ -23,11 +23,12 @@
        <!--标签-->
        <Tags :momentDetail="momentDetail"/>
         <!--动态回复，评论，点赞按钮-->
-        <reply :id="momentDetail.momentId" v-if="isShowCom"/>
+        <reply :id="momentDetail.momentId" v-if="isShowCom" @reply="reply"/>
         <!--评论回复-->
         <comment :momentId="momentDetail.momentId"
                  v-if="momentDetail&&isShowCom"
-                 :key="momentDetail.momentId+momentDetail.comments.length+keyId"/>
+                 :key="momentDetail.momentId+momentDetail.comments.length+keyId"
+                 @reply-comment="replyComment"/>
   </div>
 </template>
 
@@ -36,6 +37,7 @@ import reply from '@/components/content/reply/Reply';
 import Tags from "@/components/content/tags/Tags"
 import Comment from "@/components/content/comment/Comment";
 import MomentBar from "@/components/content/moment/children/momentBar/MomentBar";
+import {publishCom, replyComment} from "@/network/comment";
 export default {
   name: "Moment",
   components:{
@@ -76,14 +78,14 @@ export default {
   created() {
     //console.log(this.momentDetail)
   },
-  mounted() {
-    this.$bus.$on("replyComment",()=>{
-      this.keyId+=1;
-    })
-  },
-  destroyed() {
-    this.$bus.$off("replyComment");
-  },
+  // mounted() {
+  //   this.$bus.$on("replyComment",()=>{
+  //     this.keyId+=1;
+  //   })
+  // },
+  // destroyed() {
+  //   this.$bus.$off("replyComment");
+  // },
   methods:{
     userRouter(user)
     {
@@ -93,6 +95,18 @@ export default {
         query:{
           id:user.id
         }
+      })
+    },
+    reply(content){
+      publishCom(content,this.momentDetail.momentId).then(data=>{
+        this.keyId+=1
+        this.$toast.show("发表成功");
+      })
+    },
+    replyComment(commentId,content){
+      replyComment(content,commentId).then(data=>{
+        this.keyId+=1
+        this.$toast.show("回复成功");
       })
     }
   }

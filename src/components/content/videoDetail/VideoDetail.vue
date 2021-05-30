@@ -41,7 +41,8 @@
       <!--动态（视频）评论-->
       <comment :momentId="videoDetail.moment.momentId"
                v-if="videoDetail.moment.momentId"
-               :key="keyId"/>
+               :key="keyId"
+               @reply-comment="replyComment"/>
     </div>
     <div class="right-content">
       <RecommendVideo :vid="vid" @play-video="playVideo"/>
@@ -57,6 +58,7 @@ import Comment from "@/components/content/comment/Comment";
 import RecommendVideo from "@/components/content/videoDetail/childCpn/recommendVideo/RecommendVideo";
 import VideoMsg from "@/components/content/videoDetail/childCpn/videoMsg/VideoMsg";
 import {formatDate} from "@/utils/formatDate";
+import {publishCom, replyComment} from "@/network/comment";
 
 export default {
 name: "VideoDetail",
@@ -101,9 +103,20 @@ name: "VideoDetail",
     {
       return formatDate(time,ft);
     },
-    reply()
+    //发表视频评论
+    reply(content)
     {
-      this.keyId+=1;
+      publishCom(content,this.videoDetail.moment.momentId).then(data=>{
+        this.keyId+=1;
+        this.$toast.show("发表成功");
+      })
+    },
+    //回复评论
+    replyComment(commentId,content){
+      replyComment(content,commentId).then(data=>{
+        this.keyId+=1;
+        this.$toast.show("回复成功");
+      })
     },
     play()
     {

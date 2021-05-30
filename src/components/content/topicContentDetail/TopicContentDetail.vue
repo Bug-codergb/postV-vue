@@ -22,8 +22,9 @@
       <!--评论内容-->
       <comment :comment-detail="contentDetail.comment"
                :status="3"
-                v-if="contentDetail.comment"
-               :key="keyId"/>
+                v-if="contentDetail.comment[0].commentId"
+               :key="keyId"
+               @reply-comment="replyComment"/>
     </div>
     <div class="right-content"></div>
   </div>
@@ -34,6 +35,7 @@ import {getTopicContentDetail} from "@/network/topic";
 import ControlBtn from "@/components/common/controlBtn/ControlBtn";
 import Reply from "@/components/content/reply/Reply";
 import Comment from "@/components/content/comment/Comment";
+import {publishTopicCom, replyTopicCom} from "@/network/comment";
 
 export default {
   name: "TopicContentDetail",
@@ -41,7 +43,7 @@ export default {
   data()
   {
     return {
-      contentDetail:{user:{},updateTime:''},
+      contentDetail:{user:{},updateTime:'',comment:[{}]},
       keyId:0
     }
   },
@@ -50,24 +52,25 @@ export default {
       this.contentDetail=data;
     })
   },
-  mounted() {
-    this.$bus.$on("replyTopicComment",()=>{
-      getTopicContentDetail(this.$route.query.topic_content_id).then(data=>{
-        this.contentDetail=data;
-        this.keyId+=1;
-      })
-    })
-  },
-  destroyed() {
-    this.$bus.$off("replyTopicComment")
-  },
   methods:{
-    reply()
+    reply(content)
     {
-      getTopicContentDetail(this.$route.query.topic_content_id).then(data=>{
-        this.contentDetail=data;
-        this.keyId+=1;
+      publishTopicCom(this.contentDetail.topic_content_id,content).then(data=>{
+        getTopicContentDetail(this.$route.query.topic_content_id).then(data=>{
+          this.contentDetail=data;
+          this.keyId+=1;
+          this.$toast.show("发表成功");
+        })
       })
+    },
+    replyComment(commentId,content){
+       replyTopicCom(commentId,content).then(data=>{
+         getTopicContentDetail(this.$route.query.topic_content_id).then(data=>{
+           this.contentDetail=data;
+           this.keyId+=1;
+           this.$toast.show("回复成功");
+         })
+       })
     }
   }
 }

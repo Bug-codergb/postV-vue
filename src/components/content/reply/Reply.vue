@@ -169,51 +169,11 @@ name: "Reply",
     },
     replyBtn()
     {
-      /*发送动态评论*/
-      if(this.content&&this.status===0)
-      {
-        publishCom(this.content,this.id).then(data=>{
-          this.$store.dispatch({
-            type:'getMomentDetail',
-            momentId:this.id
-          })
-          this.isShowCom=false;
-          this.$toast.show("评论成功",2000);
-          this.$emit('reply')
-        })
-      }
-      /*回复评论的评论*/
-      if(this.content&&this.status===1)
-      {
-        replyComment(this.content,this.id).then(data=>{
-          this.isShowCom=false;
-          this.$toast.show("回复评论成功",2000);
-          this.$bus.$emit('replyComment');
-        })
-      }
-      //发表专题评论
-      if(this.content&&this.status===2)
-      {
+      if(this.content.trim().length!==0){
+        this.$emit("reply",this.content);
         this.isShowCom=false;
-        publishTopicCom(this.id,this.content).then(data=>{
-          this.$toast.show("评论成功",2000);
-          this.$emit('reply')
-        })
-      }
-      //回复专题评论
-      if(this.content&&this.status===3)
-      {
-        this.isShowCom=false;
-        replyTopicCom(this.id,this.content).then(data=>{
-          this.$toast.show("回复成功",2000);
-          this.$bus.$emit('replyTopicComment');
-        })
-      }
-      //发表频道评论
-      if(this.content&&this.status===99){
-        publishChannelComment(this.id,this.content).then(data=>{
-          this.$toast.show("发表成功",2000);
-        })
+      }else{
+        this.$toast.show("内容不能为空",1500);
       }
     },
     //点赞

@@ -17,14 +17,15 @@
           <reply :replyStyle="{fontSize:'14px'}"
                  :status="status"
                  :id="item.commentId"
-                 :is-show-sub="false"/>
+                 :is-show-sub="false"
+                 @reply="reply($event,item)"/>
           <!--回复评论的评论-->
           <ul class="reply-comment" v-if="item.reply">
             <li v-for="(iten,i) in item.reply"
                 :key="iten.commentId">
               <div class="reply-user-msg">
                 <div class="reply-user-avatar">
-                  <img :src="iten.user.avatarUrl"/>
+                  <img :src="iten.user.avatarUrl" alt=""/>
                 </div>
                 <div class="reply-user-name">{{iten.user.userName}}: </div>
               </div>
@@ -88,6 +89,11 @@ export default {
   methods:{
     formatTime(time,ft){
       return formatDate(time,ft)
+    },
+    //回复评论
+    reply(content,item){
+      const {commentId}=arguments[1];
+      this.$emit("reply-comment",commentId,content);
     }
   }
 }
@@ -154,7 +160,7 @@ export default {
     margin: 0 0 5px 0;
     padding: 5px 10px;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     .reply-content {
       color: #616162;
     }
