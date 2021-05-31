@@ -1,7 +1,7 @@
 <template>
   <div class="video-cate">
     <cate-list title="类别" :list="videoCate" v-if="videoCate.length" @cate="cate" />
-    <ul class="video-list" v-if="videoList.videos[0].vid">
+    <ul class="video-list" v-if="videoList.videos">
       <li v-for="(item,index) in videoList.videos" :key="item.vid">
         <msg-list img-container-height="130px">
           <div slot="img-container" @click="videoRouter(item)">
@@ -10,7 +10,7 @@
           <div slot="state">
             <div class="video-cate-state">{{item.title}}</div>
           </div>
-          <div slot="avatarUrl"><img :src="item.user.avatarUrl"/>}}</div>
+          <div slot="avatarUrl"><img :src="item.user.avatarUrl"/></div>
           <div slot="userName">{{item.user.userName}}</div>
           <div slot="playCount">{{item.playCount}}</div>
         </msg-list>
@@ -28,6 +28,7 @@ import {getAllVideoCate} from "@/network/video";
 import {getCateVideo} from "@/network/video";
 import {holder} from "@/utils/holder";
 import MsgList from "@/components/common/msgList/MsgList";
+import {getAllCateCon} from "@/network/category";
 export default {
   name: "VideoCate",
   components: {MsgList, CateList},
@@ -37,25 +38,23 @@ export default {
       videoCate:[],
       videoCatMap:new Map(),
       videoList:{
-        videos:[{}]
-      }
+        videos:[]
+      },
+      cateId:""
     }
   },
   created() {
-    getAllVideoCate().then(data=>{
-      data.forEach((item,index)=>{
-        this.videoCatMap.set(item.name,item.categoryId);
-        this.cate("科幻")
-      })
-      this.videoCate=data.map((item,index)=>{
-        return item.name
-      })
+    this.cateId=this.$route.query.id;
+    getAllCateCon(this.cateId).then(data=>{
+      console.log(data);
+      this.videoCate=data.cate;
     })
   },
   methods:{
     cate(item)
     {
-      getCateVideo(this.videoCatMap.get(item)).then(data=>{
+      getCateVideo(item.id).then(data=>{
+        console.log(data);
         this.videoList=data;
       })
     },
@@ -94,7 +93,7 @@ export default {
       flex-wrap: wrap;
       li{
         margin: 0 0 20px 0;
-        width: 245px;
+        width: 235px;
       }
       .video-cate-state{
         margin: 20px 0 0 0;

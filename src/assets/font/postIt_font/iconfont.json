@@ -6,6 +6,41 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "1234577",
+      "name": "音乐",
+      "font_class": "yinle",
+      "unicode": "e626",
+      "unicode_decimal": 58918
+    },
+    {
+      "icon_id": "18436307",
+      "name": "军事",
+      "font_class": "junshi",
+      "unicode": "e602",
+      "unicode_decimal": 58882
+    },
+    {
+      "icon_id": "4625979",
+      "name": "体育",
+      "font_class": "tiyu",
+      "unicode": "e6d6",
+      "unicode_decimal": 59094
+    },
+    {
+      "icon_id": "17920023",
+      "name": "影视",
+      "font_class": "yingshi",
+      "unicode": "e611",
+      "unicode_decimal": 58897
+    },
+    {
+      "icon_id": "18400552",
+      "name": "专栏",
+      "font_class": "zhuanlan1",
+      "unicode": "e60b",
+      "unicode_decimal": 58891
+    },
+    {
       "icon_id": "548104",
       "name": "channel2",
       "font_class": "channel2",

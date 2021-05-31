@@ -55,13 +55,13 @@ name: "HotRecommend",
         return getCateMsg(item.categoryId)
       })
       Promise.all(promise).then(data=>{
+        console.log(data);
         this.recommendArc=data.filter((item,index)=>{
           return item.name==='专栏'
         })[0]
         this.otherRec=data.filter((item,index)=>{
           return item.name!=='专栏'
         });
-        //console.log(this.otherRec)
       })
     })
   },

@@ -120,7 +120,7 @@ name: "MsgList",
     /*持续时间*/
     .dt{
       position: absolute;
-      top: 90%;
+      top: 94%;
       left:100%;
       transform: translate(-110%,-100%);
       color: #fff;

@@ -2,8 +2,8 @@
   <div class="cate-list">
     <div class="title">{{title}}:</div>
     <ul>
-      <li v-for="(item,index) in list" :key="item" :class="{active:currentIndex===index}" @click="liClick(item,index)">
-        {{item}}
+      <li v-for="(item,index) in list" :key="item.id" :class="{active:currentIndex===index}" @click="liClick(item,index)">
+        {{item.name}}
       </li>
     </ul>
   </div>

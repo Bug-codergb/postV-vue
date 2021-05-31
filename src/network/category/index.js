@@ -9,3 +9,12 @@ export function getCateDetail(id,offset=0,limit=15)
         }
     })
 }
+//获取分类子分类
+export function getAllCateCon(cateId){
+    return request({
+        url:"/cate/all/con",
+        params:{
+            cateId
+        }
+    })
+}
