@@ -1,6 +1,8 @@
 <template>
   <div class="spcolumn">
-    <toplist-item :list="swiperList" v-if="swiperList.length"></toplist-item>
+    <toplist-item :list="swiperList"
+                  v-if="swiperList.length"
+                  :toplist="toplist"></toplist-item>
   </div>
 </template>
 
@@ -8,23 +10,19 @@
 import {getSpcolumnTop} from "@/network/toplist";
 import ArticleItem from "@/components/common/spcolumnItem/SpcolumnItem";
 import ToplistItem from "@/views/topList/childCpn/toplistItem/ToplistItem";
-
-
-
 export default {
   name: "Technology",
   components: {ToplistItem, ArticleItem},
   data()
   {
     return {
-       article:[],
       swiperList:[],
       toplist:[]
     }
   },
   created() {
     getSpcolumnTop().then(data=>{
-      console.log(data);
+      //console.log(data);
       this.toplist=data;
       this.swiperList=data.map((item,index)=>{
         return {

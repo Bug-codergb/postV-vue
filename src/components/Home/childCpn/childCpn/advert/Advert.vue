@@ -31,7 +31,7 @@ export default {
   },
   created() {
     getAllAdvert(0,5).then(data=>{
-      console.log(data);
+      //console.log(data);
       this.allAdvert=data;
     })
   },

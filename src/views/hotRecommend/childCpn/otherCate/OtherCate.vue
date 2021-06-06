@@ -13,9 +13,10 @@
       <li v-for="(item,index) in cateDetail.moments" :key="item.momentId">
         <msg-list img-container-height="110px"
                   :is-show-play="true"
-                  :is-show-time="true">
+                  :is-show-time="true"
+                  @play="videoRouter(item)">
           <div slot="img-container" @click="videoRouter(item)">
-            <img :src="item.picUrl[0].picUrl+'&type=small'" />
+            <img :src="item.picUrl[0].picUrl+'&type=small'" alt=""/>
           </div>
           <div slot="playCount" v-if="item.video">{{item.video.playCount}}</div>
           <div slot="dt" v-if="item.video&&item.video.duration!==0">
@@ -53,13 +54,9 @@ name: "OtherCate",
       }
     }
   },
-  created() {
-    console.log(this.cateDetail)
-  },
   methods:{
     detailRouter(detail)
     {
-      console.log(detail);
       switch(detail.name)
       {
         case '影视':

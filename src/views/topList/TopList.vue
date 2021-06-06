@@ -3,7 +3,7 @@
     <ul class="category">
       <li v-for="(item,index) in allCate"
           :class="{active:index===currentIndex}"
-          @click="liClick(index)">
+          @click="liClick(item,index)">
         {{item.name}}
       </li>
     </ul>
@@ -21,25 +21,28 @@ export default {
   {
     return {
       currentIndex:0,
-      path:['/Home/TopList/Video','/Home/TopList/Spcolumn','/Home/TopList/Picture',
-             '/Home/TopList/spcolumn'],
+      path:['/Home/TopList/Video','/Home/TopList/Spcolumn','/Home/TopList/Music',
+             '/Home/TopList/Military','/Home/TopList/Sport'],
       allCate:[]
     }
   },
   created() {
     getAllCate(0,30).then(data=>{
-      console.log(data)
+      //console.log(data)
       this.allCate=data.filter((item,index)=>{
         return item.name!=="微课堂"&&item.name!=="预告片"
       })
     })
   },
   methods:{
-    liClick(index)
+    liClick(item,index)
     {
       this.currentIndex=index;
       this.$router.push({
-        path:this.path[index]
+        path:this.path[index],
+        query:{
+          id:item.categoryId
+        }
       })
     }
   }

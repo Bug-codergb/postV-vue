@@ -18,3 +18,12 @@ export function getSpcolumnTop(cateId=1616757439494){
         }
     })
 }
+//获取其它榜单详情
+export function getToplist(cateId){
+    return request({
+        url:"/toplist",
+        params:{
+            cateId
+        }
+    })
+}

@@ -139,6 +139,7 @@ export default {
       li{
         display: flex;
         border-bottom: 1px solid rgba(58, 142, 230,.2);
+        width: 100%;
         padding: 10px 0;
         .img-container{
           width: 150px;
@@ -155,6 +156,7 @@ export default {
         }
         .msg{
           margin: 10px 0 0 20px;
+          width: 75%;
           .title{
             cursor: pointer;
             &:hover{
@@ -165,7 +167,6 @@ export default {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            width: 500px;
             margin: 20px 0 0 0;
             .article-btn{
               color: #9ca3ab;

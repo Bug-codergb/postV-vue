@@ -38,12 +38,11 @@ import {
 } from './detail/index'
 
 //榜单子路由
-const movie=()=>import('../views/topList/childCpn/movie/Movie')
-const picture=()=>import('../views/topList/childCpn/picture/Picture')
+const military=()=>import('../views/topList/childCpn/military/Military')
 const sport=()=>import('../views/topList/childCpn/sport/Sport')
 const spcolumn=()=>import('../views/topList/childCpn/spcolumn/Spcolumn')
 const video=()=>import('../views/topList/childCpn/video/Video');
-const funny=()=>import('../views/topList/childCpn/funny/Funny')
+const music=()=>import('../views/topList/childCpn/music/Music')
 
 const originalPush = VueRouter.prototype.push
 VueRouter.prototype.push = function push(location) {
@@ -97,14 +96,9 @@ const routes = [
             redirect:'/Home/TopList/Video'
           },
           {
-            path:'Movie',
-            name:'movie',
-            component:movie
-          },
-          {
-            path:'Picture',
-            name:'picture',
-            component:picture
+            path:'Military',
+            name:'military',
+            component:military
           },
           {
             path:'Spcolumn',
@@ -122,9 +116,9 @@ const routes = [
             component:video
           },
           {
-            path:'Funny',
-            name:'funny',
-            component:funny
+            path:'Music',
+            name:'music',
+            component:music
           }
         ]
       },

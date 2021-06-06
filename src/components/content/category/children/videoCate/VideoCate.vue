@@ -6,14 +6,14 @@
     <cate-list title="类别" :list="videoCate" v-if="videoCate.length" @cate="cate" />
     <ul class="video-list" v-if="videoList.videos">
       <li v-for="(item,index) in videoList.videos" :key="item.vid">
-        <msg-list img-container-height="130px">
+        <msg-list img-container-height="130px" @play="videoRouter(item)">
           <div slot="img-container" @click="videoRouter(item)">
-            <img :src="item.coverUrl+'&type=small'"/>
+            <img :src="item.coverUrl+'&type=small'" alt=""/>
           </div>
           <div slot="state">
             <div class="video-cate-state">{{item.title}}</div>
           </div>
-          <div slot="avatarUrl"><img :src="item.user.avatarUrl"/></div>
+          <div slot="avatarUrl"><img :src="item.user.avatarUrl" alt=""/></div>
           <div slot="userName">{{item.user.userName}}</div>
           <div slot="playCount">{{item.playCount}}</div>
         </msg-list>
@@ -51,12 +51,14 @@ export default {
   created() {
     this.cateId=this.$route.query.id;
     getAllCateCon(this.cateId).then(data=>{
-      //console.log(data);
+      console.log(data.cate);
       this.videoCate=data.cate;
+      if(data.cate){
+        this.cate(data.cate[0])
+      }
     })
     //获取视频banner
     getVideoBanner(this.cateId,0,5).then(data=>{
-      console.log(data);
       this.banner=data;
     })
   },
@@ -64,7 +66,6 @@ export default {
     cate(item)
     {
       getCateVideo(item.id).then(data=>{
-        console.log(data);
         this.videoList=data;
       })
     },
@@ -96,6 +97,7 @@ export default {
   .video-cate{
     border-right: 1px solid #d8e8fa;
     width: 70%;
+    padding: 0 30px 0 0;
     ul.video-list{
       margin: 20px 0 0 0;
       display: flex;

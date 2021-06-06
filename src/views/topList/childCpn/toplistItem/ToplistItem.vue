@@ -18,14 +18,32 @@
         </ul>
       </div>
     </div>
+    <div class="body-content">
+      <ul class="item-content">
+        <li v-for="(item,index) in toplist.slice(5,100)" :key="item.momentId" @click="detailRouter(item,index)">
+           <MsgItem :title="item.title" img-width="140px">
+             <div slot="index" class="spcolumn-index">{{index+6}}</div>
+             <img slot="img-container" :src="item.picUrl[0]+'&type=small'" v-if="item.picUrl" alt=""/>
+             <img slot="avatar" :src="item.user.avatarUrl" alt=""/>
+             <div slot="user-name" class="spcolumn-user-name">{{item.user.userName}}</div>
+             <span slot="time">{{ formatTime(item.createTime,"yyyy-MM-dd hh:mm:ss")}}</span>
+             <span slot="thumb">{{item.thumbs}}</span>
+             <span slot="comment">{{item.comments}}</span>
+             <span slot="view">{{item.view}}</span>
+           </MsgItem>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
 <script>
 import Swiper from "@/components/common/swiper/Swiper";
+import MsgItem from "@/components/common/msgItem/MsgItem";
+import {formatDate} from "@/utils/formatDate";
 export default {
   name: "ToplistItem",
-  components: {Swiper},
+  components: {MsgItem, Swiper},
   data(){
     return {
       liveIndex:0,
@@ -35,6 +53,12 @@ export default {
   },
   props:{
     list:{
+      type:Array,
+      default(){
+        return []
+      }
+    },
+    toplist:{
       type:Array,
       default(){
         return []
@@ -53,6 +77,30 @@ export default {
     },
     leave(){
       this.autoPlay=true
+    },
+    formatTime(time,ft){
+      return formatDate(time,ft);
+    },
+    detailRouter(item,index){
+      console.log(item);
+      const {type,user}=item;
+      if(type===1) {
+        this.$router.push({
+          path: "/videoDetail",
+          query: {
+            vid: item.vid
+          }
+        })
+      }
+      else if(type===0){
+       this.$router.push({
+        path:"/momentDetail",
+        query:{
+          momentId:item.momentId,
+          userId:user.userId
+        }
+      })
+      }
     }
   }
 }
@@ -60,7 +108,7 @@ export default {
 
 <style scoped lang="less">
   .toplist-item{
-    margin: 10px 0;
+    margin: 30px 0;
     .toplist-item-header{
       display: flex;
       flex-wrap: nowrap;
@@ -91,6 +139,25 @@ export default {
             &.active{
               background-color: #959595;
             }
+          }
+        }
+      }
+    }
+    .body-content{
+      .item-content{
+        &>li{
+          width: 100%;
+          padding: 15px 0;
+          border-bottom: 1px solid #d8e8fa;
+          display: flex;
+          align-items: center;
+          .spcolumn-index{
+            font-size: 16px;
+            text-shadow: 0 0 20px #fff;
+          }
+          .spcolumn-user-name{
+            font-size: 12px;
+            margin: 0 0 0 5px;
           }
         }
       }

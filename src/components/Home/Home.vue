@@ -78,7 +78,6 @@ export default {
 .content-body{
   width: 1200px;
   margin: 0 auto;
-  border: 1px solid rgba(58, 142, 230,.6);
   display: flex;
   background-color: #fff;
   padding:  30px 30px 50px 30px;

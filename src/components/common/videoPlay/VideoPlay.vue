@@ -84,7 +84,9 @@ export default {
       /*addVideoPlayCouont(this.videoDetail.vid).then(data => {
       })*/
       this.isPlay=!this.isPlay;
-      this.isPlay?this.$refs.vio.play():this.$refs.vio.pause();
+      this.isPlay?this.$refs.vio.play().catch(e=>{
+        console.log(e)
+      }):this.$refs.vio.pause();
     },
     playVideo(vid)
     {
@@ -96,7 +98,7 @@ export default {
     },
     getCurrentTime(e)
     {
-      if(!this.isDrag)
+      if(!this.isDrag&&this.$refs.vio)
       {
         this.currentTime=e.target.currentTime*1000;
         this.progress=(this.currentTime/this.dt)*100;
@@ -108,17 +110,28 @@ export default {
     },
     change(val)
     {
-      if(this.isMove) {
-        this.isDrag = true;
-        this.currentTime = this.dt * (val / 100);
+      if(this.$refs.vio.play){
+        this.$refs.vio.play().then(()=>{
+          if(this.isMove) {
+            this.isDrag = true;
+            this.currentTime = this.dt * (val / 100);
+          }
+        })
       }
     },
     changeEnd(val)
     {
-      this.isDrag=false;
-      this.$refs.vio.currentTime=this.currentTime/1000;
-      this.progress=val;
-      this.isMove=false;
+      const promise=this.$refs.vio.play();
+      if(promise){
+        promise.then(()=>{
+          this.isDrag=false;
+          this.progress=val;
+          this.isMove=false;
+          this.$refs.vio.currentTime=this.currentTime/1000;
+        }).catch(e=>{
+          console.log(e)
+        })
+      }
     },
     endHandle()
     {

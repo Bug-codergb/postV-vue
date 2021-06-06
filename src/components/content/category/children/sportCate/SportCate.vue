@@ -8,7 +8,7 @@
     </div>
     <ul class="video-list" v-if="videoList.videos">
       <li v-for="(item,index) in videoList.videos" :key="item.vid">
-        <msg-list img-container-height="130px">
+        <msg-list img-container-height="130px" @play="videoRouter(item)">
           <div slot="img-container" @click="videoRouter(item)">
             <img :src="item.coverUrl+'&type=small'" alt=""/>
           </div>
@@ -53,6 +53,9 @@ export default {
     this.cateId=this.$route.query.id;
     getAllCateCon(this.cateId).then(data=>{
       this.sportCate=data.cate;
+      if(data.cate){
+        this.cateClick(data.cate[0],0)
+      }
     });
     //获取视频banner
     getVideoBanner(this.cateId,0,5).then(data=>{
@@ -68,8 +71,13 @@ export default {
     holder(count,line){
       return holder(count,line);
     },
-    videoRouter(){
-
+    videoRouter(item){
+      this.$router.push({
+        path:'/videoDetail',
+        query:{
+          vid:item.vid
+        }
+      })
     }
   }
 }
@@ -78,6 +86,7 @@ export default {
 <style scoped lang="less">
   .sport-cate{
     width: 70%;
+    padding: 0 30px 0 0;
     border-right: 1px solid #d8e8fa;
     ul.video-list{
       margin: 20px 0 0 0;

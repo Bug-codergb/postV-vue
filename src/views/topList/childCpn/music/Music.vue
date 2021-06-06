@@ -1,14 +1,15 @@
 <template>
-  <div class="video">
+  <div class="music-cate">
     <toplist-item :list="swiperList" :toplist="toplist"/>
   </div>
 </template>
 
 <script>
-import {getToplist} from "@/network/toplist";
 import ToplistItem from "@/views/topList/childCpn/toplistItem/ToplistItem";
+import {getToplist} from "@/network/toplist";
+
 export default {
-  name: "Video",
+  name: "Music",
   components: {ToplistItem},
   data()
   {
@@ -18,7 +19,7 @@ export default {
     }
   },
   created() {
-    getToplist(1614678769218).then(data=>{
+    getToplist(this.$route.query.id).then(data=>{
       //console.log(data);
       this.toplist=data;
       this.swiperList=data.map((item,index)=>{
@@ -33,6 +34,6 @@ export default {
 }
 </script>
 
-<style scoped lang="less">
+<style scoped>
 
 </style>

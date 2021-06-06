@@ -7,7 +7,8 @@
       <div class="play" :style="{width:parseInt(imgContainerHeight)*0.4+'px',
                                  height: parseInt(imgContainerHeight)*0.4+'px',
                                  lineHeight:parseInt(imgContainerHeight)*0.4+'px'}"
-                         v-show="isShowPlay">
+                         v-show="isShowPlay"
+                         @click="play">
         <i class="iconfont icon-play" :style="{fontSize:parseInt(imgContainerHeight)*0.25+'px'}"></i>
       </div>
       <div class="play-count-item" v-show="isShowTime">
@@ -58,6 +59,11 @@ name: "MsgList",
       type:String,
       default:"86%"
     }
+  },
+  methods:{
+    play(){
+      this.$emit("play")
+    }
   }
 }
 </script>
@@ -90,6 +96,7 @@ name: "MsgList",
       text-align: center;
       background-color:rgba(255,255,255,.58);
       border-radius: 50%;
+      cursor: pointer;
       i{
         color: #3a8ee6;
       }

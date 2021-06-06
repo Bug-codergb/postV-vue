@@ -1,99 +1,138 @@
 <template>
   <div class="msg-item">
-    <div class="img-container">
-      <img :src="detail.picUrl[0].picUrl" />
-      <div class="play">
-        <i class="iconfont icon-play"></i>
+    <div class="img-container" :style="{width:imgWidth,height:(parseInt(imgWidth)*0.65)+'px'}">
+      <div class="index">
+        <slot name="index"></slot>
       </div>
+      <slot name="img-container"></slot>
     </div>
-    <div class="state">{{detail.title}}</div>
-    <div class="user-msg">
-      <div class="avatar">
-        <img :src="detail.user.avatarUrl" />
+    <div class="right-msg">
+      <div class="title">{{title}}</div>
+      <div class="user-control">
+        <div class="user-msg">
+          <div class="avatar">
+            <slot name="avatar"></slot>
+          </div>
+          <div class="user-name">
+            <slot name="user-name"></slot>
+          </div>
+        </div>
+        <control-btn not-show="sub">
+          <span slot="time" class="msg-item-control">
+            <slot name="time"></slot>
+          </span>
+          <span slot="thumb" class="msg-item-control">
+            <slot name="thumb"></slot>
+          </span>
+          <span slot="comment" class="msg-item-control">
+            <slot name="comment"></slot>
+          </span>
+          <span slot="view" class="msg-item-control">
+            <slot name="view"></slot>
+          </span>
+        </control-btn>
       </div>
-      <div class="user-name">{{detail.user.userName}}</div>
     </div>
   </div>
 </template>
 
 <script>
-export default {
+import ControlBtn from "@/components/common/controlBtn/ControlBtn";
+export default{
   name: "MsgItem",
+  components: {ControlBtn},
   props:{
-    detail:{
-      type:Object,
-      default()
-      {
-        return {}
-      }
+    title:{
+      type:String,
+      default:""
+    },
+    imgWidth:{
+      type:String,
+      default:"170px"
     }
   }
 }
 </script>
 
 <style scoped lang="less">
-.center()
-{
-  position: absolute;
-  left: 50%;
-  top:50%;
-  transform: translate(-50%,-50%);
-}
+  .center()
+  {
+    position: absolute;
+    left: 50%;
+    top:50%;
+    transform: translate(-50%,-50%);
+  }
   .msg-item{
+    display: flex;
+    width: 100%;
+    position: relative;
     .img-container{
-      width: 200px;
-      height: 104px;
       overflow: hidden;
-      border-radius: 3px;
-      text-align: center;
-      background-color: #333333;
+      background-color: #373737;
       position: relative;
-      &:hover{
-        img{
-          transform: scale(1.3);
-        }
-        .play{
-          display: block;
-        }
-      }
+      cursor: pointer;
       img{
-        height: 104px;
-        transition: transform 0.3s;
-      }
-      .play{
         .center();
-        width: 45px;
-        height: 45px;
-        background-color: rgba(255, 255, 255,.6);
-        border-radius: 50%;
+        height: 100%;
+      }
+      .index{
+        position: absolute;
+        top: 0;
+        left: 0;
+        color: #fff;
+        width: 30px;
+        height: 30px;
+        background-color: rgba(58, 142, 230,.5);
         text-align: center;
-        line-height: 45px;
-        i{
-          color: #3a8ee6;
-          font-size: 30px;
-        }
-        display: none;
+        line-height: 30px;
+        border-radius: 0 0 100% 0;
+        z-index: 99;
       }
     }
-    .state{
-      margin: 10px 0;
-      font-size: 14px;
-    }
-    .user-msg{
+    .right-msg{
+      margin: 0 0 0 30px;
+      width:70%;
       display: flex;
-      .avatar{
-        width: 20px;
-        height: 20px;
-        overflow: hidden;
-        position: relative;
-        img{
-          .center();
-          height: 20px;
+      flex-direction: column;
+      justify-content: space-around;
+      .title{
+        font-size: 20px;
+        color: #212121;
+      }
+      .user-control{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        .user-msg{
+          display: flex;
+          align-items: center;
+          .avatar{
+            width: 20px;
+            height: 20px;
+            overflow: hidden;
+            background-color: #373737;
+            position: relative;
+            border-radius: 50%;
+            img{
+              .center();
+              height: 100%;
+            }
+          }
+          .user-name{
+            color: #3a8ee6;
+          }
+        }
+        .msg-item-control{
+          color: #9ca3ab;
+          font-size: 12px;
+          margin: 0 0 0 5px;
         }
       }
-      .user-name{
-        font-size: 12px;
+    }
+    &:hover{
+      .title{
         color: #3a8ee6;
+        cursor: pointer;
       }
     }
   }
