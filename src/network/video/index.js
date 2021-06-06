@@ -87,3 +87,14 @@ export function getRecommendVio()
         url:'/video/commend',
     })
 }
+//获取视频banner
+export function getVideoBanner(cateId,offset=0,limit=30){
+    return request({
+        url:"/video/banner",
+        params:{
+            cateId,
+            offset,
+            limit
+        }
+    })
+}

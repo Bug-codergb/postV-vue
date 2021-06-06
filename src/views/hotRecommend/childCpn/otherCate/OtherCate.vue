@@ -69,6 +69,27 @@ name: "OtherCate",
               id:detail.categoryId
             }
           });break;
+        case "音乐":
+          this.$router.push({
+            path:'/musicCate',
+            query:{
+              id:detail.categoryId
+            }
+          });break;
+        case "军事":
+          this.$router.push({
+            path:'/militaryCate',
+            query:{
+              id:detail.categoryId
+            }
+          });break;
+        case "体育":
+          this.$router.push({
+            path:'/sportCate',
+            query:{
+              id:detail.categoryId
+            }
+          });break;
       }
     },
     //占位

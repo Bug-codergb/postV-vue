@@ -76,7 +76,7 @@ export default {
 
 <style scoped>
 .content-body{
-  width: 1180px;
+  width: 1200px;
   margin: 0 auto;
   border: 1px solid rgba(58, 142, 230,.6);
   display: flex;

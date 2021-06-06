@@ -61,6 +61,7 @@ import E from 'wangeditor';
 import store from "@/store";
 import CateCon from "./childCpn/cateCon/CateCon";
 import {getAllCateCon} from "@/network/category";
+import {getAllSpcolumnCate} from "@/network/spcolumn";
 
 
 export default {
@@ -70,7 +71,6 @@ export default {
     return {
       content:``,
       title:'',
-      images:[],
       fileList:[],
       vioImg:[],//视频封面
       coverUrl:'',//视频封面url
@@ -87,10 +87,14 @@ export default {
   },
   created() {
     getAllCate(0,10).then(data=>{
+      console.log(data);
       this.category=data
       this.category.forEach((item,index)=>{
         this.cateMap.set(item.name,item.categoryId);
       });
+      getAllSpcolumnCate().then(data=>{
+        this.cateConList=data;
+      })
     })
   },
   mounted() {
@@ -126,15 +130,21 @@ export default {
   methods:{
     //选择分类
     change(){
-      getAllCateCon(this.cateMap.get(this.cate)).then(data=>{
-        console.log(data);
-        this.cateConList=data;
-      })
+      console.log(this.cateMap.get(this.cate))
+      if(this.cateMap.get(this.cate)==='1616757439494'){
+        getAllSpcolumnCate().then(data=>{
+          this.cateConList=data;
+        })
+      }else{
+        getAllCateCon(this.cateMap.get(this.cate)).then(data=>{
+          this.cateConList=data;
+        })
+      }
     },
     //选择子分类
     cateClick(item){
       console.log(item);
-      this.cateConId=item.id;
+      this.cateConId=item.id||item.categoryId;
     },
     publishMoment()
     {
@@ -143,7 +153,8 @@ export default {
         this.$toast.show("为你的动态添加一个标题吧!",1500)
       }
      else{
-        publishMoment(this.momentId,this.title,this.cateMap.get(this.cate),this.content).then(data=>{
+       console.log(this.cateConId)
+        publishMoment(this.momentId,this.title,this.cateMap.get(this.cate),this.content,this.cateConId).then(data=>{
           if(this.cate!=='专栏')
           {
             this.upload(this.fileList,data)

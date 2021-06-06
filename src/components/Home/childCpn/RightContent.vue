@@ -136,6 +136,7 @@ export default {
   }
   .right-content{
     width: 300px;
+    margin: 0 auto;
     .advert{
       margin:50px 0 0 10px;
     }

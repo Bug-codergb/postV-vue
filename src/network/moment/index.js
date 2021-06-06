@@ -1,6 +1,6 @@
 import {request} from '../request';
 import store from '../../store/index'
-export function publishMoment(momentId,title,cate,content)
+export function publishMoment(momentId,title,cate,content,cateConId)
 {
     return request({
         url:'/moment/add',
@@ -12,7 +12,8 @@ export function publishMoment(momentId,title,cate,content)
             momentId,
             title,
             content,
-            cate
+            cate,
+            cateConId
         }
     })
 }

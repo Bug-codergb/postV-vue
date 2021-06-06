@@ -21,6 +21,12 @@ const topic=()=>import('../../components/content/searchDetail/childCpn/topic/Top
 //分类详情页
 //视频分类详情页
 const videoCate=()=>import('../../components/content/category/children/videoCate/VideoCate');
+//音乐分类详情页
+const musicCate=()=>import("../../components/content/category/children/music/Music");
+//军事分类
+const militaryCate=()=>import("../../components/content/category/children/militaryCate/Military");
+//体育分类
+const sportCate=()=>import("../../components/content/category/children/sportCate/SportCate");
 //专栏分类详情
 const spcolumnCate=()=>import('../../components/content/category/children/spcolumnCate/SpcolumnCate')
 //课程分类详情页
@@ -118,7 +124,30 @@ export const videoCateRouter={
         detail:videoCate
     }
 }
-
+//音乐分类详情
+export const musicCateRouter={
+    path:"/musicCate",
+    name:"musicCate",
+    components:{
+        detail:musicCate
+    }
+}
+//军事分类详情
+export const militaryCateRouter={
+    path:"/militaryCate",
+    name:"militaryCate",
+    components:{
+        detail:militaryCate
+    }
+}
+//体育分类详情
+export const sportCateRouter={
+    path:"/sportCate",
+    name:"sportCate",
+    components:{
+        detail:sportCate
+    }
+}
 //文章分类详情
 export const spcolumnCateRouter={
     path:'/spcolumnCate',

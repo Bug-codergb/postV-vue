@@ -1,14 +1,4 @@
 import {request} from '../request';
-export function getToplistPic(offset,limit)
-{
-    return request({
-        url:"/toplist/picture",
-        params:{
-            offset,
-            limit
-        }
-    })
-}
 export function getAllCate(offset,limit)
 {
     return request({
@@ -19,25 +9,12 @@ export function getAllCate(offset,limit)
         }
     })
 }
-//获取视频榜单
-export function getVideoToplist(offset=0,limit=30)
-{
+//获取专栏榜单详情
+export function getSpcolumnTop(cateId=1616757439494){
     return request({
-        url:'/toplist/video',
+        url:"/toplist/spcolumn",
         params:{
-            offset,
-            limit
-        }
-    })
-}
-//获取文章榜单
-export function getArticleToplist(offset,limit=30)
-{
-    return request({
-        url:'/toplist/article',
-        params:{
-            offset,
-            limit
+            cateId
         }
     })
 }

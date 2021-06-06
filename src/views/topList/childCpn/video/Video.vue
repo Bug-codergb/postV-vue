@@ -1,43 +1,12 @@
 <template>
   <div class="video">
-    <ul>
-      <li v-for="(item,index) in videoTopList" :key="item.vid">
-        <div class="index">{{(index+1).toString().padStart(2,"0")}}</div>
-        <div class="left-content">
-          <div class="img-container" @click="videoRouter(item)">
-            <img :src="item.coverUrl" :alt="item.title"/>
-            <div class="duration">{{duration(item.duration,"mm:ss")}}</div>
-            <div class="playCount">
-              <i class="iconfont icon-play1"></i>
-              {{item.playCount}}</div>
-          </div>
-        </div>
-        <div class="right-content">
-          <div class="title text-nowrap">{{item.title.trim()}}</div>
-          <div class="cate" @click="videoCate">
-            <span>类型:</span>{{item.cate}}
-          </div>
-          <div class="msg">
-            <div class="user-msg">
-              <div class="avatar">
-                <img :src="item.user.avatarUrl" alt="item.title" />
-              </div>
-              <div class="user-name" @click="userRouter(item)">{{item.user.userName}}</div>
-            </div>
-            <control-btn not-show="view thumb">
-              <div slot="time" class="video-control-btn">{{item.updateTime.substring(0,10)}}</div>
-              <div slot="comment" class="video-control-btn">{{item.comments}}</div>
-              <div slot="sub" class="video-control-btn">{{item.sub}}</div>
-            </control-btn>
-          </div>
-        </div>
-      </li>
-    </ul>
+    <div class="header">
+
+    </div>
   </div>
 </template>
 
 <script>
-import {getVideoToplist} from "@/network/toplist";
 import LeftContent from "@/components/Home/childCpn/LeftContent";
 import ControlBtn from "@/components/common/controlBtn/ControlBtn";
 import {formatDate} from "@/utils/formatDate";
@@ -52,10 +21,7 @@ export default {
     }
   },
   created() {
-    getVideoToplist(0,30).then(data=>{
-      console.log(data);
-      this.videoTopList=data;
-    })
+
   },
   methods:{
     vioRouter(vid)

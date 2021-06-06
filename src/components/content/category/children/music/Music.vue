@@ -1,19 +1,24 @@
 <template>
-  <div class="video-cate">
+  <div class="music-cate">
     <div class="banner">
-      <swiper :list="banner" @item-click="videoRouter"/>
+      <swiper :list="banner"/>
     </div>
-    <cate-list title="类别" :list="videoCate" v-if="videoCate.length" @cate="cate" />
+    <div class="cate-title">
+      <div class="current-cate">
+        {{ cateName }}
+      </div>
+      <CateList :list=musicCate color="#ec4141" @cate="cateClick"/>
+    </div>
     <ul class="video-list" v-if="videoList.videos">
       <li v-for="(item,index) in videoList.videos" :key="item.vid">
         <msg-list img-container-height="130px">
           <div slot="img-container" @click="videoRouter(item)">
-            <img :src="item.coverUrl+'&type=small'"/>
+            <img :src="item.coverUrl+'&type=small'" alt=""/>
           </div>
           <div slot="state">
             <div class="video-cate-state">{{item.title}}</div>
           </div>
-          <div slot="avatarUrl"><img :src="item.user.avatarUrl"/></div>
+          <div slot="avatarUrl"><img :src="item.user.avatarUrl" alt=""/></div>
           <div slot="userName">{{item.user.userName}}</div>
           <div slot="playCount">{{item.playCount}}</div>
         </msg-list>
@@ -27,75 +32,60 @@
 
 <script>
 import CateList from "@/components/common/cateList/CateList";
-import {getVideoBanner} from "@/network/video";
-import {getCateVideo} from "@/network/video";
-import {holder} from "@/utils/holder";
-import MsgList from "@/components/common/msgList/MsgList";
 import {getAllCateCon} from "@/network/category";
+import {holder} from "@/utils/holder";
+import {getCateVideo, getVideoBanner} from "@/network/video";
+import MsgList from "@/components/common/msgList/MsgList";
 import Swiper from "@/components/common/swiper/Swiper";
 export default {
-  name: "VideoCate",
-  components: {Swiper, MsgList, CateList},
-  data()
-  {
+  name: "Music",
+  components: {Swiper, CateList,MsgList},
+  data(){
     return {
-      videoCate:[],
-      videoCatMap:new Map(),
-      videoList:{
-        videos:[]
-      },
+      cateName:"华语",
       cateId:"",
+      musicCate:[],
+      videoList:[],
       banner:[]
     }
   },
   created() {
     this.cateId=this.$route.query.id;
     getAllCateCon(this.cateId).then(data=>{
-      //console.log(data);
-      this.videoCate=data.cate;
-    })
+      console.log(data);
+      this.musicCate=data.cate;
+    });
     //获取视频banner
     getVideoBanner(this.cateId,0,5).then(data=>{
-      console.log(data);
       this.banner=data;
     })
   },
   methods:{
-    cate(item)
-    {
+    cateClick(item,index){
+      this.cateName=item.name;
       getCateVideo(item.id).then(data=>{
-        console.log(data);
         this.videoList=data;
       })
     },
-    videoRouter(item)
-    {
-      this.$router.push({
-        path:'/videoDetail',
-        query:{
-          vid:item.vid
-        }
-      })
-    },
-    holder(count,line)
-    {
+    holder(count,line){
       return holder(count,line);
+    },
+    videoRouter(){
+
     }
-  }
+  },
 }
 </script>
 
 <style scoped lang="less">
-  .center()
-  {
-    transform: translate(-50%,-50%);
-    top:50%;
-    left:50%;
-    position:absolute;
-  }
-  .video-cate{
+  .music-cate{
     border-right: 1px solid #d8e8fa;
     width: 70%;
+    .cate-title{
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+    }
     ul.video-list{
       margin: 20px 0 0 0;
       display: flex;

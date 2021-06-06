@@ -1,34 +1,40 @@
 <template>
-  <div class="article">
-    <ul>
-      <li v-for="(item,index) in article" :key="item.momentId" @click="articleRouter(item)">
-        <div class="article-item">
-          <div class="index">{{index+1}}</div>
-          <article-item :article="item" />
-        </div>
-      </li>
-    </ul>
+  <div class="spcolumn">
+    <toplist-item :list="swiperList" v-if="swiperList.length"></toplist-item>
   </div>
 </template>
 
 <script>
-import {getArticleToplist} from "@/network/toplist";
+import {getSpcolumnTop} from "@/network/toplist";
 import ArticleItem from "@/components/common/spcolumnItem/SpcolumnItem";
+import ToplistItem from "@/views/topList/childCpn/toplistItem/ToplistItem";
+
+
 
 export default {
   name: "Technology",
-  components: {ArticleItem},
+  components: {ToplistItem, ArticleItem},
   data()
   {
     return {
-       article:[]
+       article:[],
+      swiperList:[],
+      toplist:[]
     }
   },
   created() {
-    getArticleToplist(0,30).then(data=>{
-      //console.log(data)
-      this.article=data;
+    getSpcolumnTop().then(data=>{
+      console.log(data);
+      this.toplist=data;
+      this.swiperList=data.map((item,index)=>{
+        return {
+          id:item.momentId,
+          coverUrl:item.picUrl?item.picUrl[0]:'',
+          title:item.title
+        }
+      })
     })
+
   },
   methods:{
     articleRouter(item)

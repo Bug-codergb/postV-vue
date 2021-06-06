@@ -1,8 +1,11 @@
 <template>
   <div class="cate-list">
-    <div class="title">{{title}}:</div>
+    <div class="title" v-if="title">{{title}}:</div>
     <ul>
-      <li v-for="(item,index) in list" :key="item.id" :class="{active:currentIndex===index}" @click="liClick(item,index)">
+      <li v-for="(item,index) in list" :key="item.id"
+          :class="{active:currentIndex===index}"
+          @click="liClick(item,index)"
+          :style="{backgroundColor:color}">
         {{item.name}}
       </li>
     </ul>
@@ -26,12 +29,14 @@ export default {
       {
         return []
       }
-    }
+    },
+    color:String,
+    default:"#7698d0"
   },
   data()
   {
     return {
-      currentIndex:0
+      currentIndex:0,
     }
   },
   methods:{
@@ -57,13 +62,17 @@ export default {
     ul{
       display: flex;
       li{
-        padding: 3px 10px;
+        padding: 5px 15px;
         cursor: pointer;
-        border-radius: 5px;
-        margin: 0 10px 0 0;
+        border-radius: 4px;
+        margin: 0 15px 0 0;
+        background-image: url("../../../assets/img/video.png");
+        background-color:#7698d0;
+        background-size: contain;
+        color: #fff;
+        font-size: 13px;
         &.active{
-          background-color: rgba(58, 142, 230,.2);
-          color: #3a8ee6;
+          background-color:#8bd9f3!important;
         }
       }
     }

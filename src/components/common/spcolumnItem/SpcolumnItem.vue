@@ -2,7 +2,7 @@
   <div class="article-item">
     <div class="left-content">
       <div class="img-container" >
-        <img v-if="article.picUrl" :src="article.picUrl[0].picUrl" />
+        <img v-if="article.picUrl" :src="article.picUrl[0].picUrl" alt=""/>
       </div>
     </div>
     <div class="right-content">
@@ -10,7 +10,7 @@
       <div class="msg">
         <div class="user-msg">
           <div class="avatar">
-            <img :src="article.user.avatarUrl" />
+            <img :src="article.user.avatarUrl" alt="" />
           </div>
           <div class="user-name">{{article.user.userName}}</div>
         </div>

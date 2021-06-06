@@ -16,7 +16,6 @@
 </template>
 
 <script>
-import {getCateDetail} from "@/network/category";
 import SpcolumnItem from "@/components/common/spcolumnItem/SpcolumnItem";
 import {momentView} from "@/network/moment";
 import {getAllSpcolumnCate, getSpcolumnDetail} from "@/network/spcolumn";
@@ -34,8 +33,8 @@ name: "SpcolumnCate",
   },
   created() {
     getAllSpcolumnCate().then(data=>{
-      this.allCate=data;
-      getSpcolumnDetail(this.$route.query.categoryId,this.allCate[0].id).then(data=>{
+      this.allCate=data.cate;
+      getSpcolumnDetail(this.$route.query.categoryId,this.allCate[0].categoryId).then(data=>{
         this.allSpcolumnDetail=data;
       })
     })
@@ -54,7 +53,7 @@ name: "SpcolumnCate",
     },
     liClick(item,index){
       this.currentIndex=index;
-      getSpcolumnDetail(this.$route.query.categoryId,item.id).then(data=>{
+      getSpcolumnDetail(this.$route.query.categoryId,item.categoryId).then(data=>{
         this.allSpcolumnDetail=data;
       })
     }

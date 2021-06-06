@@ -25,6 +25,9 @@ import {
   topicContentDetailRouter,
   searchDetailRouter,
   videoCateRouter,
+  musicCateRouter,
+  militaryCateRouter,
+  sportCateRouter,
   spcolumnCateRouter,
   knowCateRouter,
   knowDetailRouter,
@@ -38,7 +41,7 @@ import {
 const movie=()=>import('../views/topList/childCpn/movie/Movie')
 const picture=()=>import('../views/topList/childCpn/picture/Picture')
 const sport=()=>import('../views/topList/childCpn/sport/Sport')
-const article=()=>import('../views/topList/childCpn/article/Article')
+const spcolumn=()=>import('../views/topList/childCpn/spcolumn/Spcolumn')
 const video=()=>import('../views/topList/childCpn/video/Video');
 const funny=()=>import('../views/topList/childCpn/funny/Funny')
 
@@ -104,9 +107,9 @@ const routes = [
             component:picture
           },
           {
-            path:'Article',
-            name:'article',
-            component:article
+            path:'Spcolumn',
+            name:'Spcolumn',
+            component:spcolumn
           },
           {
             path:'Sport',
@@ -146,6 +149,12 @@ const routes = [
       searchDetailRouter,
         //视频分类详情页
       videoCateRouter,
+        //音乐分类详情页
+      musicCateRouter,
+        //军事分类详情页
+      militaryCateRouter,
+        //体育分类详情页
+      sportCateRouter,
         //文章分类详情
       spcolumnCateRouter,
         //课程分类·

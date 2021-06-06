@@ -16,11 +16,11 @@ import {getToplistPic} from "@/network/toplist";
 import Comment from "@/components/content/comment/Comment";
 import Reply from "@/components/content/reply/Reply";
 import Tags from "@/components/content/tags/Tags";
-import Images from "@/components/common/images/Images";
+
 
 export default {
   name: "picture",
-  components: {Images, Tags, Reply, Comment},
+  components: { Tags, Reply, Comment},
   data()
   {
     return {
