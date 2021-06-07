@@ -97,7 +97,7 @@ export const searchDetailRouter={
     children:[
         {
           path:'/searchDetail',
-          redirect:'/searchDetail/moment'
+          redirect:'/searchDetail/dynamic'
         },
         {
             path:'user',

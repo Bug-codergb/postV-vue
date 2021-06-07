@@ -37,7 +37,7 @@ import Reply from "@/components/content/reply/Reply";
 import Moment from "@/components/content/moment/Moment";
 import {getNewBanner} from "@/network/new";
 import {momentView} from "@/network/moment";
-//import Moment from "@/components/content/moment/Moment";
+//import Moment from "@/components/content/dynamic/Moment";
 export default {
   name: "News",
   components:{

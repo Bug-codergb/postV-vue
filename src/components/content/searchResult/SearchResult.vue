@@ -59,7 +59,7 @@ name: "SearchResult",
   methods:{
     momentRouter(item)
     {
-      this.$emit('moment-match',item)
+      this.$emit('dynamic-match',item)
       const {type}=item;
       if(type===1)
       {
@@ -83,7 +83,7 @@ name: "SearchResult",
     },
     userRouter(item)
     {
-      this.$emit('moment-match',item)
+      this.$emit('dynamic-match',item)
       this.$router.push({
         path:'/userDetail',
         query:{
@@ -93,7 +93,7 @@ name: "SearchResult",
     },
     topicRouter(item)
     {
-      this.$emit('moment-match',item);
+      this.$emit('dynamic-match',item);
       this.$router.push({
         path:'/topicDetail',
         query:{

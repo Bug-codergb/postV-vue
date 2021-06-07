@@ -12,6 +12,7 @@ const Home=()=>import('../components/Home/Home')
 
 const hotRecommend=()=>import('../views/hotRecommend/HotRecommend');
 const news=()=>import('../views/news/News');
+const dynamic=()=>import("../views/dynamic/Dynamic");
 const topList=()=>import('../views/topList/TopList');
 const topic=()=>import('../views/topic/Topic');
 const channel=()=>import("../views/channel/Channel");
@@ -80,6 +81,11 @@ const routes = [
         path:'News',
         name:'News',
         component: news
+      },
+      {
+        path:"Dynamic",
+        name:"Dynamic",
+        component:dynamic
       },
       {
         path:'Topic',
