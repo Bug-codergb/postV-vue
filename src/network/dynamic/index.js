@@ -10,3 +10,13 @@ export function getUserFollow(){
         }
     })
 }
+//获取用户dynamic
+export function getUserDynamic(userId,cateId){
+    return request({
+        url:"/dynamic/user",
+        params:{
+            userId,
+            cateId
+        }
+    })
+}

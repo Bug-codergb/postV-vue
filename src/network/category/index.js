@@ -18,3 +18,13 @@ export function getAllCateCon(cateId){
         }
     })
 }
+export function getAllCate(offset,limit)
+{
+    return request({
+        url:'/cate/all',
+        params:{
+            offset,
+            limit
+        }
+    })
+}

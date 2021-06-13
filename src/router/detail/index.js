@@ -16,7 +16,8 @@ const topicContentDetail=()=>import('../../components/content/topicContentDetail
 //搜索子路由
 const user=()=>import('../../components/content/searchDetail/childCpn/user/User');
 const moment=()=>import('../../components/content/searchDetail/childCpn/moment/Moment');
-const topic=()=>import('../../components/content/searchDetail/childCpn/topic/Topic')
+const topic=()=>import('../../components/content/searchDetail/childCpn/topic/Topic');
+const channel=()=>import("../../components/content/searchDetail/childCpn/channel/Channel");
 
 //分类详情页
 //视频分类详情页
@@ -97,7 +98,7 @@ export const searchDetailRouter={
     children:[
         {
           path:'/searchDetail',
-          redirect:'/searchDetail/dynamic'
+          redirect:'/searchDetail/moment'
         },
         {
             path:'user',
@@ -113,6 +114,11 @@ export const searchDetailRouter={
             path:'topic',
             name:'topic',
             component:topic
+        },
+        {
+            path:"channel",
+            name:"channel",
+            component:channel
         }
     ]
 }

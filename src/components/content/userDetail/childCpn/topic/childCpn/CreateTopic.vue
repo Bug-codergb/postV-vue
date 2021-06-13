@@ -16,7 +16,7 @@
       <!--图片预览-->
       <div class="preview">
         <div class="img-container" v-for="(item,index) in fileUrl">
-          <img :src="item"/>
+          <img :src="item" alt=""/>
           <div class="cancel" @click="cancel(index)">
             <i class="iconfont icon-chahao"></i>
           </div>
@@ -113,11 +113,10 @@ export default {
   }
   .create-topic{
     .create-btn{
-      padding: 10px 0;
+      padding:10px 20px;
       background-color: #3a8ee6;
       border-radius: 2px;
       color: #fff;
-      width: 200px;
       text-align: center;
       margin: 0 auto;
       display: block;
@@ -125,26 +124,31 @@ export default {
     }
     position: relative;
     .topic{
-      .center();
-      width: 450px;
-      height: 300px;
       background-color: #fff;
+      .center();
+      padding: 30px;
+      border-radius: 5px;
       box-shadow: 0 0 15px rgba(0,0,0,.3);
       z-index: 9;
-      padding: 30px 0 0 20px;
       .title,.desc{
         width: 400px;
         margin: 0 auto 20px;
         display:flex;
         align-items: center;
+        white-space: nowrap;
         span{
           font-size: 14px;
+          margin: 0 5px 0 0;
+        }
+        textarea{
+          border: 1px solid #84b8ef;
+          outline: none;
         }
       }
       /*图片预览*/
       .preview{
-        width: 350px;
-        height: 50px;
+        width: 100%;
+        height: 100px;
         margin: 0 auto 20px;
         background-color: rgba(58, 142, 230,.2);
         padding: 5px;

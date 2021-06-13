@@ -99,7 +99,7 @@ export default {
           momentId:item.momentId,
           userId:user.userId
         }
-      })
+        })
       }
     }
   }

@@ -12,7 +12,7 @@
            @click.stop/>
     <search-result v-show="isShow&&this.keywords!==''"
                    :searchRes="searchRes"
-                    @moment-match="momentMatch"/>
+                    @dynamic-match="momentMatch"/>
     <history v-if="isShowHistory" @changeKeyword="changeKeyword"/>
   </div>
 </template>
@@ -107,7 +107,8 @@ export default {
         })
         this.$router.push({
           path:'/searchDetail'
-        })
+        });
+        console.log("我在这里")
       }
     },
     enter()

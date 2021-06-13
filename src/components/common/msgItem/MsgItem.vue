@@ -71,6 +71,7 @@ export default{
       background-color: #373737;
       position: relative;
       cursor: pointer;
+      border-radius: 4px;
       img{
         .center();
         height: 100%;

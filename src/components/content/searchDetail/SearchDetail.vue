@@ -1,11 +1,16 @@
 <template>
   <div class="search-detail">
-    <ul>
-      <li v-for="(item,index) in path" @click="searchResRouter(item,index)" :class="{active:currentIndex===index}">
-        {{list[index]}}
-      </li>
-    </ul>
-    <router-view/>
+    <div class="left-content">
+      <ul>
+        <li v-for="(item,index) in path" @click="searchResRouter(item,index)" :class="{active:currentIndex===index}">
+          {{list[index]}}
+        </li>
+      </ul>
+      <router-view/>
+    </div>
+    <div class="right-content">
+      45
+    </div>
   </div>
 </template>
 
@@ -16,8 +21,8 @@ export default {
   {
     return {
       currentIndex:0,
-      list:['动态','用户','专题'],
-      path:['moment','user','topic']
+      list:['动态','用户','专题','频道'],
+      path:['moment','user','topic','channel']
     }
   },
   methods:{
@@ -34,7 +39,13 @@ export default {
 
 <style scoped lang="less">
   .search-detail{
+    width: 100%;
     height: 1000px;
+    display: flex;
+    .left-content{
+      width:70%;
+      border-right: 1px solid #d8e8fa;
+    }
     ul{
       display: flex;
       li{

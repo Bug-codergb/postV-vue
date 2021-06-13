@@ -30,7 +30,7 @@
         <li v-for="(item,index) in recommendUser" :key="item.userId" @click="userRouter(item)">
           <div v-if="item.userId!==userId">
             <div class="avatar">
-              <img :src="item.avatarUrl" />
+              <img :src="item.avatarUrl" alt="" />
             </div>
             <div class="rec-user-info">
               <div class="rec-user-name">{{item.userName}}</div>

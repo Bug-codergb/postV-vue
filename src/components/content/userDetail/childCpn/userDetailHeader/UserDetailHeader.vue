@@ -205,9 +205,9 @@ export default {
     justify-content: center;
     margin: 20px 0 0 0;
     border:1px solid #3a8ee6;
-    padding: 3px;
+    padding: 3px 5px;
     border-radius: 15px;
-    width:80px;
+    width:90px;
     cursor: pointer;
     .tip{
       font-size: 13px;

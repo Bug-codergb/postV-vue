@@ -11,7 +11,7 @@
     </transition>
     <div class="top-bar-content">
       <div class="logo" @click="homeRouter">
-        <img src="../../../assets/img/logo2.png"/>
+        <img src="../../../assets/img/logo.svg" alt="logo"/>
       </div>
       <!--设置搜索框-->
       <search/>
@@ -129,7 +129,7 @@ name: "TopBar",
 }
 .logo img{
   cursor:pointer;
-  height: 35px;
+  height:62px;
 }
 //创作中心
 .innovate{
