@@ -22,13 +22,12 @@
 </template>
 
 <script>
-import {addVideoPlayCouont, getVideoDetail} from "@/network/video";
+import {getVideoDetail} from "@/network/video";
 import Reply from "@/components/content/reply/Reply";
 import Avatar from "@/components/content/avatar/Avatar";
 import Comment from "@/components/content/comment/Comment";
 import RecommendVideo from "@/components/content/videoDetail/childCpn/recommendVideo/RecommendVideo";
 import VideoMsg from "@/components/content/videoDetail/childCpn/videoMsg/VideoMsg";
-import {formatDate} from "@/utils/formatDate";
 import {publishCom, replyComment} from "@/network/comment";
 import VideoPlay from "@/components/common/videoPlay/VideoPlay";
 import {cancelThumb, thumbs} from "@/network/thumbs";

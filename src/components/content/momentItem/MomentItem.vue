@@ -159,6 +159,7 @@ export default {
             border-radius: 50%;
             border: 1px solid rgba(0,0,0,.2);
             position: relative;
+            overflow: hidden;
             img{
               .center(50%,50%,50%,50%);
               height:100%;

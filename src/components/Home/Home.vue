@@ -39,8 +39,11 @@ export default {
     }
   },
   watch:{
-    $route(to,from){
-      this.livePath=to.path;
+    $route: {
+      handler: function(to,from){
+        this.livePath=to.path;
+      },
+      immediate:true
     }
   },
   mounted() {

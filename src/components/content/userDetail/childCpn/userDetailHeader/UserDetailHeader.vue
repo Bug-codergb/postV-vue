@@ -26,7 +26,7 @@
             </label>
           </div>
         </div>
-        <div class="chat" @click="chatRouter">
+        <div class="chat" @click="chatRouter" v-if="this.$store.state.userMsg.userId!==userDetail.userId">
           <i class="iconfont icon-pinglun1"></i>
           <div class="tip">发私信</div>
         </div>
@@ -60,7 +60,7 @@ export default {
     follow(id)
     {
       followUser(id).then(data=>{
-        console.log(data);
+        //console.log(data);
         this.$store.dispatch({
           type:'getUserDetailAction',
           userId:this.$store.state.userMsg.userId
@@ -70,7 +70,7 @@ export default {
     cancelFollow(id)
     {
       cancelFollow(id).then(data=>{
-        console.log(data)
+        //console.log(data)
         this.$store.dispatch({
           type:'getUserDetailAction',
           userId:this.$store.state.userMsg.userId

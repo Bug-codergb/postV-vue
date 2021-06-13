@@ -6,17 +6,17 @@
           <li v-for="(item,index) in momentDetails" :key="item.momentId">
             <div class="moment-left">
               <div class="moment-img-container" @click="momentRouter(item)">
-                <img :src="item.picUrl[0].picUrl" />
+                <img :src="item.picUrl[0].picUrl" alt="" />
               </div>
             </div>
             <div class="moment-right">
               <div class="title text-nowrap">{{item.title}}</div>
               <div class="msg">
-                <div class="user-msg" v-if="user">
+                <div class="user-msg" v-if="item.user">
                   <div class="avatar">
-                    <img :src="user.avatarUrl" />
+                    <img :src="item.user.avatarUrl" alt=""/>
                   </div>
-                  <div class="user-name">{{user.userName}}</div>
+                  <div class="user-name">{{item.user.userName}}</div>
                 </div>
                 <div class="time">{{item.updateTime.substring(0,10)}}</div>
               </div>
@@ -28,11 +28,11 @@
             <div class="topic-left">
               <div class="title" @click="topicRouter(item)">{{item.title}}</div>
               <div class="msg">
-                <div class="user-msg" v-if="user">
+                <div class="user-msg" v-if="item.user">
                   <div class="avatar">
-                    <img :src="user.avatarUrl" />
+                    <img :src="item.user.avatarUrl" alt=""/>
                   </div>
-                  <div class="user-name">{{user.userName}}</div>
+                  <div class="user-name">{{item.user.userName}}</div>
                 </div>
               </div>
             </div>
@@ -77,6 +77,7 @@ name: "Subscriber",
   created() {
   //console.log(this.userId)
     getUserSub(this.userId).then(data=>{
+      console.log(data);
       this.momentDetails=data.moments
       this.topicDetails=data.topicContent;
       this.user=data.user;

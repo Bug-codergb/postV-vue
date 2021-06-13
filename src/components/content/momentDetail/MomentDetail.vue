@@ -2,8 +2,7 @@
   <div class="moment-detail">
     <div class="left-content">
       <moment :momentDetail="this.$store.state.momentDetails"
-              v-if="this.$store.state.momentDetails.momentId!==undefined"
-              >
+              v-if="this.$store.state.momentDetails.momentId!==undefined">
         <div slot="momentContent">
           <div class="content">
             <div class="state">
@@ -17,6 +16,9 @@
     </div>
     <div class="right-content">
       <avatar :user-id="userId"/>
+      <spcolumn :user-id="userId"
+                :momentId="this.$store.state.momentDetails.momentId"
+                 @spcolumn-change="spcolumnChange"/>
     </div>
   </div>
 </template>
@@ -24,10 +26,10 @@
 <script>
 import Moment from "@/components/content/moment/Moment";
 import Avatar from "@/components/content/avatar/Avatar";
-
+import Spcolumn from "@/components/content/momentDetail/childCpn/spColumn/Spcolumn";
 export default {
   name: "MomentDetail",
-  components: {Avatar, Moment},
+  components: {Avatar, Moment,Spcolumn},
   data()
   {
     return {
@@ -44,6 +46,15 @@ export default {
       type:'getMomentDetail',
       momentId:this.momentId
     })
+  },
+  methods:{
+    spcolumnChange(momentId){
+      this.momentId=momentId;
+      this.$store.dispatch({
+        type:'getMomentDetail',
+        momentId:this.momentId
+      })
+    }
   }
 }
 </script>
@@ -68,8 +79,10 @@ export default {
   .left-content{
     width:70%;
     border-right: 1px solid rgba(58, 142, 230,.2);
+    padding: 0 20px 0 0;
   }
   .right-content{
     flex: 1;
+    padding: 0 10px;
   }
 </style>

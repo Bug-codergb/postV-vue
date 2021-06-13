@@ -10,7 +10,7 @@
            @focus="focus"
            v-model="keywords"
            @click.stop/>
-    <search-result v-show="isShow&&this.keywords!==''"
+    <search-result v-if="isShow&&this.keywords!==''"
                    :searchRes="searchRes"
                     @dynamic-match="momentMatch"/>
     <history v-if="isShowHistory" @changeKeyword="changeKeyword"/>

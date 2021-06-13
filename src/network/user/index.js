@@ -72,3 +72,12 @@ export function setUserDesc(content)
         }
     })
 }
+//获取用户其它专栏
+export function getUserSpColumn(userId){
+    return request({
+        url:"/user/spcolumn",
+        params:{
+            userId
+        }
+    })
+}

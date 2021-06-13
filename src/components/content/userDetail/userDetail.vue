@@ -2,9 +2,7 @@
 <template>
   <div class="user-detail">
      <div class="left-content">
-
        <user-detail-header :user-detail="userDetail"/>
-
        <tab-control :list="['动态','关注','粉丝','收藏','专题']">
          <div slot='动态'>
            <moment-item :moment-detail="momentDetail"/>
@@ -50,7 +48,6 @@ import {momentDetail} from "@/network/home";
 import Moment from "@/components/content/moment/Moment";
 import {delMoment} from "@/network/moment";
 import Follow from "@/components/content/userDetail/childCpn/follow/Follow";
-import {cancelFollow, followUser} from "@/network/follow";
 import Subscriber from "@/components/content/userDetail/childCpn/subscriber/Subscriber";
 import Fans from "@/components/content/userDetail/childCpn/fans/Fans";
 import Topic from "@/components/content/userDetail/childCpn/topic/Topic";
