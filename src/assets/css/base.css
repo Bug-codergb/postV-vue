@@ -52,6 +52,11 @@ textarea{
 .el-slider__button-wrapper,.el-slider__button{
     cursor: pointer!important;
 }
+.el-carousel__container{
+    border-radius:5px!important;
+    overflow: hidden;
+}
+
 
 .el-slider__runway{
     margin: 0!important;

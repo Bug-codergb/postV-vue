@@ -111,7 +111,7 @@ name: "HotRecommend",
       display: flex;
       flex-wrap: wrap;
       align-items: center;
-      background-image:linear-gradient(transparent 170px,rgba(0,0,0,.6));
+      /*background-image:linear-gradient(transparent 170px,rgba(0,0,0,.6));*/
       position: absolute;
       z-index: 999;
       img{

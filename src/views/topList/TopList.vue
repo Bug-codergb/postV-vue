@@ -3,7 +3,8 @@
     <ul class="category">
       <li v-for="(item,index) in allCate"
           :class="{active:index===currentIndex}"
-          @click="liClick(item,index)">
+          @click="liClick(item,index)"
+          :style="{backgroundColor:bgc[index]}">
         {{item.name}}
       </li>
     </ul>
@@ -21,6 +22,7 @@ export default {
   {
     return {
       currentIndex:0,
+      bgc:['#7698d0','#3a8ee6','#ec4141','#476736','#e15822'],
       path:['/Home/TopList/Video','/Home/TopList/Spcolumn','/Home/TopList/Music',
              '/Home/TopList/Military','/Home/TopList/Sport'],
       allCate:[]
@@ -55,12 +57,15 @@ export default {
     li{
       background-color: #3a8ee6;
       margin: 0 15px;
-      padding: 3px 15px;
+      padding: 4px 18px;
       color: #fff;
       font-size: 14px;
       cursor:pointer;
+      background-image: url("../../assets/img/video.png");
+      background-size: contain;
+      border-radius: 3px;
       &.active{
-        background-color: #0c73c2;
+        background-color: #0c73c2!important;
       }
     }
   }
