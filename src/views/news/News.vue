@@ -1,10 +1,14 @@
 <template>
   <div class="new">
-    <el-carousel height="260px" :autoplay="false" indicator-position="outside">
+    <el-carousel height="260px" :autoplay="true" indicator-position="outside">
       <el-carousel-item v-for="item in banners" :key="item.momentId">
-        <div @click="bannerRouter(item)">
-          <img :src="item.pictures[0]" class="postit-img" alt="用户头像"/>
-          <div class="title">{{item.title}}</div>
+        <div class="img-outer">
+          <!--模糊-->
+          <div class="img-blur" :style="{backgroundImage:`url(${item.pictures[0]})`}"></div>
+          <div @click="bannerRouter(item)" class="img-container">
+            <img :src="item.pictures[0]"  alt="用户头像"/>
+            <div class="state">{{item.title}}</div>
+          </div>
         </div>
       </el-carousel-item>
     </el-carousel>
@@ -56,7 +60,7 @@ export default {
     this.getAllMoments();
     this._this=this
     getNewBanner().then(data=>{
-      //console.log(data)
+      console.log(data)
       this.banners=data;
     })
   },
@@ -111,6 +115,48 @@ export default {
 <style scoped lang="less">
 .new{
   height: 100%;
+  .el-carousel--horizontal{
+    width: 780px!important;
+    margin: 0 auto;
+  }
+  .img-outer{
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+  .img-blur{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-repeat: no-repeat;
+    filter:blur(10px);
+    background-size: cover;
+  }
+  .img-container{
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    justify-content: center;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    position: absolute;
+    z-index: 999;
+    img{
+      vertical-align: bottom;
+      width: 400px;
+    }
+    .state{
+      width:100%;
+      position: absolute;
+      top: 74%;
+      left: 0;
+      padding: 20px;
+      font-weight: bold;
+      font-size: 18px;
+      color: #fff;
+    }
+  }
   ul {
     li {
       border-bottom: 1px solid rgba(58, 142, 230, .3);
@@ -118,31 +164,11 @@ export default {
       cursor:pointer;
     }
   }
-  /*轮播图的title*/
-  .title{
-    background-color: #3a8ee6;
-    position: absolute;
-    top: 77%;
-    width: 96%;
-    font-size: 18px;
-    background-color: rgba(0,0,0,.4);
-    color: #f4f4f4;
-    padding: 20px 0 20px 30px;
-    letter-spacing: 2px;
-    font-weight: bolder;
-  }
-}
-.el-carousel--horizontal {
-  width: 650px !important;
-  margin: 0px auto;
-}
-img.postit-img {
-  width: 650px;
 }
 
 h3 {
   color: #333;
-  margin: 20px 0 20px 0px;
+  margin: 20px 0 20px 0;
 }
 //评论回复
 //动态内容

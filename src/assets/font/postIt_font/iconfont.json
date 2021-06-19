@@ -6,6 +6,20 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "3493943",
+      "name": "标签",
+      "font_class": "biaoqian",
+      "unicode": "e929",
+      "unicode_decimal": 59689
+    },
+    {
+      "icon_id": "14263294",
+      "name": "专栏",
+      "font_class": "zhuanlan",
+      "unicode": "e601",
+      "unicode_decimal": 58881
+    },
+    {
       "icon_id": "1527822",
       "name": "dynamic",
       "font_class": "icon",
@@ -221,20 +235,6 @@
       "font_class": "dianzan1",
       "unicode": "e60f",
       "unicode_decimal": 58895
-    },
-    {
-      "icon_id": "8642116",
-      "name": "ARTIFICIAL INTELLIGENCE",
-      "font_class": "ARTIFICIALINTELLIGENCE",
-      "unicode": "e7ef",
-      "unicode_decimal": 59375
-    },
-    {
-      "icon_id": "17711613",
-      "name": "小程序",
-      "font_class": "xiaochengxu",
-      "unicode": "e81e",
-      "unicode_decimal": 59422
     },
     {
       "icon_id": "19813569",

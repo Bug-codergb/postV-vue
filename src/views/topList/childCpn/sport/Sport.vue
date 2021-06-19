@@ -24,9 +24,11 @@ export default {
       this.toplist=data;
       this.swiperList=data.map((item,index)=>{
         return {
-          id:item.momentId,
+          momentId:item.momentId,
           coverUrl:item.picUrl?item.picUrl[0]:'',
-          title:item.title
+          title:item.title,
+          type:item.type,
+          vid:item.vid,
         }
       })
     })

@@ -10,7 +10,7 @@
         <i class="iconfont icon-channel2" slot="频道"></i>
         <i class="iconfont icon-icon" slot="动态"></i>
       </tab-bar>
-      <router-view class="routerView" name="detail"/>
+        <router-view class="routerView" name="detail"/>
         <left-content/>
         <right-content v-if="!livePath.includes('Detail')"/>
     </div>
@@ -93,7 +93,7 @@ export default {
 }
 .back-top{
   position: fixed;
-  left: 1300px;
+  left:90%;
   top: 650px;
   background-color:rgba(58, 142, 230,.5);
   color: #fff;
@@ -125,4 +125,5 @@ export default {
 .backTop-leave-to{
   opacity: 0;
 }
+
 </style>

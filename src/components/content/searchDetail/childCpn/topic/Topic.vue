@@ -3,7 +3,7 @@
     <ul>
       <li v-for="(item,index) in this.$store.state.searchResult.topic">
         <div class="img-container" @click="topicRouter(item)">
-          <img :src="item.picUrl" />
+          <img :src="item.picUrl" alt=""/>
         </div>
         <div class="state text-nowrap" @click="topicRouter(item)">{{item.name}}</div>
         <div class="creator text-nowrap" @click="userRouter(item)">{{item.leader.userName}}</div>
@@ -45,15 +45,22 @@ export default {
   .topic{
     margin: 20px 0 0 0;
     ul{
-      li{
+      &>li{
         display: flex;
         align-items: center;
+        padding: 10px 0;
+        &:nth-child(odd){
+          background-color: #f9f9f9;
+        }
         .img-container{
           width: 50px;
           height: 50px;
           overflow: hidden;
+          background-color: #656565;
+          position: relative;
           img{
-            width: 50px;
+            .center(50%,50%,-50%,-50%);
+            height:100%;
           }
         }
         .state{

@@ -127,9 +127,13 @@ name: "TopBar",
   align-items: center;
   position: relative;
 }
-.logo img{
-  cursor:pointer;
-  height:62px;
+.logo{
+  margin: 0 5px 0 0;
+  img{
+    cursor:pointer;
+    height:55px;
+    vertical-align: baseline;
+  }
 }
 //创作中心
 .innovate{
@@ -234,13 +238,9 @@ name: "TopBar",
   transform: scale(0);
   transition: opacity 0.3s ,transform 0.3s;
 }
-.login-enter-to{
+.login-enter-to,.login-leave-from{
   opacity: 1;
   transform:scale(1);
-}
-.login-leave-from{
-  opacity: 1;
-  transform: scale(1);
 }
 .login-leave-active{
   opacity: 0;
@@ -250,5 +250,15 @@ name: "TopBar",
 .login-leave{
   opacity: 0;
   transform: scale(0);
+}
+
+.innovate-enter,.innovate-leave-to{
+  opacity:0;
+}
+.innovate-enter-to,.innovate-leave{
+   opacity: 1;
+}
+.innovate-enter-active,.innovate-leave-active{
+  transition: opacity 0.3s;
 }
 </style>

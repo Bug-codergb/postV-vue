@@ -2,7 +2,9 @@
   <div class="tag">
     <!--标签-->
     <div class="tags" v-if="momentDetail!==undefined">
-      <p v-if="momentDetail.tags!==null">标签</p>
+      <p v-if="momentDetail.tags!==null" class="tag-icon">
+        <i class="iconfont icon-biaoqian"></i>
+      </p>
       <ul>
         <li v-for="(it,i) in momentDetail.tags">
           <div @click="delTag(momentDetail.momentId,it.tagId)"><i class="iconfont icon-chahao"></i></div>
@@ -95,7 +97,9 @@ name: "Tags",
     padding: 5px 10px;
     border-radius: 5px;
     color: #fff;
-    font-size: 13px;
+    span{
+      font-size: 13px;
+    }
   }
   .addTag i{
     display: inline-block;
@@ -114,6 +118,9 @@ name: "Tags",
     display: flex;
     align-items: center;
     margin: 10px 0 20px 0;
+    .tag-icon{
+      color: #3a8ee6;
+    }
   }
   .tags >ul{
     display: flex;

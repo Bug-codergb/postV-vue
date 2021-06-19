@@ -1,6 +1,8 @@
 <template>
-  <div class="article">
-    <p class="article-name" @click="articleRouter">{{article.name}}
+  <div class="spcolumn">
+    <p class="spcolumn-name" @click="articleRouter">
+      <i class="iconfont icon-zhuanlan spcolumn-icon"></i>
+      {{article.name}}
       <i class="iconfont icon-svgarrowsright"></i>
     </p>
     <!--文章内容-->
@@ -120,12 +122,20 @@ export default {
     left: 50%;
     transform: translate(-50%,-50%);
   }
-  .article{
-    .article-name{
+  .spcolumn{
+    .spcolumn-name{
       font-weight: bold;
       margin: 20px 0 0 0;
       cursor: pointer;
       color:#333;
+      display: flex;
+      align-items: center;
+      i.spcolumn-icon{
+        font-size: 18px;
+        color: #3a8ee6;
+        font-weight: bolder;
+        margin: 0 10px 0 0;
+      }
       &:hover{
         color:#000;
       }
@@ -146,8 +156,10 @@ export default {
           height: 100px;
           overflow: hidden;
           position: relative;
+          background-color: #656565;
+          border-radius:5px;
           img{
-            width: 120px;
+            height: 100%;
             position: absolute;
             top: 50%;
             left: 50%;

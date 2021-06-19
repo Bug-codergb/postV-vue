@@ -50,7 +50,7 @@ export default {
   },
   methods:{
     divClick(item,index){
-     this.$emit('item-click',item);
+     this.$emit('img-click',item,index);
     },
     change(current,prev){
       this.$emit('change',current,prev);

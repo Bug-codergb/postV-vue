@@ -19,13 +19,15 @@ export default {
   },
   created() {
     getToplist(1614678769218).then(data=>{
-      //console.log(data);
+      console.log(data);
       this.toplist=data;
       this.swiperList=data.map((item,index)=>{
         return {
-          id:item.momentId,
+          momentId:item.momentId,
           coverUrl:item.picUrl?item.picUrl[0]:'',
-          title:item.title
+          title:item.title,
+          type:item.type,
+          vid:item.vid
         }
       })
     })

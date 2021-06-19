@@ -5,7 +5,8 @@
         <swiper :list="list.slice(0,5)" height="240px" :is-show-title="false"
                  @change="change"
                  :activeItem="activeItem"
-                 :auto-play="autoPlay"/>
+                 :auto-play="autoPlay"
+                 @img-click="detailRouter"/>
       </div>
       <div class="state" @mouseover="over" @mouseleave="leave">
         <ul>
@@ -83,7 +84,7 @@ export default {
     },
     detailRouter(item,index){
       console.log(item);
-      const {type,user}=item;
+      const {type,userId}=item;
       if(type===1) {
         this.$router.push({
           path: "/videoDetail",
@@ -97,7 +98,7 @@ export default {
         path:"/momentDetail",
         query:{
           momentId:item.momentId,
-          userId:user.userId
+          userId:userId
         }
         })
       }
@@ -119,8 +120,9 @@ export default {
       }
       .state{
         width: 38%;
-        background-color: #363636;
+        background-color:#656565;
         color: #fff;
+        border-radius: 3px;
         &>ul{
           display: flex;
           flex-direction: column;

@@ -6,7 +6,7 @@
         <!--频道头-->
         <div class="title">
           <div class="img-container" @click="channelCateRouter(item,index)">
-            <img :src="item.coverUrl"/>
+            <img :src="item.coverUrl" alt=""/>
           </div>
           <div class="msg">
             <div class="title-name">{{item.name}}</div>
@@ -20,11 +20,11 @@
           <li v-for="(iten,i) in item.channels" :key="iten.cId" @click="channelPlay(iten,index)">
             <msg-list :is-show-play="false" item-width="168px" :is-show-time="false" creator-top="85%">
               <div slot="img-container">
-                <img :src="iten.picUrl"/>
+                <img :src="iten.picUrl" alt=""/>
               </div>
               <div class="cate-content-state text-nowrap" slot="state">{{iten.title}}</div>
               <div slot="avatarUrl">
-                <img :src="iten.user.avatarUrl"/>
+                <img :src="iten.user.avatarUrl" alt=""/>
               </div>
               <div slot="userName" class="cate-content-user-name text-nowrap">
                 {{iten.user.userName}}
@@ -66,7 +66,7 @@ export default {
       });
     },
     cateClick(item){
-      console.log(item);
+      //console.log(item);
       getChannelCateDetail(item.id).then(data=>{
         this.cateDetail=data;
       })

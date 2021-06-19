@@ -6,7 +6,7 @@
     <cate-list title="类别" :list="videoCate" v-if="videoCate.length" @cate="cate" />
     <ul class="video-list" v-if="videoList.videos">
       <li v-for="(item,index) in videoList.videos" :key="item.vid">
-        <msg-list img-container-height="130px" @play="videoRouter(item)">
+        <msg-list img-container-height="115px" @play="videoRouter(item)">
           <div slot="img-container" @click="videoRouter(item)">
             <img :src="item.coverUrl+'&type=small'" alt=""/>
           </div>
@@ -18,7 +18,7 @@
           <div slot="playCount">{{item.playCount}}</div>
         </msg-list>
       </li>
-      <li v-for="(item,index) in holder(videoList.videos.length,3)" style="opacity: 0">
+      <li v-for="(item,index) in holder(videoList.videos.length,4)" style="opacity: 0">
         <div class="img-container"></div>
       </li>
     </ul>
@@ -105,7 +105,7 @@ export default {
       flex-wrap: wrap;
       li{
         margin: 0 0 20px 0;
-        width: 235px;
+        width: 180px;
       }
       .video-cate-state{
         margin: 20px 0 0 0;
