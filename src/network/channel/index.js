@@ -197,3 +197,29 @@ export function cancelThumbChannel(cId){
         }
     })
 }
+//收藏频道
+export function subChannel(id){
+    return request({
+        url:"/channel/sub",
+        method:"post",
+        headers:{
+            'authorization':store.state.userMsg.token,
+        },
+        params:{
+            id
+        }
+    })
+}
+//取消收藏频道
+export function cancelChannelSub(id){
+    return request({
+        url:"/channel/sub/cancel",
+        method:"post",
+        headers:{
+            'authorization':store.state.userMsg.token
+        },
+        params:{
+            id
+        }
+    })
+}

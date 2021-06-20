@@ -88,6 +88,19 @@ export function subTopic(topic_content_id)
         }
     })
 }
+//取消收藏
+export function cancelTopicSub(topic_content_id){
+    return request({
+        url:"/topic/content/sub/cancel",
+        method:'post',
+        headers:{
+            'authorization':store.state.userMsg.token,
+        },
+        params:{
+            topic_content_id
+        }
+    })
+}
 //加入专题
 export function joinTopic(topicId)
 {

@@ -30,8 +30,6 @@
 </template>
 
 <script>
-import {cancelSubMoment, subMoment} from "@/network/moment";
-import {subTopic} from "@/network/topic";
 import E from "wangeditor";
 import {APP_HOST} from "@/constants/config/config";
 import store from "@/store";
@@ -157,13 +155,12 @@ name: "Reply",
           return this.id===item.topic_content_id
         })
       }
-      if(flag===-1)
-      {
-        return false
+      if(this.$store.state.userDetail.subscribe.channel&&flag===-1){
+        flag=this.$store.state.userDetail.subscribe.channel.findIndex((item,index)=>{
+          return this.id===item.cId
+        })
       }
-      else{
-        return true;
-      }
+      return flag !== -1;
     }
   },
   methods:{
@@ -188,41 +185,7 @@ name: "Reply",
     //收藏
     subscribe()
     {
-      if(!this.isSub)
-      {
-        if(this.status===0)
-        {
-          subMoment(this.id,this.$store.state.userMsg.userId).then(data=>{
-            console.log(data)
-            this.$store.dispatch({
-              type:'getUserDetailAction',
-              userId:this.$store.state.userMsg.userId
-            })
-          })
-        }
-        //收藏专题
-        if(this.status===2)
-        {
-          subTopic(this.id,this.$store.state.userMsg.userId).then(data=>{
-            this.$store.dispatch({
-              type:'getUserDetailAction',
-              userId:this.$store.state.userMsg.userId
-            })
-          })
-        }
-      }
-      else{
-        if(this.status===0)
-        {
-          cancelSubMoment(this.id,this.$store.state.userMsg.userId).then(data=>{
-            console.log(data);
-            this.$store.dispatch({
-              type:'getUserDetailAction',
-              userId:this.$store.state.userMsg.userId
-            })
-          })
-        }
-      }
+      this.$emit("sub",this.isSub);
     }
   }
 }

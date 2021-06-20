@@ -6,7 +6,10 @@
       <ChannelMsg :channelDetail="channelDetail"/>
     </div>
     <div class="comment-channel">
-      <reply :id="cId" @reply="reply" @thumb="thumb"/>
+      <reply :id="cId"
+             @reply="reply"
+             @thumb="thumb"
+             @sub="sub"/>
     </div>
     <div class="channel-comment">
       <comment :status="3" :comment-detail="comment"
@@ -23,12 +26,13 @@
 import VideoPlay from "@/components/common/videoPlay/VideoPlay";
 import ChannelMsg from "@/components/content/channelDetail/childCpn/ChannelMsg";
 import {
+  cancelChannelSub,
   cancelThumbChannel,
   getChannelComment,
   getChannelDetail,
   getChannelUrl,
   publishChannelComment,
-  replyChannelComment, thumbChannel
+  replyChannelComment, subChannel, thumbChannel
 } from "@/network/channel";
 import Reply from "@/components/content/reply/Reply";
 import Comment from "@/components/content/comment/Comment";
@@ -116,6 +120,24 @@ export default {
         })
       }else{
         cancelThumb(commentId).then(data=>{
+          this.$store.dispatch({
+            type:'getUserDetailAction',
+            userId:this.$store.state.userMsg.userId
+          })
+        })
+      }
+    },
+    //收藏频道
+    sub(isSub){
+      if(!isSub){
+        subChannel(this.cId).then(data=>{
+          this.$store.dispatch({
+            type:'getUserDetailAction',
+            userId:this.$store.state.userMsg.userId
+          })
+        })
+      }else{
+        cancelChannelSub(this.cId).then(data=>{
           this.$store.dispatch({
             type:'getUserDetailAction',
             userId:this.$store.state.userMsg.userId

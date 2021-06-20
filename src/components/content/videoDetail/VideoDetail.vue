@@ -7,7 +7,8 @@
       <reply :id="videoDetail.moment.momentId"
              v-if="videoDetail.moment"
              @reply="reply"
-             @thumb="thumb"/>
+             @thumb="thumb"
+             @sub="sub"/>
       <!--动态（视频）评论-->
       <comment :momentId="videoDetail.moment.momentId"
                v-if="videoDetail.moment.momentId"
@@ -31,6 +32,7 @@ import VideoMsg from "@/components/content/videoDetail/childCpn/videoMsg/VideoMs
 import {publishCom, replyComment} from "@/network/comment";
 import VideoPlay from "@/components/common/videoPlay/VideoPlay";
 import {cancelThumb, thumbs} from "@/network/thumbs";
+import {cancelSubMoment, subMoment} from "@/network/moment";
 
 export default {
 name: "VideoDetail",
@@ -111,6 +113,27 @@ name: "VideoDetail",
         })
       }else{
         cancelThumb(commentId).then(data=>{
+          this.$store.dispatch({
+            type:'getUserDetailAction',
+            userId:this.$store.state.userMsg.userId
+          })
+        })
+      }
+    },
+    sub(isSub){
+      if(!isSub)
+      {
+        subMoment(this.videoDetail.moment.momentId,this.$store.state.userMsg.userId).then(data=>{
+          console.log(data)
+          this.$store.dispatch({
+            type:'getUserDetailAction',
+            userId:this.$store.state.userMsg.userId
+          })
+        })
+      }
+      else{
+        cancelSubMoment(this.videoDetail.moment.momentId,this.$store.state.userMsg.userId).then(data=>{
+          console.log(data);
           this.$store.dispatch({
             type:'getUserDetailAction',
             userId:this.$store.state.userMsg.userId

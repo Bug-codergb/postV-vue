@@ -3,7 +3,7 @@
     <div class="left-content">
       <div class="user-msg">
         <div class="avatar">
-          <img :src="contentDetail.user.avatarUrl" />
+          <img :src="contentDetail.user.avatarUrl" alt=""/>
         </div>
         <div class="user-name">{{contentDetail.user.userName}}</div>
       </div>
@@ -18,7 +18,10 @@
       </control-btn>
 
       <!--点赞，评论，回复按钮-->
-      <reply :status="2" :id="contentDetail.topic_content_id" @reply="reply"/>
+      <reply :status="2"
+             :id="contentDetail.topic_content_id"
+             @reply="reply"
+             @sub="sub"/>
       <!--评论内容-->
       <comment :comment-detail="contentDetail.comment"
                :status="3"
@@ -31,11 +34,12 @@
 </template>
 
 <script>
-import {getTopicContentDetail} from "@/network/topic";
+import {cancelTopicSub, getTopicContentDetail, subTopic} from "@/network/topic";
 import ControlBtn from "@/components/common/controlBtn/ControlBtn";
 import Reply from "@/components/content/reply/Reply";
 import Comment from "@/components/content/comment/Comment";
 import {publishTopicCom, replyTopicCom} from "@/network/comment";
+import {cancelSubMoment} from "@/network/moment";
 
 export default {
   name: "TopicContentDetail",
@@ -71,6 +75,27 @@ export default {
            this.$toast.show("回复成功");
          })
        })
+    },
+    sub(isSub){
+      if(!isSub)
+      {
+        subTopic(this.contentDetail.topic_content_id).then(data=>{
+          console.log(data)
+          this.$store.dispatch({
+            type:'getUserDetailAction',
+            userId:this.$store.state.userMsg.userId
+          })
+        })
+      }
+      else{
+        cancelTopicSub(this.contentDetail.topic_content_id).then(data=>{
+          console.log(data);
+          this.$store.dispatch({
+            type:'getUserDetailAction',
+            userId:this.$store.state.userMsg.userId
+          })
+        })
+      }
     }
   }
 }

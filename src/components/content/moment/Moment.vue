@@ -23,7 +23,10 @@
        <!--标签-->
        <Tags :momentDetail="momentDetail"/>
         <!--动态回复，评论，点赞按钮-->
-        <reply :id="momentDetail.momentId" v-if="isShowCom" @reply="reply" @thumb="thumb"/>
+        <reply :id="momentDetail.momentId" v-if="isShowCom"
+               @reply="reply"
+               @thumb="thumb"
+               @sub="sub"/>
         <!--评论回复-->
         <comment :momentId="momentDetail.momentId"
                  v-if="momentDetail&&isShowCom"
@@ -40,6 +43,7 @@ import Comment from "@/components/content/comment/Comment";
 import MomentBar from "@/components/content/moment/children/momentBar/MomentBar";
 import {publishCom, replyComment} from "@/network/comment";
 import {cancelThumb, thumbs} from "@/network/thumbs";
+import {cancelSubMoment, subMoment} from "@/network/moment";
 export default {
   name: "Moment",
   components:{
@@ -145,6 +149,28 @@ export default {
             userId:this.$store.state.userMsg.userId
           })
         })
+      }
+    },
+    //收藏动态
+    sub(isSub){
+      if(!isSub)
+      {
+          subMoment(this.momentDetail.momentId,this.$store.state.userMsg.userId).then(data=>{
+            console.log(data)
+            this.$store.dispatch({
+              type:'getUserDetailAction',
+              userId:this.$store.state.userMsg.userId
+            })
+          })
+      }
+      else{
+          cancelSubMoment(this.momentDetail.momentId,this.$store.state.userMsg.userId).then(data=>{
+            console.log(data);
+            this.$store.dispatch({
+              type:'getUserDetailAction',
+              userId:this.$store.state.userMsg.userId
+            })
+          })
       }
     }
   }
