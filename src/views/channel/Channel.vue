@@ -17,10 +17,10 @@
         </div>
         <!--频道内容-->
         <ul class="cate-content">
-          <li v-for="(iten,i) in item.channels" :key="iten.cId" @click="channelPlay(iten,index)">
+          <li v-for="(iten,i) in item.channels.slice(0,8)" :key="iten.cId" @click="channelPlay(iten,index)">
             <msg-list :is-show-play="false" item-width="168px" :is-show-time="false" creator-top="85%">
               <div slot="img-container">
-                <img :src="iten.picUrl" alt=""/>
+                <img :src="iten.picUrl+'&type=small'" alt=""/>
               </div>
               <div class="cate-content-state text-nowrap" slot="state">{{iten.title}}</div>
               <div slot="avatarUrl">

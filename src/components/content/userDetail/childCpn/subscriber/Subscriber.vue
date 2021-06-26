@@ -1,7 +1,7 @@
 <template>
   <div class="subscriber">
     <div class="content">
-      <tab-control :list="['动态','专题']">
+      <tab-control :list="['动态','专题','频道']">
         <ul class="moment" slot="动态">
           <li v-for="(item,index) in momentDetails" :key="item.momentId">
             <div class="moment-left">
@@ -38,7 +38,21 @@
             </div>
             <div class="topic-right">
               <div class="topic-container-img" v-if="item.picUrl">
-                <img :src="item.picUrl[0].picUrl" />
+                <img :src="item.picUrl[0].picUrl" alt=""/>
+              </div>
+            </div>
+          </li>
+        </ul>
+        <ul class="channel" slot="频道">
+          <li v-for="(item,index) in channelDetail" :key="item.id">
+            <div class="img-container" @click="channelRouter(item,index)">
+              <img :src="item.picUrl" alt=""/>
+            </div>
+            <div class="msg">
+              <div class="title text-nowrap" @click="channelRouter(item,index)">{{item.title}}</div>
+              <div class="user-and-time">
+                <UserMsg :user-name="item.user.userName" :avatar-url="item.user.avatarUrl"/>
+                <div class="time">{{formatTime(item.createTime,"yyyy-MM-dd")}}</div>
               </div>
             </div>
           </li>
@@ -53,10 +67,12 @@ import MomentDetail from "@/components/content/momentDetail/MomentDetail";
 import Moment from "@/components/content/moment/Moment";
 import {getUserSub} from "@/network/user";
 import TabControl from "@/components/common/tabControl/TabControl";
+import UserMsg from "@/components/common/userMsg/UserMsg";
+import {formatDate} from "@/utils/formatDate";
 
 export default {
 name: "Subscriber",
-  components: {TabControl, Moment, MomentDetail},
+  components: {UserMsg, TabControl, Moment, MomentDetail},
   props:{
     userId:{
       type:String,
@@ -71,19 +87,24 @@ name: "Subscriber",
     return {
       momentDetails:[],
       topicDetails:[],
+      channelDetail:[],
       user:{}
     }
   },
   created() {
   //console.log(this.userId)
     getUserSub(this.userId).then(data=>{
-      console.log(data);
+      //console.log(data);
       this.momentDetails=data.moments
       this.topicDetails=data.topicContent;
+      this.channelDetail=data.channel;
       this.user=data.user;
     })
   },
   methods:{
+    formatTime(time,ft){
+      return formatDate(time,ft);
+    },
     momentRouter(item)
     {
       console.log(item);
@@ -109,11 +130,18 @@ name: "Subscriber",
     },
     topicRouter(item)
     {
-      console.log(item);
       this.$router.push({
         path:'/topicContentDetail',
         query:{
           topic_content_id:item.topic_content_id
+        }
+      })
+    },
+    channelRouter(item,index){
+      this.$router.push({
+        path:"/channelDetail",
+        query:{
+          cId:item.id
         }
       })
     }
@@ -135,24 +163,31 @@ name: "Subscriber",
       padding: 10px 0;
       .moment-left{
         .moment-img-container{
-          width: 200px;
-          height: 130px;
+          width:168px;
+          height: 104px;
           overflow: hidden;
           background-color: #333;
+          position: relative;
+          border-radius: 4px;
           img{
+            .center();
             width: 200px;
           }
         }
       }
       .moment-right{
         margin: 0 0 0 20px;
+        background-color: #fff;
+        width: 60%;
         .title{
-          width:450px;
+          width:100%;
+          font-size: 16px;
+          font-weight: bold;
           margin: 0 0 20px 0;
         }
         .msg{
           display: flex;
-          width: 400px;
+          width: 100%;
           align-items: center;
           justify-content:space-between;
           .user-msg{
@@ -228,6 +263,40 @@ name: "Subscriber",
             width: 120px;
           }
         }
+    }
+  }
+  .channel{
+    &>li{
+      display: flex;
+      padding: 10px 0;
+      .title{
+        font-size: 16px;
+        font-weight: bold;
+        width: 100%;
+      }
+      .user-and-time{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: 20px 0 0 0;
+      }
+      .msg{
+        margin: 0 0 0 20px;
+        width: 60%;
+        .time{
+          font-size: 12px;
+          color:#656565;
+        }
+      }
+    }
+    .img-container{
+      width: 168px;
+      height: 104px;
+      overflow: hidden;
+      border-radius: 4px;
+      img{
+        width: 100%;
+      }
     }
   }
 </style>

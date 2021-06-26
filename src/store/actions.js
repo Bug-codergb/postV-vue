@@ -2,6 +2,7 @@ import {login} from '@/network/login'
 import {userDetail} from "@/network/user";
 import {allMoments, momentDetail} from "@/network/home";
 import {hotMoment} from "@/network/moment";
+import {SOCKET_HOST} from "@/constants/config/config";
 export default{
     /*获取用户登录信息*/
     getUserMsgAction(context,payload)
@@ -46,7 +47,7 @@ export default{
     //获取最新页所有动态
     getAllMomentsAction(context,payload) {
         allMoments().then(data=>{
-            console.log(data)
+            //console.log(data)
             context.commit({
                 type:'changeAllMoments',
                 allMoments:data
@@ -92,5 +93,18 @@ export default{
                 momentDetails:data
             })
         })
+    },
+    //消息
+    getChatMsgAction(context,payload){
+        this.socket=new WebSocket(`${SOCKET_HOST}:8333/message?userId=${context.state.userMsg.userId}`);
+        this.socket.onopen=()=>{
+            console.log("open")
+        };
+        this.socket.onmessage=(res)=>{
+            context.commit({
+                type:"changeChatMsg",
+                chatMsg:JSON.parse(res.data)
+            })
+        };
     }
 }

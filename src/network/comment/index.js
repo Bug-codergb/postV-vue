@@ -87,3 +87,16 @@ export function replyTopicCom(commentId,content)
         }
     })
 }
+//删除评论
+export function delComment(commentId){
+    return request({
+        url:"/comment/delete",
+        method:"post",
+        params:{
+            commentId
+        },
+        headers:{
+            'authorization':store.state.userMsg.token
+        }
+    })
+}

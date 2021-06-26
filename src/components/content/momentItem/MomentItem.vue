@@ -21,7 +21,7 @@
           </div>
         </div>
         <control-btn not-show="thumb">
-          <div slot="time" class="moment-item-control">{{item.updateTime.substring(0,19).replace("T"," ")}}</div>
+          <div slot="time" class="moment-item-control">{{formatTime(item.updateTime,"yyyy-MM-dd hh:mm:ss")}}</div>
           <div slot="view" class="moment-item-control">{{item.views}}</div>
           <div slot="comment" class="moment-item-control">{{item.commentCount}}</div>
           <div slot="sub" class="moment-item-control">{{item.subscriber}}</div>
@@ -37,12 +37,19 @@
         </div>
       </li>
     </ul>
+    <div class="no-moment">
+      <div>
+        <i class="iconfont icon-xiangzidakai"></i>
+        <p>暂无动态</p>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import ControlBtn from "@/components/common/controlBtn/ControlBtn";
 import {delMoment} from "@/network/moment";
+import {formatDate} from "@/utils/formatDate";
 export default {
   name: "MomentItem",
   components: {ControlBtn},
@@ -76,6 +83,9 @@ export default {
     })
   },
   methods:{
+    formatTime(time,ft){
+      return formatDate(time,ft);
+    },
     momentRouter(item,index){
       console.log(item);
       this.$router.push({
@@ -123,6 +133,19 @@ export default {
     top: @top;
   }
   .moment-item{
+    .no-moment{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 200px;
+      i{
+        font-size: 50px;
+        color: #61a5eb;
+      }
+      p{
+        color: #61a5eb;
+      }
+    }
     li{
       border-bottom: 1px solid #d8e8fa;
       position:relative ;

@@ -27,6 +27,7 @@ import LeftContent from "@/components/Home/childCpn/LeftContent";
 import RightContent from "@/components/Home/childCpn/RightContent";
 import TabBar from "@/components/common/tabBar/TabBar";
 import TopBar from "@/components/content/topBar/TopBar";
+import {SOCKET_HOST} from "@/constants/config/config";
 
 export default {
   name: "Home",
@@ -35,7 +36,8 @@ export default {
   {
     return{
       livePath:'',
-      backTop:false
+      backTop:false,
+      socket:null
     }
   },
   watch:{
@@ -46,17 +48,16 @@ export default {
       immediate:true
     }
   },
+  created() {
+    this.$store.dispatch({
+      type:"getChatMsgAction"
+    })
+  },
   mounted() {
     this.$nextTick(()=>{
       let _this=this;
       window.addEventListener('scroll',function(){
-        if(this.pageYOffset>=760)
-        {
-          _this.backTop=true;
-        }
-        else{
-          _this.backTop=false;
-        }
+        _this.backTop = this.pageYOffset >= 760;
       })
     })
   },
@@ -73,7 +74,7 @@ export default {
           clearInterval(timber)
         }
       },10)
-    }
+    },
   }
 }
 </script>

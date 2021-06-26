@@ -4,6 +4,7 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 import actions from './actions';
 import mutations from "./mutations";
+import {SOCKET_HOST} from "@/constants/config/config";
 export default new Vuex.Store({
   state: {
     //用户登录信息
@@ -37,7 +38,8 @@ export default new Vuex.Store({
     //评论结果实时动态详情（实时更新评论）
     momentDetails:{
       user:{}
-    }
+    },
+    chatMsg:[],
   },
   mutations,
   actions,

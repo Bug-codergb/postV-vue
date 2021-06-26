@@ -60,7 +60,7 @@ export default {
     this.getAllMoments();
     this._this=this
     getNewBanner().then(data=>{
-      console.log(data)
+      //console.log(data)
       this.banners=data;
     })
   },
@@ -73,7 +73,7 @@ export default {
     },
     momentRouter(item)
     {
-      console.log(item)
+      //console.log(item)
       //点击量
       momentView(item.momentId).then(data=>{
         //console.log(data)

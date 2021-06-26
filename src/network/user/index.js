@@ -81,3 +81,29 @@ export function getUserSpColumn(userId){
         }
     })
 }
+//用户上线
+export function goesOnline(online=0){
+    return request({
+        url:"/user/online",
+        method:"post",
+        data:{
+          online
+        },
+        headers:{
+            'authorization':store.state.userMsg.token,
+        }
+    })
+}
+//用户已读信息
+export function readMsg(userId){
+    return request({
+        url:"/message/read",
+        method:"post",
+        data:{
+          userId
+        },
+        headers:{
+            'authorization':store.state.userMsg.token,
+        }
+    })
+}

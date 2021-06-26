@@ -3,7 +3,7 @@
     <div class="header">
       <div class="left-content">
         <div class="img-container">
-          <img :src="topic.picUrl+'&type=small'" />
+          <img :src="topic.picUrl+'&type=small'" alt=""/>
         </div>
       </div>
       <div class="right-content">
@@ -12,7 +12,7 @@
             <div class="title">{{topic.name}}</div>
             <div class="user-msg">
               <div class="avatar">
-                <img :src="topic.user.avatarUrl" />
+                <img :src="topic.user.avatarUrl" alt=""/>
               </div>
               <div class="user-name" @click.stop="userRouter">{{topic.user.userName}}</div>
               <!--创建实践-->
@@ -69,13 +69,7 @@ export default {
         flag=this.$store.state.userDetail.topic.findIndex((item,index)=>{
           return this.topic.topicId===item.topicId
         })
-        if(flag===-1)
-        {
-          return false
-        }
-        else{
-          return true
-        }
+        return flag !== -1;
       }
     }
   },
@@ -138,7 +132,7 @@ export default {
             border-radius: 8px;
             position: relative;
             img{
-              width: 150px;
+              height: 100%;
               .center();
             }
           }

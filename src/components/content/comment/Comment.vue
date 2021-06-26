@@ -5,11 +5,20 @@
       <li v-for="(item,index) in comments" :key="item.commentId">
         <!--用户头像-->
         <div class="comment-avatar">
-          <img :src="item.user.avatarUrl" />
+          <img :src="item.user.avatarUrl" alt=""/>
         </div>
         <!--用户回复内容-->
         <div class="comment-content">
-          <span class="comment-user-name">{{item.user.userName}}: </span>
+          <div class="user-name-outer">
+            <span class="comment-user-name">{{item.user.userName}}: </span>
+            <i class="iconfont icon-MoreVertical"
+               @click.stop="showDel(index)"
+               v-if="self.$store.state.userMsg.userId===item.user.userId">
+              <span class="del" v-show="isShow&&currentIndex===index" @click="delComment(item,index,type=0,0)">
+                <i class="iconfont icon-template_delete-copy"></i>
+              </span>
+            </i>
+          </div>
           <div v-html="item.content" class="content"></div>
           <div class="comment-time">
             {{item.createTime?formatTime(item.createTime,"yyyy-MM-dd hh:mm:ss"):formatTime(item.updateTime,"yyyy-MM-dd hh:mm:ss")}}
@@ -24,13 +33,27 @@
           <ul class="reply-comment" v-if="item.reply">
             <li v-for="(iten,i) in item.reply"
                 :key="iten.commentId">
-              <div class="reply-user-msg">
-                <div class="reply-user-avatar">
-                  <img :src="iten.user.avatarUrl" alt=""/>
+              <div class="reply-msg">
+                <!--回复人头像-->
+                <div class="reply-user-msg">
+                  <div class="reply-user-avatar">
+                    <img class="avatar-img" :src="iten.user.avatarUrl" alt=""/>
+                  </div>
+                  <div class="reply-user-name">{{iten.user.userName}}: </div>
                 </div>
-                <div class="reply-user-name">{{iten.user.userName}}: </div>
+                <!--回复内容-->
+                <div v-html="iten.content" class="reply-content"></div>
               </div>
-              <div v-html="iten.content" class="reply-content"></div>
+              <div class="reply-time">
+                <div class="create-time">{{formatTime(iten.createTime,"yyyy-MM-dd hh:mm:ss")}}</div>
+                <i class="iconfont icon-MoreVertical"
+                   @click.stop="showDel(i)"
+                   v-if="self.$store.state.userMsg.userId===iten.user.userId">
+                <span class="del" v-show="isShow&&currentIndex===i" @click="delComment(iten,i,type=1,index)">
+                  <i class="iconfont icon-template_delete-copy"></i>
+                </span>
+                </i>
+              </div>
             </li>
           </ul>
         </div>
@@ -40,7 +63,7 @@
 </template>
 
 <script>
-import {commentDetail, getMomentCom} from "@/network/comment";
+import {commentDetail, delComment, getMomentCom} from "@/network/comment";
 import reply from '@/components/content/reply/Reply'
 import {formatDate} from "@/utils/formatDate";
 export default {
@@ -52,7 +75,10 @@ export default {
   {
     return {
       comments:[],
-      keyId:1
+      keyId:1,
+      isShow:false,
+      currentIndex:0,
+      self:null
     }
   },
   props:{
@@ -73,10 +99,11 @@ export default {
     }
   },
   created() {
+    this.self=this;
     if(this.status===1)
     {
       getMomentCom(this.momentId).then(data=>{
-        console.log(data.comments);
+       // console.log(data.comments);
         if(data.comments)
         {
           this.comments=data.comments;
@@ -87,9 +114,36 @@ export default {
       this.comments=this.commentDetail
     }
   },
+  mounted() {
+    this.$nextTick(()=>{
+      document.addEventListener('click',()=>{
+        this.isShow=false;
+      })
+    })
+  },
   methods:{
     formatTime(time,ft){
       return formatDate(time,ft)
+    },
+    showDel(index){
+      this.currentIndex=index;
+      this.isShow=true;
+    },
+    delComment(item,index,type,i){
+      //console.log(item.commentId);
+      this.$message.show("确定要删除吗?").then(data=>{
+        if(data){
+          delComment(item.commentId).then(data=>{
+            if(type===0){
+              this.$delete(this.comments,index);
+            }
+            if(type===1){
+              this.$delete(this.comments[i].reply,index);
+            }
+            this.$toast.show("删除成功",1500);
+          })
+        }
+      })
     },
     //回复评论
     reply(content,item){
@@ -111,10 +165,31 @@ export default {
     top: 50%;
     transform: translate(-50%,-50%);
   }
+  .del(){
+    font-size: 24px;
+    color: #9b9b9b;
+    position: relative;
+    cursor: pointer;
+    &:hover{
+      color: #616162;
+    }
+    span.del{
+      cursor:pointer;
+      position: absolute;
+      background-color: #fff;
+      font-size: 20px;
+      left: 50%;
+      top: 100%;
+      transform: translate(-50%,0);
+      padding: 5px 7px;
+      box-shadow:0 0 6px rgba(0,0,0,.2);
+      border-radius: 3px;
+    }
+  }
   .comments{
     border-top:1px solid #d8e8fa;
     padding: 30px 0 0 0;
-    li{
+    &>li{
       display: flex;
       margin: 0 0 10px 0;
     }
@@ -140,17 +215,25 @@ export default {
   border-bottom:1px solid rgba(0,0,0,.09);
   padding: 5px 0 5px 15px;
   font-size: 13px;
-  width: 630px;
+  width: 90%;
 }
 .comment-content{
-  /deep/img{
-    width: 60px;
-    display: block;
-    margin: 5px 0;
+  .user-name-outer{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    &>i{
+      .del();
+    }
   }
   .content{
     color: #616162;
     line-height: 22px;
+    /deep/img{
+      width: 60px;
+      display: block;
+      margin: 5px 0;
+    }
   }
 }
 .comments .comment-time{
@@ -161,11 +244,26 @@ export default {
 }
 /*回复评论信息*/
 .reply-comment {
-  li {
+  &>li{
     margin: 0 0 5px 0;
     padding: 5px 10px;
-    display: flex;
-    align-items: flex-start;
+    .reply-msg{
+      display: flex;
+      align-items: flex-start;
+    }
+    .reply-time{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      .create-time{
+        font-size: 13px;
+        color: #9B9B9B;
+        margin: 15px 0 0 0;
+      }
+      &>i{
+        .del();
+      }
+    }
     .reply-content {
       color: #616162;
     }
@@ -179,9 +277,9 @@ export default {
         position: relative;
         border: 1px solid #dddddd;
         border-radius: 50%;
-        img{
-          width: 100%;
+        &>img.avatar-img{
           .center();
+          height: 100%;
         }
       }
       .reply-user-name{

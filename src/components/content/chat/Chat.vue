@@ -19,17 +19,6 @@
                     </div>
                   </div>
                 </li>
-                <!--当前记录-->
-<!--                <li class="profile" v-for="(item,index) in contentText" :key="item.id"
-                    v-if="item.user.userId===store.state.userMsg.userId||item.user.userId===userId">
-                  <div class="msg" :class="{active:item.user.userId===userId}">
-                      <span class="bubble">{{item.content}}</span>
-                      <div class="avatar" v-if="item.user">
-                        <img :src="item.user.avatarUrl" alt="暂无头像" />
-                      </div>
-                  </div>-->
-
-<!--                </li>-->
               </ul>
             </div>
             <div class="inp">
@@ -43,10 +32,12 @@
 </template>
 
 <script>
-import {userDetail} from "@/network/user";
+import {goesOnline, readMsg, userDetail} from "@/network/user";
 import store from "../../../store"
 import NavBarControl from "@/components/common/navBarControl/NavBarControl";
 import {getAllChatUserMsg} from "@/network/chat";
+import {SOCKET_HOST} from "@/constants/config/config";
+
 export default {
   name: "Chat",
   components: {NavBarControl},
@@ -71,14 +62,21 @@ export default {
   created() {
     this.store=store;
     this.userId=this.$route.query.userId;
+    goesOnline(1).then(data=>{
+
+    });
+    readMsg(this.userId).then(data=>{
+      this.$store.dispatch({
+        type:"getChatMsgAction"
+      })
+    })
     getAllChatUserMsg(this.$store.state.userMsg.userId,this.userId).then(data=>{
-      console.log(data);
+      //console.log(data);
       this.historyMsg=data;
     })
     userDetail(this.userId).then(data=>{
-      console.log(data);
+      //console.log(data);
       this.userDetail=data;
-
       this.chatUsers.push({
         content:[],
         user:{
@@ -95,7 +93,7 @@ export default {
     this.chat();
   },
   destroyed() {
-    console.log("页面")
+    goesOnline(0);
     this.socket.close();
   },
   computed:{
@@ -124,7 +122,7 @@ export default {
     },
     chat()
     {
-      this.socket=new WebSocket(`ws://localhost:8333?userId=${this.$store.state.userMsg.userId}&chatUserId=${this.userId}`);
+      this.socket=new WebSocket(`${SOCKET_HOST}:8333?userId=${this.$store.state.userMsg.userId}&chatUserId=${this.userId}`);
       this.socket.onopen=this.open;
       this.socket.onmessage=this.getMessage;
     },
@@ -160,7 +158,6 @@ export default {
       }
       //是当前聊天用户
       else{
-        console.log("我再执行")
         getAllChatUserMsg(this.$store.state.userMsg.userId,this.userId).then(data=>{
           this.historyMsg=data;
         })

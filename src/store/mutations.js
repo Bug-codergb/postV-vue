@@ -42,5 +42,9 @@ export default{
     changeMomentDetails(state,payload)
     {
         state.momentDetails=payload.momentDetails;
-    }
+    },
+    //获取信息
+    changeChatMsg(state,payload){
+        state.chatMsg=payload.chatMsg;
+    },
 }

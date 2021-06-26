@@ -34,6 +34,7 @@ import Spcolumn from "@/views/hotRecommend/childCpn/spcolumn/Spcolumn";
 import {getAllCate} from "@/network/toplist";
 import OtherCate from "@/views/hotRecommend/childCpn/otherCate/OtherCate";
 import Knowledge from "@/views/hotRecommend/childCpn/knowledge/Knowledge";
+import {SOCKET_HOST} from "@/constants/config/config";
 
 export default {
 name: "HotRecommend",
@@ -43,7 +44,7 @@ name: "HotRecommend",
     return {
       banner:[],
       recommendArc:{},
-      otherRec:[]
+      otherRec:[],
     }
   },
   created() {
@@ -55,7 +56,7 @@ name: "HotRecommend",
         return getCateMsg(item.categoryId)
       })
       Promise.all(promise).then(data=>{
-        console.log(data);
+        //console.log(data);
         this.recommendArc=data.filter((item,index)=>{
           return item.name==='专栏'
         })[0]

@@ -21,6 +21,8 @@
 
 <script>
 import LoginCpn from "@/components/common/loginCpn/LoginCpn";
+import {SOCKET_HOST} from "@/constants/config/config";
+
 export default {
 name: "Login",
   components: {LoginCpn},
@@ -52,13 +54,15 @@ name: "Login",
             })
           }
           else{
+            this.$store.dispatch({
+              type:"getChatMsgAction"
+            })
             this.$router.push({
               path:'/Home'
             })
           }
         }
         else{
-          console.log("789")
           this.isShowErr=true;
           setTimeout(()=>{
             this.isShowErr=false

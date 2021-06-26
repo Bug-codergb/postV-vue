@@ -49,7 +49,7 @@
 import PublishMoment from '@/components/content/publishMoment/PublishMoment'
 import Login from "./childCpn/login/Login";
 import search from './childCpn/search/Search'
-import Message from "@/components/content/topBar/childCpn/massage/Message";
+import Message from "@/components/content/topBar/childCpn/message/Message";
 import Innovate from "@/components/content/topBar/childCpn/innovate/Innovate";
 import ChannelPublish from "@/components/content/channelPublish/ChannelPublish";
 export default {
