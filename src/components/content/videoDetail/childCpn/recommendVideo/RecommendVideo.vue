@@ -5,11 +5,11 @@
       <li v-for="(item,index) in videoList" :key="item.vid">
         <div class="video-list" v-if="item.vid!==vid">
           <div class="img-container" @click="playVideo(item)">
-            <img :src="item.coverUrl"/>
+            <img :src="item.coverUrl" alt=""/>
             <div class="play-count">
               <i class="iconfont icon-play1"></i>
               {{item.playCount}}</div>
-            <div class="duration">{{duration(item.duration,"MM:ss")}}</div>
+            <div class="duration">{{duration(item.duration,"mm:ss")}}</div>
           </div>
           <div class="right-content">
             <div class="title text-nowrap">{{item.title}}</div>

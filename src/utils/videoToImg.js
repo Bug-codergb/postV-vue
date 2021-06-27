@@ -42,7 +42,7 @@ export function getVideoDuration(file)
     let oVideo = document.createElement('video');
     oVideo.setAttribute('src',url);
     return new Promise((resolve,reject)=>{
-        oVideo.oncanplay = ()=>{
+        oVideo.onloadeddata = ()=>{
             resolve(oVideo.duration*1000)
         }
     })
