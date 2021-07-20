@@ -9,7 +9,7 @@
      <ul class="outer" ref="outer">
        <li v-for="(item,index) in article.moments" :key="item.momentId">
          <div class="img-container" @click="momentRouter(item)">
-           <img :src="item.picUrl[0].picUrl" />
+           <img :src="item.picUrl[0].picUrl" alt=""/>
          </div>
          <!--文章信息-->
          <div class="msg">
@@ -17,8 +17,8 @@
            <div class="info">
              <!--用户信息-->
              <div class="user">
-               <div class="avatar-container">
-                 <img :src="item.user.avatarUrl" />
+               <div class="avatar-container" @click="userRouter(item)">
+                 <img :src="item.user.avatarUrl" alt=""/>
                </div>
                <div class="user-name" @click="userRouter(item)">{{item.user.userName}}</div>
              </div>

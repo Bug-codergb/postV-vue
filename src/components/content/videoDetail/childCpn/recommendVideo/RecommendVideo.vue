@@ -9,7 +9,7 @@
             <div class="play-count">
               <i class="iconfont icon-play1"></i>
               {{item.playCount}}</div>
-            <div class="duration">{{duration(item.duration,"mm:ss")}}</div>
+            <div class="duration">{{item.duration,"mm:ss"|formatTime}}</div>
           </div>
           <div class="right-content">
             <div class="title text-nowrap">{{item.title}}</div>
@@ -23,7 +23,7 @@
 
 <script>
 import {getRecommendVio} from "@/network/video";
-import {formatDate} from "@/utils/formatDate";
+import filter from "@/utils/filter";
 
 export default {
   name: "RecommendVideo",
@@ -42,6 +42,7 @@ export default {
       }
     }
   },
+  filters:filter,
   created() {
     getRecommendVio().then(data=>{
       console.log(data);
@@ -49,10 +50,6 @@ export default {
     })
   },
   methods:{
-    duration(time,fmt)
-    {
-      return formatDate(time,fmt)
-    },
     playVideo(item)
     {
       this.$emit('play-video',item.vid);

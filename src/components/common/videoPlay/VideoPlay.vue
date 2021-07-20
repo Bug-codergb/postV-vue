@@ -6,6 +6,7 @@
              @timeupdate="getCurrentTime"
              @ended="endHandle"
              autoplay
+             preload="auto"
              @canplay="canPlay">
       </video>
       <div class="control">

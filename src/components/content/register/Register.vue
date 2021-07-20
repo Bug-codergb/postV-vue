@@ -11,7 +11,7 @@
         <span>验证码</span>
         <div class="code">
           <input type="text" v-model="code"/>
-          <img src="http://localhost:7876/getimgCode" alt="暂无图片" v-if="change" @click="changeCode"/>
+          <img src="http://8.140.110:7876/getimgCode" alt="暂无图片" v-if="change" @click="changeCode"/>
         </div>
       </div>
     </login-cpn>

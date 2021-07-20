@@ -116,7 +116,7 @@ name: "TopBar",
     transform: translate(-50%,-50%);
   }
 .top-bar{
-  margin: 0 0 5px 0;
+  margin: 0 0 2px 0;
   background-color:#fff;
 }
 .top-bar-content{

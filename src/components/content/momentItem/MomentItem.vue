@@ -37,11 +37,8 @@
         </div>
       </li>
     </ul>
-    <div class="no-moment">
-      <div>
-        <i class="iconfont icon-xiangzidakai"></i>
-        <p>暂无动态</p>
-      </div>
+    <div class="no-moment" v-if="momentDetail.length===0">
+      <NoTip font="40px" content="暂无动态"/>
     </div>
   </div>
 </template>
@@ -50,9 +47,10 @@
 import ControlBtn from "@/components/common/controlBtn/ControlBtn";
 import {delMoment} from "@/network/moment";
 import {formatDate} from "@/utils/formatDate";
+import NoTip from "@/components/common/noTip/NoTip";
 export default {
   name: "MomentItem",
-  components: {ControlBtn},
+  components: {NoTip, ControlBtn},
   props:{
     momentDetail:{
       type:Array,
@@ -87,7 +85,13 @@ export default {
       return formatDate(time,ft);
     },
     momentRouter(item,index){
-      console.log(item);
+      const {type}=item;
+      if(type===1){
+        this.$router.push({
+          path:"/videoDetail",
+
+        })
+      }
       this.$router.push({
         path:'/momentDetail',
         query:{

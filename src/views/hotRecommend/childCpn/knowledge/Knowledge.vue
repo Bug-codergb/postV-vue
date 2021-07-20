@@ -6,18 +6,18 @@
     <ul>
       <li v-for="(item,index) in hotKnow" :key="item.kid">
           <div class="img-container" @click="knowRouter(item)">
-            <img :src="item.picUrl" />
+            <img :src="item.picUrl" alt=""/>
             <div class="vip" v-if="item.vip===1">vip</div>
           </div>
         <div class="state">{{item.title}}</div>
         <div class="user-msg">
           <div class="avatar">
-            <img :src="item.user.avatarUrl" />
+            <img :src="item.user.avatarUrl" alt=""/>
           </div>
           <div class="user-name">{{item.user.userName}}</div>
         </div>
       </li>
-      <li v-for="item in holder(hotKnow.length,3)">
+      <li v-for="item in holder(hotKnow.length,4)">
         <div class="img-container"></div>
       </li>
     </ul>
@@ -81,7 +81,7 @@ name: "Knowledge",
           }
         })
       }
-    }
+    },
   }
 }
 </script>
@@ -111,14 +111,14 @@ name: "Knowledge",
       li{
         margin: 0 0 15px 0;
         .img-container{
-          width:200px;
+          width:180px;
           height:105px;
           overflow: hidden;
           text-align: center;
           border-radius: 3px;
           position: relative;
           img{
-            width:200px;
+            width:100%;
           }
           .vip{
             position: absolute;

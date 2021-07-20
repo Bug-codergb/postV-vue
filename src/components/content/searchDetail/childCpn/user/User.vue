@@ -2,8 +2,8 @@
   <div class="user">
     <ul>
       <li v-for="(item,index) in this.$store.state.searchResult.user">
-        <div class="img-container">
-          <img :src="item.avatarUrl" />
+        <div class="img-container" @click="userRouter(item,index)">
+          <img :src="item.avatarUrl" alt="" />
         </div>
         <div class="right-content">
           <div class="creator">
@@ -28,14 +28,31 @@
         </div>
       </li>
     </ul>
+    <div class="tip" v-if="$store.state.searchResult.user.length===0">
+      <NoTip content="暂无相关用户" font="50px"/>
+    </div>
   </div>
 </template>
 
 <script>
 import {userDetail} from "@/network/user";
-
+import NoTip from "@/components/common/noTip/NoTip";
 export default {
   name: "User",
+  components:{
+    NoTip
+  },
+  methods:{
+    userRouter(item,index){
+      console.log(item);
+      this.$router.push({
+        path:"/userDetail",
+        query:{
+          id:item.userId
+        }
+      })
+    }
+  }
 }
 </script>
 
@@ -75,6 +92,9 @@ export default {
         color: #7f7f7f;
         margin:0 0 10px 0 ;
       }
+    }
+    .tip{
+      height:300px;
     }
     .right-content{
       margin: 0 0 0 20px;

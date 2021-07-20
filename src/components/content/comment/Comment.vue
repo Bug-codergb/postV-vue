@@ -4,7 +4,7 @@
     <ul class="comments">
       <li v-for="(item,index) in comments" :key="item.commentId">
         <!--用户头像-->
-        <div class="comment-avatar">
+        <div class="comment-avatar" @click="userRouter(item,index)">
           <img :src="item.user.avatarUrl" alt=""/>
         </div>
         <!--用户回复内容-->
@@ -153,6 +153,15 @@ export default {
     //点赞评论
     thumb(isThumb,item){
       this.$emit('thumb-comment',isThumb,item.commentId);
+    },
+    userRouter(item,index){
+      console.log(item);
+      this.$router.push({
+        path:"/userDetail",
+        query:{
+          id:item.user.userId
+        }
+      })
     }
   }
 }

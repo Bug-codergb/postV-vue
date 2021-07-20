@@ -19,14 +19,20 @@
         </div>
       </li>
     </ul>
+    <div class="tip" v-if="$store.state.searchResult.user.length===0">
+      <NoTip content="暂无相关频道" font="50px"/>
+    </div>
   </div>
 </template>
 
 <script>
 import {formatDate} from "@/utils/formatDate";
-
+import NoTip from "@/components/common/noTip/NoTip";
 export default {
   name: "Channel",
+  components:{
+    NoTip
+  },
   methods:{
     formatTime(time,ft){
       return formatDate(time,ft);
@@ -90,6 +96,9 @@ export default {
           width: 20%;
         }
       }
+    }
+    .tip{
+      height:300px;
     }
   }
 </style>

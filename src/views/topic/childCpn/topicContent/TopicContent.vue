@@ -4,12 +4,10 @@
       <div>标题</div>
       <textarea cols="65" rows="2" v-model="title"></textarea>
     </div>
-
     <div class="content">
       <textarea cols="10" rows="1" v-model="content"></textarea>
     </div>
      <div id="edit" ref="topicEdit"></div>
-
     <div class="control-btn">
       <button @click="publish">发布</button>
       <button @click="cancelPublish">取消</button>

@@ -22,7 +22,7 @@
               </ul>
             </div>
             <div class="inp">
-              <textarea cols="124" rows="4" v-model="content"></textarea>
+              <textarea cols="112" rows="4" v-model="content"></textarea>
               <button class="send" @click="send">发送</button>
             </div>
           </div>
@@ -198,13 +198,13 @@ export default {
       background:#89bbf0;
       text-align: center;
       line-height: 40px;
-      font-size: 14px;
+      font-size: 16px;
     }
     .body{
       display: flex;
       .user-list{
         width: 150px;
-        background: #89bbf0;
+        background-color: #89bbf0;
         height: 550px;
       }
       .content{
@@ -260,7 +260,7 @@ export default {
           }
         }
         .inp{
-          height: 120px;
+          height: 140px;
           background: #fff;
           position: relative;
           overflow: hidden;
@@ -275,7 +275,7 @@ export default {
             color: #fff;
             position: absolute;
             left: 90%;
-            top: 100%;
+            top: 90%;
             transform: translate(0,-120%);
           }
         }

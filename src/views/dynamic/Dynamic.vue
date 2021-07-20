@@ -12,6 +12,8 @@
                 :class="{active:liveIndex===i}">
             <img :src="it.avatarUrl" alt=""/>
           </div>
+          <div class="img-container holder"
+               v-for="(item,index) in holder(follow.slice(index*8,(index+1)*8).length,8)"></div>
         </el-carousel-item>
       </el-carousel>
       <div class="prev" @click="prev">
@@ -29,7 +31,10 @@
         {{item.name}}
       </li>
     </ul>
-    <DynamicList :list="dynamic"/>
+    <DynamicList :list="dynamic" v-if="dynamic.length!==0"/>
+    <div class="tip" v-if="dynamic.length===0">
+      <NoTip font="60px"/>
+    </div>
   </div>
 </template>
 
@@ -37,10 +42,11 @@
 import {getUserDynamic, getUserFollow} from "@/network/dynamic";
 import {getAllCate} from "@/network/category";
 import DynamicList from "@/views/dynamic/childCpn/dynamicList/DynamicList";
+import NoTip from "@/components/common/noTip/NoTip";
 
 export default {
   name: "Dynamic",
-  components: {DynamicList},
+  components: {NoTip, DynamicList},
   data(){
     return {
       follow:[],
@@ -91,6 +97,9 @@ export default {
         this.dynamic=data;
         console.log(data);
       })
+    },
+    holder(count,line){
+      return Math.ceil(count/line)*line-count;
     }
   }
 }
@@ -149,10 +158,14 @@ export default {
       img{
         .center();
         height: 100%;
+        cursor: pointer;
       }
       &.active{
         border: 3px solid #3a8ee6;
       }
+    }
+    .holder{
+      background-color: #fff;
     }
     .cate-list{
       margin:20px 0 0 0;
@@ -169,6 +182,9 @@ export default {
           color: #3a8ee6;
         }
       }
+    }
+    .tip{
+      height: 300px;
     }
   }
 </style>

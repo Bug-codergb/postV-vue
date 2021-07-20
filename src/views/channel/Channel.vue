@@ -23,7 +23,7 @@
                 <img :src="iten.picUrl+'&type=small'" alt=""/>
               </div>
               <div class="cate-content-state text-nowrap" slot="state">{{iten.title}}</div>
-              <div slot="avatarUrl">
+              <div slot="avatarUrl" @click.stop="userRouter(iten.user)">
                 <img :src="iten.user.avatarUrl" alt=""/>
               </div>
               <div slot="userName" class="cate-content-user-name text-nowrap">
@@ -76,6 +76,14 @@ export default {
         path:"/channelCateDetail",
         query:{
           id:item.id
+        }
+      })
+    },
+    userRouter(user){
+      this.$router.push({
+        path:"/userDetail",
+        query:{
+          id:user.userId
         }
       })
     }

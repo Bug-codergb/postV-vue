@@ -12,12 +12,17 @@
         <div class="content">成员: {{item.users}}</div>
       </li>
     </ul>
+    <div class="tip" v-if="$store.state.searchResult.topic.length===0">
+      <NoTip content="暂无相关专题" font="50px"/>
+    </div>
   </div>
 </template>
 
 <script>
+import NoTip from "@/components/common/noTip/NoTip";
 export default {
   name: "Topic",
+  components: {NoTip},
   methods:{
     topicRouter(item)
     {
@@ -80,6 +85,9 @@ export default {
           width: 150px;
         }
       }
+    }
+    .tip{
+      height:300px;
     }
   }
 </style>

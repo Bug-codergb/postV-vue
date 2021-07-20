@@ -20,7 +20,7 @@
           </div>
           <div slot="playCount" v-if="item.video">{{item.video.playCount}}</div>
           <div slot="dt" v-if="item.video&&item.video.duration!==0">
-            {{formatDate (item.video.duration,"mm:ss") }}
+            {{item.video.duration,"mm:ss"|formatTime}}
           </div>
           <div slot="state" @click="videoRouter(item)" class="other-state">{{item.title}}</div>
           <div slot="avatarUrl" @click="userRouter(item)">
@@ -40,8 +40,7 @@
 <script>
 import {holder} from "@/utils/holder";
 import MsgList from "@/components/common/msgList/MsgList";
-import {formatDate} from "@/utils/formatDate";
-
+import filter from "@/utils/filter";
 export default {
 name: "OtherCate",
   components: {MsgList},
@@ -54,6 +53,7 @@ name: "OtherCate",
       }
     }
   },
+  filters:filter,
   methods:{
     detailRouter(detail)
     {
@@ -114,9 +114,6 @@ name: "OtherCate",
           id:item.user.userId
         }
       })
-    },
-    formatDate(time,ft){
-      return formatDate(time,ft)
     }
   }
 }

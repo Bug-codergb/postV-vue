@@ -118,7 +118,13 @@ export default {
               }
             }
             .content{
-              width: 50%;
+              width: 60%;
+              height: 150px;
+              overflow-y: hidden;
+              line-height:25px;
+              /deep/img{
+                display: none!important;
+              }
             }
           }
         }

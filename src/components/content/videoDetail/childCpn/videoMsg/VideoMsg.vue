@@ -1,10 +1,10 @@
 <template>
   <div class="video-msg">
     <div class="profile">
-      <div class="img-container">
-        <img :src="videoDetail.user.avatarUrl" />
+      <div class="img-container" @click="userRouter">
+        <img :src="videoDetail.user.avatarUrl" alt=""/>
       </div>
-      <div class="user-name">{{videoDetail.user.userName}}</div>
+      <div class="user-name" @click="userRouter">{{videoDetail.user.userName}}</div>
     </div>
     <!--视频标题-->
     <h2>{{videoDetail.moment.title}}</h2>
@@ -25,6 +25,16 @@ export default {
       {
         return {}
       }
+    }
+  },
+  methods:{
+    userRouter(){
+      this.$router.push({
+        path:"userDetail",
+        query:{
+          id:this.videoDetail.user.userId
+        }
+      })
     }
   }
 }

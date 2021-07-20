@@ -15,12 +15,19 @@
         <div class="updateTime">{{item.updateTime.substring(0,10)}}</div>
       </li>
     </ul>
+    <div class="tip" v-if="$store.state.searchResult.moment.length===0">
+      <NoTip content="暂无相关动态" font="50px"/>
+    </div>
   </div>
 </template>
 
 <script>
+import NoTip from "@/components/common/noTip/NoTip";
 export default {
   name: "User",
+  components:{
+    NoTip
+  },
   methods:{
     momentRouter(item)
     {
@@ -133,6 +140,9 @@ export default {
           color: #616162;
         }
       }
+    }
+    .tip{
+      height:300px;
     }
   }
 </style>

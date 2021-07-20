@@ -16,7 +16,7 @@
             <img :src="item.coverUrl+'&type=small'" alt=""/>
           </div>
           <div slot="state">
-            <div class="video-cate-state">{{item.title}}</div>
+            <div class="video-cate-state text-nowrap">{{item.title}}</div>
           </div>
           <div slot="avatarUrl"><img :src="item.user.avatarUrl" alt=""/></div>
           <div slot="userName">{{item.user.userName}}</div>
@@ -105,6 +105,7 @@ export default {
       }
       .video-cate-state{
         margin: 20px 0 0 0;
+        width: 180px;
       }
     }
   }

@@ -31,7 +31,7 @@ export default {
     border-right:1px solid #3a8ee6;
   }
   video{
-    width: 500px;
+    width:600px;
     outline: none;
     display: block;
     margin: 0 auto;
