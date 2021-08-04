@@ -22,6 +22,7 @@ import toast from '@/components/common/toast/index';
 import message from "./components/common/message/index";
 Vue.use(toast);
 Vue.use(message);
+
 Vue.config.productionTip = false
 new Vue({
   router,

@@ -17,7 +17,10 @@
     <!--推荐动态-->
     <Spcolumn :article="recommendArc" v-if="recommendArc&&recommendArc.moments"/>
     <!--视频，图片科技等-->
-    <ul>
+    <ul v-loading="otherRec.length===0"
+        element-loading-text="载入中..."
+        element-loading-spinner="el-icon-loading"
+        element-loading-background="#ffffff">
       <li v-for="(item,index) in otherRec" :key="item.categoryId">
         <other-cate :cate-detail="item" v-if="otherRec.length&&item.moments.length" />
       </li>

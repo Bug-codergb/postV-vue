@@ -16,7 +16,7 @@
                   :is-show-time="true"
                   @play="videoRouter(item)">
           <div slot="img-container" @click="videoRouter(item)">
-            <img :src="item.picUrl[0].picUrl+'&type=small'" alt=""/>
+            <img v-lazy="item.picUrl[0].picUrl+'&type=small'" alt=""/>
           </div>
           <div slot="playCount" v-if="item.video">{{item.video.playCount}}</div>
           <div slot="dt" v-if="item.video&&item.video.duration!==0">

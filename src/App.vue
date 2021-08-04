@@ -2,7 +2,7 @@
   <div id="app">
     <router-view name="login" class="home-login"/>
     <div class="footer">
-      &#169 键行键近
+      &#169 postV
     </div>
   </div>
 </template>

@@ -8,7 +8,7 @@
       <li v-for="(item,index) in videoList.videos" :key="item.vid">
         <msg-list img-container-height="115px" @play="videoRouter(item)">
           <div slot="img-container" @click="videoRouter(item)">
-            <img :src="item.coverUrl+'&type=small'" alt=""/>
+            <img v-lazy="item.coverUrl+'&type=small'" alt=""/>
           </div>
           <div slot="state">
             <div class="video-cate-state">{{item.title}}</div>

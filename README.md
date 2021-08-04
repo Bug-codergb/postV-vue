@@ -1,5 +1,5 @@
 # postV
-
+## [postV演示视频](http://8.140.110.78:7879/)
 ```
 一个基于vue的娱乐型社区，前端页面采用vue 后台管理系统也是采用vue, 
 后台编码则是koa2+mySQL 
@@ -28,9 +28,7 @@
 * **排行榜**<br><br>
 ![排行榜](https://wx1.sinaimg.cn/large/008asUO8ly1grwn9zgozzj31hc0rkdu2.jpg)
 <br>
-
-## 项目演示视频
-  [postV视频](http://8.140.110.78:7879/)
+  
 ## Project setup
 ```
 npm install

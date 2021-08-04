@@ -206,7 +206,7 @@ name: "VideoDetail",
       }
     }
     .right-content{
-       flex: 1;
+       width: 28%;
     }
   }
 </style>

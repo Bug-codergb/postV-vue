@@ -6,7 +6,7 @@
              @timeupdate="getCurrentTime"
              @ended="endHandle"
              autoplay
-             preload="auto"
+             preload="metadata"
              @canplay="canPlay">
       </video>
       <div class="control">
@@ -63,7 +63,7 @@ export default {
         progress:0,
         isDrag:false,
         isMove: false,
-        volume:10
+        volume:10,
     }
   },
   mounted() {
@@ -85,7 +85,15 @@ export default {
       /*addVideoPlayCouont(this.videoDetail.vid).then(data => {
       })*/
       this.isPlay=!this.isPlay;
-      this.isPlay?this.$refs.vio.play():this.$refs.vio.pause();
+      if(this.isPlay){
+        if(this.$refs.vio.play()){
+          this.$refs.vio.play().catch(e=>{
+
+          })
+        }
+      } else{
+        this.$refs.vio.pause();
+      }
     },
     playVideo(vid)
     {
@@ -119,7 +127,15 @@ export default {
         this.isDrag=false;
         this.progress=val;
         this.isMove=false;
+
         this.$refs.vio.currentTime=this.currentTime/1000;
+        if(this.$refs.vio.play()!==undefined)
+        {
+          this.$refs.vio.play().then(data=>{
+          }).catch(e=>{
+
+          })
+        }
     },
     endHandle()
     {
@@ -142,8 +158,8 @@ export default {
 <style scoped lang="less">
 .videoPlay{
     .vio-container{
-      width: 700px;
-      height:300px;
+      width: 730px;
+      height:400px;
       text-align: center;
       background-color:#111111;
       border-radius: 5px;

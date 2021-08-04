@@ -66,6 +66,9 @@ export default {
     li .video-list{
       display: flex;
       padding: 10px 0 10px 15px;
+      .right-content{
+        width:50%;
+      }
     }
   }
   .img-container{
@@ -74,8 +77,10 @@ export default {
     overflow: hidden;
     background-color: #333;
     position: relative;
+    border-radius: 5px;
     img{
       width: 100%;
+      .center(50%,50%,-50%,-50%);
     }
     .play-count{
       white-space: nowrap;
@@ -96,7 +101,7 @@ export default {
     }
   }
   .title{
-    width: 100px;
+    width: 85%;
     font-size: 13px;
     margin: 10px 0 0 10px;
   }
